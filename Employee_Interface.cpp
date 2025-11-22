@@ -17,6 +17,8 @@ int main()
         cout << "3. Modify Employee\n";
         cout << "4. Display All Employees\n";
         cout << "5. Display All Employees Sorted By Alphabetical Order\n";
+        cout << "6. Display All Employees Grouped By Bank Branch\n";
+        cout << "7. Display Earliest And Most Recent Employees\n";
         cout << "0. Exit\n";
         cout << "Choose an operation : ";
         cin >> choice;
@@ -36,6 +38,12 @@ int main()
             break;
         case 5:
             DisplayEmployeesSortedByAlphabeticalOrder(employees, EmployeeCount);
+            break;
+        case 6:
+            DisplayEmployeesGroupedByBankBranch(employees, EmployeeCount);
+            break;
+        case 7:
+            DisplayEarliestAndRecentEmployees(employees, EmployeeCount);
             break;
         case 0:
             cout << "Exiting program.......\n";
