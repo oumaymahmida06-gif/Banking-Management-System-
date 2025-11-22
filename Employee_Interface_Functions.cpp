@@ -7,22 +7,50 @@ void AddEmployee(Employee* employees, int& EmployeeCount, int& capacity) {
 		NewArray(employees, capacity, EmployeeCount);
 	}
 	Employee e;
-	cout << "Enter the ID of the employee:" << endl;
-	cin >> e.id;
+	int ID;
+	do {
+		cout << "Enter the ID of the employee:" << endl;
+		cin >> ID;
+	} while (!Verify_Id(ID));
+	e.id = ID;
 	cin.ignore();
-	cout << "Enter the Name of the employee:" << endl;
-	getline(cin, e.Name);
-	cout << "Enter the Last Name of the employee:" << endl;
-	getline(cin, e.Last_Name);
-	cout << "Enter the Address of the employee:" << endl;
-	getline(cin, e.Address);
-	cout << "Enter the Salary of the employee:" << endl;
-	cin >> e.Salary;
+	string Name;
+	do {
+		cout << "Enter the Name of the employee: ";
+		getline(cin, Name);
+	} while (!Verify_Name(Name));
+	e.Name = Name;
+	string Last_Name;
+	do {
+		cout << "Enter the Last Name of the employee: ";
+		getline(cin, Last_Name);
+	} while (!Verify_Last_Name(Last_Name));
+	e.Last_Name = Last_Name;
+	string Address;
+	do {
+		cout << "Enter the Adress of the employee: ";
+		getline(cin, Address);
+	} while (!Verify_Address(Address));
+	e.Address = Address;
+	double salary;
+	do {
+		cout << "Enter the Salary of the employee:" << endl;
+		cin >> salary;
+	} while (!Verify_Salary(salary));
+	e.Salary = salary;
 	cin.ignore();
-	cout << "Enter the Hire Date of the employee:" << endl;
-	getline(cin, e.Hire_Date);
-	cout << "Enter the Bank Branch of the employee:" << endl;
-	cin >> e.Bank_Branch;
+	string date;
+	do {
+		cout << "Enter the Hire Date of the employee: ";
+		getline(cin, date);
+	} while (!Verify_Hire_Date(date));
+	e.Hire_Date = date;
+	int bank_branch;
+	do {
+		cout << "Enter the bank branch of the employee:" << endl;
+		cin >> bank_branch;
+	} while (!Verify_Bank_Branch(bank_branch));
+	e.Bank_Branch= bank_branch;
 	employees[EmployeeCount] = e;
 	EmployeeCount++;
 }
@@ -38,6 +66,104 @@ void NewArray(Employee*& employees, int& capacity, int EmployeeCount) {
 	capacity = NewSize;
 }
 
+bool Verify_Id(const int& ID) {
+	if ((ID > 9999) || (ID<999)) {
+		cout << "The ID must be a positive number containing 4 digits.\n";
+		return false;
+	}
+	return true;
+}
+bool Verify_Salary(const double& Salary) {
+	if (Salary < 0) {
+		cout << "The Salary must be a positive number.\n";
+		return false;
+	}
+	return true;
+}
+bool Verify_Bank_Branch(const int& Bank_Branch) {
+	if (Bank_Branch < 1) {
+		cout << "The bank branch must be a number >=1 .\n";
+		return false;
+	}
+	return true;
+}
+bool Verify_Address(const string& Address) {
+	if (Address.empty()) {
+		cout << "The address cannot be empty.\n";
+		return false;
+	}
+	return true;
+}
+bool Verify_Name(const string& Name) {
+
+	if (Name.length() < 3) {
+		cout << "The name must be at least 3 characters long.\n";
+		return false;
+	}
+
+	if (!isupper(Name[0])) {
+		cout << "The first letter must be uppercase.\n";
+		return false;
+	}
+
+	for (int i = 1; i < Name.length(); i++) {
+		if (!isalpha(Name[i])) {
+			cout << "The name must contain only alphabetical letters.\n";
+			return false;
+		}
+		if (!islower(Name[i])) {
+			cout << "All letters except the first one must be lowercase.\n";
+			return false;
+		}
+	}
+
+	return true;
+}
+
+
+bool Verify_Last_Name(const string& Last_Name) {
+
+	if (Last_Name.length() < 3) {
+		cout << "The last name must be at least 3 characters long.\n";
+		return false;
+	}
+
+	if (!isupper(Last_Name[0])) {
+		cout << "The first letter must be uppercase.\n";
+		return false;
+	}
+
+	for (int i = 1; i < Last_Name.length(); i++) {
+		if (!isalpha(Last_Name[i])) {
+			cout << "The last name must contain only alphabetical letters.\n";
+			return false;
+		}
+		if (!islower(Last_Name[i])) {
+			cout << "All letters except the first one must be lowercase.\n";
+			return false;
+		}
+	}
+
+	return true;
+}
+bool Verify_Hire_Date(const string& date) {
+	if (date.length() != 10) {
+		cout << "The date must be in the format DD-MM-YYYY.\n";
+		return false;
+	}
+	if (!isdigit(date[0]) || !isdigit(date[1]) || date[2] != '-' || !isdigit(date[3]) || !isdigit(date[4]) || date[5] != '-' || !isdigit(date[6]) || !isdigit(date[7]) || !isdigit(date[8]) || !isdigit(date[9])) {
+		cout << "The date must be in the format DD-MM-YYYY.\n";
+		return false;
+	}
+	int day = stoi(date.substr(0, 2));
+	int month = stoi(date.substr(3, 2));
+	int year = stoi(date.substr(6, 4));
+	if (day < 1 || day > 31 || month < 1 || month > 12) {
+		cout << "the day must be between 1 and 31; the month must be between 1 and 12.\n ";
+		return false;
+	}
+	return true;
+}
 
 int FindEmployee(Employee* employees, int ID, int EmployeeCount) {
 	for (int i = 0; i < EmployeeCount; i++) {
@@ -116,6 +242,16 @@ void ModifyEmployee(Employee* employees, int EmployeeCount) {
 
 	}
 }
+void PrintEmployee(const Employee& e) {
+	cout << "ID: " << e.id << endl;
+	cout << "Name: " << e.Name << endl;
+	cout << "Last Name: " << e.Last_Name << endl;
+	cout << "Address: " << e.Address << endl;
+	cout << "Salary: " << e.Salary << endl;
+	cout << "Hire Date: " << e.Hire_Date << endl;
+	cout << "Bank Branch: " << e.Bank_Branch << endl;
+	cout << "------------------------------------\n";
+}
 void DisplayEmployees(Employee* employees, int EmployeeCount) {
 	if (EmployeeCount == 0) {
 		cout << "No employees to display.\n";
@@ -125,21 +261,13 @@ void DisplayEmployees(Employee* employees, int EmployeeCount) {
 	cout << "\n------ Employee List ------\n";
 
 	for (int i = 0; i < EmployeeCount; i++) {
-		cout << "Employee #" << i + 1 << ":\n";
-		cout << "ID: " << employees[i].id << "\n";
-		cout << "Name: " << employees[i].Name << "\n";
-		cout << "Last Name: " << employees[i].Last_Name << "\n";
-		cout << "Address: " << employees[i].Address << "\n";
-		cout << "Salary: " << employees[i].Salary << "\n";
-		cout << "Hire Date: " << employees[i].Hire_Date << "\n";
-		cout << "Bank Branch: " << employees[i].Bank_Branch << "\n";
-		cout << "-------------------------\n";
+		PrintEmployee(employees[i]);
 	}
 }
 
 void DisplayEmployeesSortedByAlphabeticalOrder(Employee* employees, int EmployeeCount) {
 	if (EmployeeCount == 0) {
-		cout << "There's no existant employees\n";
+		cout << "There's no existant employees to display.\n";
 		return;
 	}
 	Employee* Sorted = new Employee[EmployeeCount];
@@ -156,18 +284,74 @@ void DisplayEmployeesSortedByAlphabeticalOrder(Employee* employees, int Employee
 		}
 
 	}
-	cout << "\n========= Employees (Alphabetical by Last Name) =========\n";
+	cout << "\n========= Employees (Sorted By Alphabetical Order Of The Last Name) =========\n";
 	for (int i = 0; i < EmployeeCount; i++) {
-		cout << "ID: " << Sorted[i].id << endl;
-		cout << "Name: " << Sorted[i].Name << endl;
-		cout << "Last Name: " << Sorted[i].Last_Name << endl;
-		cout << "Address: " << Sorted[i].Address << endl;
-		cout << "Salary: " << Sorted[i].Salary << endl;
-		cout << "Hire Date: " << Sorted[i].Hire_Date << endl;
-		cout << "Bank Branch: " << Sorted[i].Bank_Branch << endl;
-		cout << "------------------------------------\n";
+		PrintEmployee(Sorted[i]);
 	}
 
 	delete[] Sorted;
+}
+void DisplayEmployeesGroupedByBankBranch(Employee* employees, int EmployeeCount) {
+	if (EmployeeCount == 0) {
+		cout << "There's no existant employees to display.\n";
+		return;
+	}
+	Employee* BranchSort = new Employee[EmployeeCount];
+	for (int i = 0; i < EmployeeCount; i++) {
+		BranchSort[i] = employees[i];
+	}
+	for (int i = 0; i < EmployeeCount; i++) {
+		for (int j = 0; j < EmployeeCount - 1; j++) {
+			if (BranchSort[j].Bank_Branch > BranchSort[j + 1].Bank_Branch) {
+				Employee temp = BranchSort[j];
+				BranchSort[j] = BranchSort[j + 1];
+				BranchSort[j + 1] = temp;
+			}
+		}
 
+	}
+	cout << "\n============= Employees (Grouped By Bank Branch) =============\n";
+	int i = 0;
+	while (i < EmployeeCount) {
+		int CurrentBranch = BranchSort[i].Bank_Branch;
+		cout << "\n=========Bank Branch: " << BranchSort[i].Bank_Branch <<"=========\n";
+		while (i < EmployeeCount && BranchSort[i].Bank_Branch == CurrentBranch) {
+			PrintEmployee(BranchSort[i]);
+			i++;
+		}
+	}
+	delete[] BranchSort;
+}
+string Reformulate(string hiredate) {
+	string day = hiredate.substr(0, 2);
+	string month = hiredate.substr(3, 2);
+	string year = hiredate.substr(6, 4);
+	return year + month + day;
+}
+void DisplayEarliestAndRecentEmployees(Employee* employees, int EmployeeCount) {
+	if (EmployeeCount == 0) {
+		cout << "There's no existant employees to display.\n";
+		return;
+	}
+	Employee* HireDateSort = new Employee[EmployeeCount];
+	for (int i = 0; i < EmployeeCount; i++)
+		HireDateSort[i] = employees[i];
+	for (int i = 0; i < EmployeeCount; i++) {
+		for (int j = 0; j < EmployeeCount - 1; j++) {
+			if (Reformulate(HireDateSort[j].Hire_Date) > Reformulate(HireDateSort[j + 1].Hire_Date)) {
+				Employee temp = HireDateSort[j];
+				HireDateSort[j] = HireDateSort[j + 1];
+				HireDateSort[j + 1] = temp;
+			}
+		}
+
+	}
+
+	cout << "\n======== The Earliest Employee ========\n";
+	PrintEmployee(HireDateSort[0]);
+	cout << "---------------------------------------------\n";
+	cout << "\n======== The Most Recent Employees ========\n";
+	PrintEmployee(HireDateSort[EmployeeCount - 1]);
+	cout << "---------------------------------------------\n";
+	delete[] HireDateSort;
 }
