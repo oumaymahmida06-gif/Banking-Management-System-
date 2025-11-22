@@ -93,22 +93,22 @@ void ModifyEmployee(Employee* employees, int EmployeeCount) {
 			}
 			else {
 				employees[p].id = newID;
+				cin.ignore();
+				cout << "Enter new name: ";
+				getline(cin, employees[p].Name);
+				cout << "Enter new last name: ";
+				getline(cin, employees[p].Last_Name);
+				cout << "Enter new address: ";
+				getline(cin, employees[p].Address);
+				cout << "Enter new salary: ";
+				cin >> employees[p].Salary;
+				cin.ignore();
+				cout << "Enter new hire date: ";
+				getline(cin, employees[p].Hire_Date);
+				cout << "Enter new branch code: ";
+				cin >> employees[p].Bank_Branch;
+				cout << "Employee modified successfully!\n";
 			}
-			cin.ignore();
-			cout << "Enter new name: ";
-			getline(cin, employees[p].Name);
-			cout << "Enter new last name: ";
-			getline(cin, employees[p].Last_Name);
-			cout << "Enter new address: ";
-			getline(cin, employees[p].Address);
-			cout << "Enter new salary: ";
-			cin >> employees[p].Salary;
-			cin.ignore();
-			cout << "Enter new hire date: ";
-			getline(cin, employees[p].Hire_Date);
-			cout << "Enter new branch code: ";
-			cin >> employees[p].Bank_Branch;
-			cout << "Employee modified successfully!\n"; 
 		}
 		else {
 			cout << "Employee not found!\n";
@@ -169,4 +169,5 @@ void DisplayEmployeesSortedByAlphabeticalOrder(Employee* employees, int Employee
 	}
 
 	delete[] Sorted;
+
 }
