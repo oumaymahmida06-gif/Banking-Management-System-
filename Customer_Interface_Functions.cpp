@@ -101,7 +101,7 @@ bool VerifyAccountType(string AccountType) {
 }
 bool VerifyIBAN(int IBAN) {
 	if (IBAN < 10000000 || IBAN > 99999999) {
-		cout << "The IBAN should be between 10000000 and 99999999 " << endl;
+		cout << "The IBAN should be an 8-digits number. " << endl;
 		return false;
 	}
 	return true;
@@ -186,6 +186,25 @@ bool VerifyPIN(int PIN)
 	{
 		cout << "Invalid PIN. PIN should be a 4-digit number." << endl;
 		return false;
+	}
+	return true;
+}
+bool Verify_End_Date(string Start_Date, string End_Date) {
+	if (End_Date.substr(6, 4) < Start_Date.substr(6, 4)) {
+		cout << "Invalid end date. Please ensure the end date is after the start date." << endl;
+		return false;
+	}
+	if (End_Date.substr(6, 4) == Start_Date.substr(6, 4)) {
+		if (End_Date.substr(3, 2) < Start_Date.substr(3, 2)) {
+			cout << "Invalid end date. Please ensure the end date is after the start date." << endl;
+			return false;
+		}
+		if (End_Date.substr(3, 2) == Start_Date.substr(3, 2)) {
+			if (End_Date.substr(0, 2) <= Start_Date.substr(0, 2)) {
+				cout << "Invalid end date. Please ensure the end date is after the start date." << endl;
+				return false;
+			}
+		}
 	}
 	return true;
 }
@@ -316,7 +335,6 @@ node* create_Node(const loan& value) {
         cout << "\nMemory allocation failed for node\n";
         return nullptr;
     }
-    // Affectation explicite (requiert que node::data soit de type `loan`)
     Node->data = value;
     Node->next = nullptr;
     Node->prev = nullptr;
@@ -420,27 +438,6 @@ loan get_Element(const list& L, int pos) {
 	}
 	return current->data; 
 }
-void display_Loan_List(const list& L) {
-	if (isEmpty(L)) {
-		cout << "List is empty\n";
-		return;
-	}
-	node* current = L.head;
-	while (current) {
-		cout << "Loan ID : "<< current->data.Loan_ID
-			 << "Loan Type" << current->data.Loan_Type
-			<< "Principle Amount" << current->data.Principle_Amount
-			<< "Interest Rate :" << current->data.Interest_Rate
-			<< "Amount paid :" << current->data.Amount_paid
-			<< "Remaining Balance :"<<current->data.Remaining_Balance
-			<< "Start Date :" << current->data.Start_Date
-			<< "End Date : " << current->data.End_Date
-			<< "Loan Status : " << current->data.Loan_Status
-			<< " -> ";
-		current = current->next;
-	}
-	cout << "NULL\n";
-}
 list CopyList(const list& L) {
 	list newList = create_List();
 	node* current = L.head;
@@ -466,3 +463,60 @@ list CopyList(const list& L) {
 	newList.size = L.size;
 	return newList;
 };
+
+
+void Display_Loan_List(const customer& c) {
+	node* current = c.Loan_List.head;
+	if (current==nullptr) {
+		cout << "No loans found for this customer." << endl;
+		return;
+	}
+	cout << "Loans for Customer Account Number: " << c.Account_Number << endl;
+	while (current) {
+		cout << "Loan ID : " << current->data.Loan_ID << endl;;
+		cout << "Loan Type: " << current->data.Loan_Type << endl;
+		cout << "Principle Amount: " << current->data.Principle_Amount <<"TND"<< endl;
+		cout << "Interest Rate: " << current->data.Interest_Rate << endl;
+		cout << "Amount paid: " << current->data.Amount_paid << "TND"<<endl;
+		cout << "Remaining Balance: " << current->data.Remaining_Balance << "TND"<<endl;
+		cout << "Start Date: " << current->data.Start_Date << endl;
+		cout << "End Date: " << current->data.End_Date << endl;
+		cout << "Loan Status: " << current->data.Loan_Status << endl;
+		cout << "============================================================================================" << endl;
+		current = current->next;
+	}
+};
+
+void Submit_Loan_Request(customer& c) {
+	loan newLoan;
+	cout << "Enter Loan Type: ";
+	cin.ignore();  
+	getline(cin, newLoan.Loan_Type);
+
+	do {
+		cout << "Enter Principle Amount: ";
+		cin >> newLoan.Principle_Amount;
+		if (newLoan.Principle_Amount < 0) {
+			cout << "The Principle amount cannot be negative.\n";
+		}
+	} while (newLoan.Principle_Amount < 0);
+
+	newLoan.Amount_paid = 0.0;
+	newLoan.Remaining_Balance = newLoan.Principle_Amount;
+
+	cin.ignore();
+
+	do {
+		cout << "Enter Start Date (DD-MM-YYYY): ";
+		getline(cin, newLoan.Start_Date);
+	} while (!VerifyDate(newLoan.Start_Date));
+
+	do {
+		cout << "Enter End Date (DD-MM-YYYY): ";
+		getline(cin, newLoan.End_Date);
+	} while (!VerifyDate(newLoan.End_Date) || !Verify_End_Date(newLoan.Start_Date, newLoan.End_Date));
+
+	newLoan.Loan_Status = "Pending";
+	insert(c.Requested_Loan_List, newLoan, c.Requested_Loan_List.size + 1);
+	cout << "Loan request submitted successfully!" << endl;
+}
