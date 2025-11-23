@@ -20,3 +20,14 @@ customers[1].Opening_date = "01-01-2020";
 customers[1].Status = "Active";
 customers[1].Balance = 2000.45;
 customers[1].PIN = 2345;
+
+# loan example 
+Loan1.Loan_ID = 103;
+Loan1.Loan_Type = "Car";
+Loan1.Principle_Amount = 15000.0;
+Loan1.Interest_Rate = 6.0;
+Loan1.Amount_paid = 2000.0;
+Loan1.Remaining_Balance = 13000.0;
+Loan1.Start_Date = "01-01-2021";
+Loan1.End_Date = "01-01-2024";
+Loan1.Loan_Status = "Active";
