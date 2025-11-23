@@ -2,6 +2,7 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 #include <string>
+#include "DoublyLinkedList.h"
 using namespace std;
 
 struct customer {
