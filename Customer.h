@@ -5,7 +5,7 @@
 using namespace std;
 
 struct customer {
-	string Account_Number;
+	int Account_Number;
 	string Account_Type;
 	int IBAN=0;
 	string Branch_Code;
@@ -14,19 +14,12 @@ struct customer {
 	string Status; 
 	double Balance=0.0;
 	int PIN=0;
+	list Loan_List;
+	list Requested_Loan_List;
 };
 
-struct loan {
-	int Loan_ID=0;
-	string Loan_Type;
-	double Principle_Amount=0.0;
-	double Interest_Rate=0.0;
-	double Amount_paid=0.0;
-	double Remaining_Balance=0.0;
-	string Start_Date;
-	string End_Date;
-	string Loan_Status;
-};
+
+
 struct transaction {
 	int Transaction_ID=0;
 	int Account_Number=0;
