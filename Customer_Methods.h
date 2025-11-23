@@ -2,6 +2,7 @@
 #ifndef CUSTOMER_METHODS_H
 #define CUSTOMER_METHODS_H
 #include "DoublyLinkedList.h"
+#include "Customer.h"
 
 bool isEmpty(const list& L);
 bool isFull(const list& L);
@@ -13,14 +14,11 @@ void destroy_Node(node* value);
 list create_List();
 void destroy_List(list* L);
 
-int insert(list* L, loan Loan, int pos);
+int insert(list& L, const loan& Loan, int pos);
 int removeAt(list* L, int pos);
 loan get_Element(const list& L, int pos);
-void display_Loan_List(const list& L);
 
-list CopyList(const list& L);
-
-bool CheckCustomerLogin(customer* customers, int CustomerCount);
+int CheckCustomerLogin(customer* customers, int CustomerCount);
 void AddCustomer(customer *& customers, int& CustomerCount, int& Customer_Capacity);
 void NewCustomerArray(customer*& customers, int& Customer_Capacity, int CustomerCount);
 
@@ -30,10 +28,14 @@ bool VerifyAccountType(string AccountType);
 bool VerifyIBAN(int IBAN);
 bool VerifyBranchCode(string BranchCode);
 bool VerifyAccountHolderName(string AccountHolderName);
-bool VerifyOpeningDate(string OpeningDate);
+bool VerifyDate(string Date);
 bool VerifyStatus(string Status);
 bool VerifyBalance(double Balance);
 bool VerifyPIN(int PIN);
+
+void Display_Loan_List(const customer& c);
+void Submit_Loan_Request(customer& c);
+bool Verify_End_Date(string Start_Date, string End_Date);
 
 /// ADDED BY HANNACHI
 void PrintCustomer(const customer& c);
