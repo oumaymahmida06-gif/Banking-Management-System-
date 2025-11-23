@@ -58,7 +58,7 @@ void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacit
 	CustomerCount++;
 }
 bool CheckCustomerLogin(customer* customers, int CustomerCount) {
-	string AccountNumber, pin;
+	int AccountNumber, pin;
 	bool test = false;
 	do {
 		cout << "Enter Account Number: ";
@@ -67,7 +67,7 @@ bool CheckCustomerLogin(customer* customers, int CustomerCount) {
 		cin >> pin;
 
 		for (int i = 0; i < CustomerCount; i++) {
-			if (customers[i].Account_Number == AccountNumber && customers[i].PIN == stoi(pin)) {
+			if (customers[i].Account_Number == AccountNumber && customers[i].PIN == pin) {
 				cout << "Login successful!\n";
 				return true;
 
@@ -85,13 +85,9 @@ bool isNumber(string str) {
 	}
 	return true;
 }
-bool VerifyAccountNumber(string AccountNumber) {
-	if (isNumber(AccountNumber) == false) {
-		cout << "The account number should be composed only of digits "<< endl;
-		return false;
-	}
-	else if (AccountNumber.length()!=6) {
-		cout << "The account number should be between 100000 and 999999 " << endl;
+bool VerifyAccountNumber(int AccountNumber) {
+	if ((AccountNumber > 999999) || (AccountNumber < 99999)) {
+		cout << "The Account Number must be a positive number containing 6 digits.\n";
 		return false;
 	}
 	return true;
@@ -128,20 +124,28 @@ bool VerifyBranchCode(string BranchCode)
 	cout << "Invalid branch code. The first and second character must be uppercase letters followed by digits." << endl;
 	return false;
 }
-bool VerifyAccountHolderName(string AccountHolderName)
-{
-	if (!isupper(AccountHolderName[0])) {
-		cout << "Invalid account holder name. It should start with an uppercase letter." << endl;
+bool VerifyAccountHolderName(string AccountHolderName){
+	if (AccountHolderName.length() < 3) {
+		cout << "The name must be at least 3 characters long.\n";
 		return false;
 	}
-	for (int i = 0; i < AccountHolderName.length(); i++)
-	{
-		if (!isalpha(AccountHolderName[i]) && AccountHolderName[i] != ' ')
-		{
-			cout << "Invalid account holder name. It should contain only alphabetic characters and spaces." << endl;
+
+	if (!isupper(AccountHolderName[0])) {
+		cout << "The first letter must be uppercase.\n";
+		return false;
+	}
+
+	for (int i = 1; i < AccountHolderName.length(); i++) {
+		if (!isalpha(AccountHolderName[i])) {
+			cout << "The name must contain only alphabetical letters.\n";
+			return false;
+		}
+		if (!islower(AccountHolderName[i])) {
+			cout << "All letters except the first one must be lowercase.\n";
 			return false;
 		}
 	}
+
 	return true;
 }
 bool VerifyOpeningDate(string OpeningDate)
@@ -186,12 +190,81 @@ bool VerifyPIN(int PIN)
 	return true;
 }
 
+/// ADDED BY HANNACHI
 
+void PrintCustomer(const customer& c) {
+	cout << "Account Number " << c.Account_Number << endl;
+	cout << "Account Type: " << c.Account_Type << endl;
+	cout << "IBAN: " << c.IBAN << endl;
+	cout << "Branch Code: " << c.Branch_Code << endl;
+	cout << "Account Holder Name: " << c.Account_Holder_Name << endl;
+	cout << "Opening date: " << c.Opening_date << endl;
+	cout << "Status: " << c.Status << endl;
+	cout << "Balance: " << c.Balance << endl;
+	cout << "PIN: " << c.PIN << endl;
+	cout << "------------------------------------\n";
+}
+void DisplayCustomers(customer* customers, int CustomerCount) {
+	if (CustomerCount == 0) {
+		cout << "No customers to display.\n";
+		return;
+	}
 
+	cout << "\n------ Customer List ------\n";
 
+	for (int i = 0; i < CustomerCount; i++) {
+		PrintCustomer(customers[i]);
+	}
+}
 
-
-
+int FindCustomer(customer* customers, int number, int CustomerCount) {
+	for (int i = 0; i < CustomerCount; i++) {
+		if (customers[i].Account_Number == number) {
+			return i;
+		}
+	}
+	return -1;
+}
+void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
+	if (CustomerCount == 0) {
+		cout << "There's no existant customers\n";
+		return;
+	}
+	else {
+		int account_number_to_change_its_status = 0, p;
+		bool ValidAccount = false;
+		do {
+			cout << "Enter the customer's Account Number to change its status: " << endl;
+			cin >> account_number_to_change_its_status;
+			if (!VerifyAccountNumber(account_number_to_change_its_status)) {
+				ValidAccount = false;
+			}
+			p = FindCustomer(customers, account_number_to_change_its_status, CustomerCount);
+			if ((p == -1) && ( VerifyAccountNumber(account_number_to_change_its_status))) {
+				cout << "Customer not found. Please make sure of the Account Number.\n";
+				ValidAccount = false;
+			}
+			else {
+				ValidAccount = true;
+			}
+		} while (!ValidAccount);
+		p = FindCustomer(customers, account_number_to_change_its_status, CustomerCount);
+		string newStatus;
+		bool ValidStatus = false;
+		do {
+			cout << "Enter the new account status: " << endl;
+			cin >> newStatus;
+			if (!VerifyStatus(newStatus)) {
+				ValidStatus = false;
+			}
+			else {
+				ValidStatus = true;
+			}
+		} while (!ValidStatus);
+		customers[p].Status = newStatus;
+		cout << "Customer account status changed successfully!\n";
+	}
+}
 
 
 
@@ -393,4 +466,3 @@ list CopyList(const list& L) {
 	newList.size = L.size;
 	return newList;
 };
-
