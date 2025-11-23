@@ -1,7 +1,7 @@
 #pragma once
 #ifndef DOUBLYLINKEDLIST_H
 #define DOUBLYLINKEDLIST_H
-#include "Customer.h"
+#include "Loan.h"
 
 struct node {
 	loan data;
