@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Employee_Methods.h"
+#include "Customer_Methods.h"
 using namespace std;
 
 int main()
@@ -7,6 +8,10 @@ int main()
     int capacity = 200;
     Employee* employees = new Employee[capacity];
     int EmployeeCount = 0;
+
+    int Customer_Capacity = 200;
+    customer* customers = new customer[Customer_Capacity];
+    int CustomerCount = 0;
 
     int choice;
 
@@ -19,6 +24,9 @@ int main()
         cout << "5. Display All Employees Sorted By Alphabetical Order\n";
         cout << "6. Display All Employees Grouped By Bank Branch\n";
         cout << "7. Display Earliest And Most Recent Employees\n";
+        cout << "8. Add Customer\n";
+        cout << "9. Display All Customers\n";
+		cout << "10. Change Customer Account Status\n";
         cout << "0. Exit\n";
         cout << "Choose an operation : ";
         cin >> choice;
@@ -44,6 +52,15 @@ int main()
             break;
         case 7:
             DisplayEarliestAndRecentEmployees(employees, EmployeeCount);
+            break;
+        case 8:
+            AddCustomer(customers, CustomerCount, Customer_Capacity);
+            break;
+        case 9:
+            DisplayCustomers(customers, CustomerCount);
+            break;
+        case 10:
+            ChangeCustomerAccountStatus(customers, CustomerCount);
             break;
         case 0:
             cout << "Exiting program.......\n";
