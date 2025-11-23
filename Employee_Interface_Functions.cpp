@@ -210,34 +210,45 @@ void ModifyEmployee(Employee* employees, int EmployeeCount) {
 		cin >> ID;
 		p = FindEmployee(employees, ID, EmployeeCount);
 		if (p != -1) {
-			cout << "Enter new ID: ";
 			int newID;
-			cin >> newID;
-			int exist = FindEmployee(employees, newID, EmployeeCount);
-			if (exist != -1 && exist != p) {
-				cout << "This ID is already used by another employee.\n";
-			}
-			else {
-				employees[p].id = newID;
-				cin.ignore();
-				cout << "Enter new name: ";
-				getline(cin, employees[p].Name);
-				cout << "Enter new last name: ";
-				getline(cin, employees[p].Last_Name);
-				cout << "Enter new address: ";
-				getline(cin, employees[p].Address);
-				cout << "Enter new salary: ";
-				cin >> employees[p].Salary;
-				cin.ignore();
-				cout << "Enter new hire date: ";
-				getline(cin, employees[p].Hire_Date);
-				cout << "Enter new branch code: ";
-				cin >> employees[p].Bank_Branch;
-				cout << "Employee modified successfully!\n";
-			}
+			bool ValidID = true;
+			do {
+				cout << "Enter the new ID of the Employee:" << endl;
+				cin >> newID;
+				if (!Verify_Id(newID)) {
+					ValidID = false;
+				}
+				else {
+					int exist = FindEmployee(employees, newID, EmployeeCount);
+					if (exist != -1 && exist != p) {
+						cout << "This ID is already used by another employee. Try again.\n";
+						ValidID = false;
+					}
+					else {
+						ValidID = true;
+					}
+				}
+			} while (ValidID==false);
+			employees[p].id = newID;
+			cin.ignore();
+			cout << "Enter new name: ";
+			getline(cin, employees[p].Name);
+			cout << "Enter new last name: ";
+			getline(cin, employees[p].Last_Name);
+			cout << "Enter new address: ";
+			getline(cin, employees[p].Address);
+			cout << "Enter new salary: ";
+			cin >> employees[p].Salary;
+			cin.ignore();
+			cout << "Enter new hire date: ";
+			getline(cin, employees[p].Hire_Date);
+			cout << "Enter new branch code: ";
+			cin >> employees[p].Bank_Branch;
+			cout << "Employee modified successfully!\n";
 		}
 		else {
 			cout << "Employee not found!\n";
+			return;
 		}
 
 	}
