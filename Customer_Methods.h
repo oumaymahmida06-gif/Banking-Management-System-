@@ -25,7 +25,7 @@ void AddCustomer(customer *& customers, int& CustomerCount, int& Customer_Capaci
 void NewCustomerArray(customer*& customers, int& Customer_Capacity, int CustomerCount);
 
 bool isNumber(string str);
-bool VerifyAccountNumber(string AccountNumber);
+bool VerifyAccountNumber(int AccountNumber);
 bool VerifyAccountType(string AccountType);
 bool VerifyIBAN(int IBAN);
 bool VerifyBranchCode(string BranchCode);
@@ -34,5 +34,11 @@ bool VerifyOpeningDate(string OpeningDate);
 bool VerifyStatus(string Status);
 bool VerifyBalance(double Balance);
 bool VerifyPIN(int PIN);
+
+/// ADDED BY HANNACHI
+void PrintCustomer(const customer& c);
+void DisplayCustomers(customer* customers, int CustomerCount);
+int FindCustomer(customer* customers, int number, int CustomerCount);
+void ChangeCustomerAccountStatus(customer* customers, int CustomerCount);
 
 #endif
