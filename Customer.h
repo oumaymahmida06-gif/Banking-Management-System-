@@ -3,10 +3,11 @@
 #define CUSTOMER_H
 #include <string>
 #include "DoublyLinkedList.h"
+#include "Stack.h"
 using namespace std;
 
 struct customer {
-	int Account_Number;
+	int Account_Number=000000;
 	string Account_Type;
 	int IBAN=0;
 	string Branch_Code;
@@ -17,15 +18,9 @@ struct customer {
 	int PIN=0;
 	list Loan_List;
 	list Requested_Loan_List;
+	Stack Transaction_Stack;
 };
 
 
 
-struct transaction {
-	int Transaction_ID=0;
-	int Account_Number=0;
-	string Type;
-	double Amount=0.0;
-	string Date;
-};
 #endif
