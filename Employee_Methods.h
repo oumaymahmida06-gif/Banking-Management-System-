@@ -2,6 +2,8 @@
 #ifndef EMPLOYEE_METHODS_H
 #define EMPLOYEE_METHODS_H
 #include "Employee.h"
+#include "Customer.h"
+
 
 void AddEmployee(Employee* employees, int& EmployeeCount, int& capacity);
 void NewArray(Employee*& employees, int& capacity, int EmployeeCount);
@@ -22,4 +24,6 @@ void DisplayEmployeesGroupedByBankBranch(Employee* employees, int EmployeeCount)
 void DisplayEarliestAndRecentEmployees(Employee* employees, int EmployeeCount);
 string Reformulate(string hiredate);
 
+
+void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity, customer*& customers, int& CustomerCount, int& Customer_Capacity);
 #endif
