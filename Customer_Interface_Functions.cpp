@@ -53,29 +53,23 @@ void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacit
 		cout << "Enter the PIN of the customer:" << endl;
 		cin >> c.PIN;
 	} while (!VerifyPIN(c.PIN));
-
 	customers[CustomerCount] = c;
 	CustomerCount++;
 }
-bool CheckCustomerLogin(customer* customers, int CustomerCount) {
+int CheckCustomerLogin(customer* customers, int CustomerCount) {
 	int AccountNumber, pin;
-	bool test = false;
-	do {
-		cout << "Enter Account Number: ";
-		cin >> AccountNumber;
-		cout << "Enter PIN: ";
-		cin >> pin;
-
-		for (int i = 0; i < CustomerCount; i++) {
-			if (customers[i].Account_Number == AccountNumber && customers[i].PIN == pin) {
-				cout << "Login successful!\n";
-				return true;
-
-			}
+	cout << "Enter Account Number: ";
+	cin >> AccountNumber;
+	cout << "\nEnter PIN: ";
+	cin >> pin;
+	for (int i = 0; i < CustomerCount; i++) {
+		if (customers[i].Account_Number == AccountNumber && customers[i].PIN == pin) {
+			cout << "\nLogin successful!\n";
+			return i;
 		}
-		cout << "Login failed. Please check your credentials.\n";
-		return false;
-	} while (!test);
+	}
+	cout << "\nLogin failed. Please check your account informations.\n";
+	return -1;
 }
 bool isNumber(string str) {
 	for (int i = 0; i<str.length(); i++) {
@@ -86,8 +80,8 @@ bool isNumber(string str) {
 	return true;
 }
 bool VerifyAccountNumber(int AccountNumber) {
-	if ((AccountNumber > 999999) || (AccountNumber < 99999)) {
-		cout << "The Account Number must be a positive number containing 6 digits.\n";
+	if (AccountNumber < 100000 || AccountNumber > 999999) {
+		cout << "The account number should be a 6-digit number ." << endl;
 		return false;
 	}
 	return true;
@@ -124,17 +118,15 @@ bool VerifyBranchCode(string BranchCode)
 	cout << "Invalid branch code. The first and second character must be uppercase letters followed by digits." << endl;
 	return false;
 }
-bool VerifyAccountHolderName(string AccountHolderName){
+bool VerifyAccountHolderName(string AccountHolderName) {
 	if (AccountHolderName.length() < 3) {
 		cout << "The name must be at least 3 characters long.\n";
 		return false;
 	}
-
 	if (!isupper(AccountHolderName[0])) {
 		cout << "The first letter must be uppercase.\n";
 		return false;
 	}
-
 	for (int i = 1; i < AccountHolderName.length(); i++) {
 		if (!isalpha(AccountHolderName[i])) {
 			cout << "The name must contain only alphabetical letters.\n";
@@ -145,13 +137,12 @@ bool VerifyAccountHolderName(string AccountHolderName){
 			return false;
 		}
 	}
-
 	return true;
 }
 bool VerifyOpeningDate(string OpeningDate)
 {
 	if (OpeningDate.length() != 10 || OpeningDate[2] != '-' || OpeningDate[5] != '-')
-	{ 
+	{
 		cout << "Invalid opening date format. Please use DD-MM-YYYY." << endl;
 		return false;
 	}
@@ -208,9 +199,6 @@ bool Verify_End_Date(string Start_Date, string End_Date) {
 	}
 	return true;
 }
-
-/// ADDED BY HANNACHI
-
 void PrintCustomer(const customer& c) {
 	cout << "Account Number " << c.Account_Number << endl;
 	cout << "Account Type: " << c.Account_Type << endl;
@@ -223,6 +211,7 @@ void PrintCustomer(const customer& c) {
 	cout << "PIN: " << c.PIN << endl;
 	cout << "------------------------------------\n";
 }
+
 void DisplayCustomers(customer* customers, int CustomerCount) {
 	if (CustomerCount == 0) {
 		cout << "No customers to display.\n";
@@ -235,7 +224,6 @@ void DisplayCustomers(customer* customers, int CustomerCount) {
 		PrintCustomer(customers[i]);
 	}
 }
-
 int FindCustomer(customer* customers, int number, int CustomerCount) {
 	for (int i = 0; i < CustomerCount; i++) {
 		if (customers[i].Account_Number == number) {
@@ -259,7 +247,7 @@ void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 				ValidAccount = false;
 			}
 			p = FindCustomer(customers, account_number_to_change_its_status, CustomerCount);
-			if ((p == -1) && ( VerifyAccountNumber(account_number_to_change_its_status))) {
+			if ((p == -1) && (VerifyAccountNumber(account_number_to_change_its_status))) {
 				cout << "Customer not found. Please make sure of the Account Number.\n";
 				ValidAccount = false;
 			}
@@ -284,10 +272,6 @@ void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 		cout << "Customer account status changed successfully!\n";
 	}
 }
-
-
-
-
 void NewCustomerArray(customer*& customers, int& Customer_Capacity, int CustomerCount) {
 	int NewCustomerSize = Customer_Capacity * 2;
 	customer* NewCustomerArray = new customer[NewCustomerSize];
@@ -298,24 +282,6 @@ void NewCustomerArray(customer*& customers, int& Customer_Capacity, int Customer
 	customers = NewCustomerArray;
 	Customer_Capacity = NewCustomerSize;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 bool isEmpty(const list& L) {
 	return L.size == 0;
@@ -335,6 +301,7 @@ node* create_Node(const loan& value) {
         cout << "\nMemory allocation failed for node\n";
         return nullptr;
     }
+    // Affectation explicite (requiert que node::data soit de type `loan`)
     Node->data = value;
     Node->next = nullptr;
     Node->prev = nullptr;
@@ -359,31 +326,30 @@ void destroy_List(list* L) {
 	L->size = 0;
 }
 
-int insert(list* L, loan Loan, int pos) {
-	if (!L) return 0;
-	if (pos < 1 || pos > L->size + 1) {
+int insert(list& L, const loan& Loan, int pos) {
+	if (pos < 1 || pos > L.size + 1) {
 		cout << "\nInvalid position";
 		return 0;
 	}
 	node* n = create_Node(Loan);
 	if (!n) return 0;
-	if (isEmpty(*L)) {
-		L->head = n;
-		L->tail = n;
+	if (isEmpty(L)) {
+		L.head = n;
+		L.tail = n;
 	}
 	else if (pos == 1) {
-		n->next = L->head;
-		L->head->prev = n;
-		L->head = n;
+		n->next = L.head;
+		L.head->prev = n;
+		L.head = n;
 	}
-	else if (pos == L->size + 1) {
-		n->prev = L->tail;
-		L->tail->next = n;
-		L->tail = n;
+	else if (pos == L.size + 1) {
+		n->prev = L.tail;
+		L.tail->next = n;
+		L.tail = n;
 	}
 	else {
 		node* prev = nullptr;
-		node* current = L->head;
+		node* current = L.head;
 		for (int i = 1; i < pos; i++) {
 			prev = current;
 			current = current->next;
@@ -393,7 +359,7 @@ int insert(list* L, loan Loan, int pos) {
 		n->next = current;
 		current->prev = n;
 	}
-	L->size++;
+	L.size++;
 	return 1;
 }
 int removeAt(list* L, int pos) {
@@ -438,32 +404,6 @@ loan get_Element(const list& L, int pos) {
 	}
 	return current->data; 
 }
-list CopyList(const list& L) {
-	list newList = create_List();
-	node* current = L.head;
-	node* tail = nullptr;
-
-	while (current) {
-		node* n = create_Node(current->data);
-		if (!n) {
-			cerr << "\nMemory allocation failed while copying\n";
-			destroy_List(&newList);
-			return create_List();
-		}
-		if (!newList.head) {
-			newList.head = n;
-			tail = n;
-		}
-		else {
-			tail->next = n;
-			tail = n;
-		}
-		current = current->next;
-	}
-	newList.size = L.size;
-	return newList;
-};
-
 
 void Display_Loan_List(const customer& c) {
 	node* current = c.Loan_List.head;
@@ -509,12 +449,12 @@ void Submit_Loan_Request(customer& c) {
 	do {
 		cout << "Enter Start Date (DD-MM-YYYY): ";
 		getline(cin, newLoan.Start_Date);
-	} while (!VerifyDate(newLoan.Start_Date));
+	} while (!VerifyOpeningDate(newLoan.Start_Date));
 
 	do {
 		cout << "Enter End Date (DD-MM-YYYY): ";
 		getline(cin, newLoan.End_Date);
-	} while (!VerifyDate(newLoan.End_Date) || !Verify_End_Date(newLoan.Start_Date, newLoan.End_Date));
+	} while (!VerifyOpeningDate(newLoan.End_Date) || !Verify_End_Date(newLoan.Start_Date, newLoan.End_Date));
 
 	newLoan.Loan_Status = "Pending";
 	insert(c.Requested_Loan_List, newLoan, c.Requested_Loan_List.size + 1);
