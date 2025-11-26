@@ -371,14 +371,13 @@ void DisplayEarliestAndRecentEmployees(Employee* employees, int EmployeeCount) {
 void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,customer*& customers, int& CustomerCount, int& Customer_Capacity)
 {
 	int employee_choice;
-	cout << "============================================================================================" << endl;
-	cout << "============================================================================================" << endl;
-	cout << "                    Welcome to the Bank Employee Management System" << endl;
-	cout << "============================================================================================" << endl;
-	cout << "============================================================================================" << endl;
 
 	do {
-		cout << "\n============= EMPLOYEE MANAGEMENT SYSTEM =============\n";
+		cout << "============================================================================================" << endl;
+		cout << "============================================================================================" << endl;
+		cout << "                    Welcome to the EMPLOYEE MANAGEMENT SYSTEM" << endl;
+		cout << "============================================================================================" << endl;
+		cout << "============================================================================================" << endl;
 		cout << "1. Add Employee\n";
 		cout << "2. Delete Employee\n";
 		cout << "3. Modify Employee\n";
