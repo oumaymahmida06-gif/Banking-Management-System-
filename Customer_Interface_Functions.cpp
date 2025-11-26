@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Customer_Methods.h"
+#include "Employee_Methods.h"
 using namespace std;
 
 
@@ -17,7 +18,7 @@ void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacit
 		cout << "Enter the account type of the customer:" << endl;
 		getline(cin, c.Account_Type);
 	} while (!(VerifyAccountType(c.Account_Type)));
-	
+
 	do {
 		cout << "Enter the IBAN of the customer:" << endl;
 		cin >> c.IBAN;
@@ -72,8 +73,8 @@ int CheckCustomerLogin(customer* customers, int CustomerCount) {
 	return -1;
 }
 bool isNumber(string str) {
-	for (int i = 0; i<str.length(); i++) {
-		if (!('0' <= str[i] && str[i] <='9')) {
+	for (int i = 0; i < str.length(); i++) {
+		if (!('0' <= str[i] && str[i] <= '9')) {
 			return false;
 		}
 	}
@@ -102,7 +103,7 @@ bool VerifyIBAN(int IBAN) {
 }
 bool VerifyBranchCode(string BranchCode)
 {
-	char c1= BranchCode[0], c2 = BranchCode[1];
+	char c1 = BranchCode[0], c2 = BranchCode[1];
 	if (BranchCode.length() != 5 && isalpha(c1) && isupper(c1) && isalpha(c2) && isupper(c2))
 	{
 		for (int i = 2; i < BranchCode.length(); i++)
@@ -296,16 +297,16 @@ int listSize(const list& L) {
 	return L.size;
 }
 node* create_Node(const loan& value) {
-    node* Node = new (nothrow) node;
-    if (!Node) {
-        cout << "\nMemory allocation failed for node\n";
-        return nullptr;
-    }
-    // Affectation explicite (requiert que node::data soit de type `loan`)
-    Node->data = value;
-    Node->next = nullptr;
-    Node->prev = nullptr;
-    return Node;
+	node* Node = new (nothrow) node;
+	if (!Node) {
+		cout << "\nMemory allocation failed for node\n";
+		return nullptr;
+	}
+	// Affectation explicite (requiert que node::data soit de type `loan`)
+	Node->data = value;
+	Node->next = nullptr;
+	Node->prev = nullptr;
+	return Node;
 }
 
 void destroy_Node(node* Node) {
@@ -402,12 +403,12 @@ loan get_Element(const list& L, int pos) {
 	for (int i = 1; i < pos; i++) {
 		current = current->next;
 	}
-	return current->data; 
+	return current->data;
 }
 
 void Display_Loan_List(const customer& c) {
 	node* current = c.Loan_List.head;
-	if (current==nullptr) {
+	if (current == nullptr) {
 		cout << "No loans found for this customer." << endl;
 		return;
 	}
@@ -415,10 +416,10 @@ void Display_Loan_List(const customer& c) {
 	while (current) {
 		cout << "Loan ID : " << current->data.Loan_ID << endl;;
 		cout << "Loan Type: " << current->data.Loan_Type << endl;
-		cout << "Principle Amount: " << current->data.Principle_Amount <<"TND"<< endl;
+		cout << "Principle Amount: " << current->data.Principle_Amount << "TND" << endl;
 		cout << "Interest Rate: " << current->data.Interest_Rate << endl;
-		cout << "Amount paid: " << current->data.Amount_paid << "TND"<<endl;
-		cout << "Remaining Balance: " << current->data.Remaining_Balance << "TND"<<endl;
+		cout << "Amount paid: " << current->data.Amount_paid << "TND" << endl;
+		cout << "Remaining Balance: " << current->data.Remaining_Balance << "TND" << endl;
 		cout << "Start Date: " << current->data.Start_Date << endl;
 		cout << "End Date: " << current->data.End_Date << endl;
 		cout << "Loan Status: " << current->data.Loan_Status << endl;
@@ -430,7 +431,7 @@ void Display_Loan_List(const customer& c) {
 void Submit_Loan_Request(customer& c) {
 	loan newLoan;
 	cout << "Enter Loan Type: ";
-	cin.ignore();  
+	cin.ignore();
 	getline(cin, newLoan.Loan_Type);
 
 	do {
@@ -459,4 +460,77 @@ void Submit_Loan_Request(customer& c) {
 	newLoan.Loan_Status = "Pending";
 	insert(c.Requested_Loan_List, newLoan, c.Requested_Loan_List.size + 1);
 	cout << "Loan request submitted successfully!" << endl;
+}
+
+void customer_interface(customer*& customers, int& CustomerCount, int& Customer_Capacity) {
+	int customer_choice = -1;
+	list loanList = create_List();
+	loan Loan1;
+	int c;
+	cout << "============================================================================================" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "                    Welcome to the Bank Customer Management System" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "============================================================================================" << endl;
+	do {
+		c = CheckCustomerLogin(customers, CustomerCount);
+	} while (c == -1);
+	cout << "============================================================================================" << endl;
+	if (c != -1) {
+		do {
+			cout << "1.View loan list. " << endl;
+			cout << "2.Submit loan request" << endl;
+			cout << "3.Perform transaction." << endl;
+			cout << "4.View list of today's transactions." << endl;
+			cout << "5.Undo last transaction." << endl;
+			cout << "0.Return to Home." << endl;
+			cout << "============================================================================================" << endl;
+			cout << "Enter your choice: ";
+			cin >> customer_choice;
+
+			switch (customer_choice)
+			{
+			case 1:
+				cout << "============================================================================================" << endl;
+				Display_Loan_List(customers[c]);
+				break;
+				cout << "============================================================================================" << endl;
+
+			case 2:
+				cout << "============================================================================================" << endl;
+				Submit_Loan_Request(customers[c]);
+				break;
+				cout << "============================================================================================" << endl;
+
+			case 3:
+				cout << "============================================================================================" << endl;
+				break;
+				//Perform transaction function
+				cout << "============================================================================================" << endl;
+
+
+			case 4:
+				cout << "============================================================================================" << endl;
+				break;
+				//View list of today's transactions function
+				cout << "============================================================================================" << endl;
+
+			case 5:
+				cout << "============================================================================================" << endl;
+				break;
+				//Undo last transaction function
+				cout << "============================================================================================" << endl;
+
+			case 0:
+				cout << "Returning...." << endl;
+				break;
+
+			default:
+				cout << "--------------------------------------------------------------------------------------------" << endl;
+				cout << "Invalid choice. Please try again." << endl;
+				cout << "============================================================================================" << endl;
+			}
+		} while (customer_choice != 0);
+	}
+	destroy_List(&loanList);
 }
