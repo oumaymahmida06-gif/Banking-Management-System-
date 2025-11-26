@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Employee_Methods.h"
+#include "Customer_Methods.h"
 using namespace std;
 
 void AddEmployee(Employee* employees, int& EmployeeCount, int& capacity) {
@@ -365,4 +366,71 @@ void DisplayEarliestAndRecentEmployees(Employee* employees, int EmployeeCount) {
 	PrintEmployee(HireDateSort[EmployeeCount - 1]);
 	cout << "---------------------------------------------\n";
 	delete[] HireDateSort;
+}
+
+void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,customer*& customers, int& CustomerCount, int& Customer_Capacity)
+{
+	int employee_choice;
+	cout << "============================================================================================" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "                    Welcome to the Bank Employee Management System" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "============================================================================================" << endl;
+
+	do {
+		cout << "\n============= EMPLOYEE MANAGEMENT SYSTEM =============\n";
+		cout << "1. Add Employee\n";
+		cout << "2. Delete Employee\n";
+		cout << "3. Modify Employee\n";
+		cout << "4. Display All Employees\n";
+		cout << "5. Display All Employees Sorted By Alphabetical Order\n";
+		cout << "6. Display All Employees Grouped By Bank Branch\n";
+		cout << "7. Display Earliest And Most Recent Employees\n";
+		cout << "8. Add Customer\n";
+		cout << "9. Display All Customers\n";
+		cout << "10. Change Customer Account Status\n";
+		cout << "0. Return to Home\n";
+		cout << "Choose an operation : ";
+		cin >> employee_choice;
+
+		switch (employee_choice) {
+		case 1:
+			AddEmployee(employees, EmployeeCount, capacity);
+			break;
+		case 2:
+			DeleteEmployee(employees, EmployeeCount);
+			break;
+		case 3:
+			ModifyEmployee(employees, EmployeeCount);
+			break;
+		case 4:
+			DisplayEmployees(employees, EmployeeCount);
+			break;
+		case 5:
+			DisplayEmployeesSortedByAlphabeticalOrder(employees, EmployeeCount);
+			break;
+		case 6:
+			DisplayEmployeesGroupedByBankBranch(employees, EmployeeCount);
+			break;
+		case 7:
+			DisplayEarliestAndRecentEmployees(employees, EmployeeCount);
+			break;
+		case 8:
+			AddCustomer(customers, CustomerCount, Customer_Capacity);
+			break;
+		case 9:
+			DisplayCustomers(customers, CustomerCount);
+			break;
+		case 10:
+			ChangeCustomerAccountStatus(customers, CustomerCount);
+			break;
+		case 0:
+			cout << "Returning.......\n";
+			break;
+		default:
+			cout << "Invalid option. Try again.\n";
+		}
+
+	} while (employee_choice != 0);
+
 }
