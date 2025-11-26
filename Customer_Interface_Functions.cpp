@@ -200,6 +200,10 @@ bool Verify_End_Date(string Start_Date, string End_Date) {
 	}
 	return true;
 }
+
+
+
+// array functions
 void PrintCustomer(const customer& c) {
 	cout << "Account Number " << c.Account_Number << endl;
 	cout << "Account Type: " << c.Account_Type << endl;
@@ -284,6 +288,8 @@ void NewCustomerArray(customer*& customers, int& Customer_Capacity, int Customer
 	Customer_Capacity = NewCustomerSize;
 }
 
+
+// doubly linked list functions
 bool isEmpty(const list& L) {
 	return L.size == 0;
 }
@@ -462,15 +468,149 @@ void Submit_Loan_Request(customer& c) {
 	cout << "Loan request submitted successfully!" << endl;
 }
 
+
+// stack functions
+
+Stack* CreateStack() {
+	Stack* S = new (nothrow) Stack;
+
+	if (!S) {
+		cout << "\n Error: unable to allocate memory";
+	}
+	else {
+		S->Top = 0;
+	}
+	return S;
+}
+
+void DestroyStack(Stack* S) {
+	delete S;
+}
+
+void DisplayStack(const Stack& S) {
+	for (int i = S.Top; i >= 1; i--) {
+		cout << " the transaction ID is :" << S.transactions[i].Transaction_ID
+			<< " the Account Number is :" << S.transactions[i].Account_Number
+			<< " the Transaction Type is :" << S.transactions[i].Transaction_Type
+			<< " the transaction amount is : " << S.transactions[i].Transaction_Amount
+			<< " the Transaction Date is :" << S.transactions[i].Transaction_Date << endl;
+	}
+	cout << endl;
+}
+
+bool IsEmpty(const Stack& S) {
+	return (S.Top == 0);
+}
+
+bool IsFull(const Stack& S) {
+	return (S.Top == Max);
+}
+
+int StackSize(const Stack& S) {
+	return S.Top;
+}
+
+int Push(Stack* S, const transaction& e) {  // add element to the top 
+	if (!S) return 0;
+	if (IsFull(*S)) { cout << "\nStack is full"; return 0; }
+	S->transactions[S->Top++] = e; // store at next free slot
+	return 1;
+}
+
+transaction Pop(Stack* S) { // remove the top element from the stack
+	transaction e{0,0,"",0.0,""};
+	if (!S || S->Top == 0) { cout << "\nStack is empty"; return e; }
+	e = S->transactions[--S->Top];
+	return e;
+}
+
+transaction Top(const Stack& S) { // look at the top element without removing it 
+	transaction e = transaction{0,0,"",0.0,""};
+
+	if (IsEmpty(S)) {
+		cout << "\nStack is empty";
+	}
+	else {
+		e = S.transactions[S.Top];
+	}
+
+	return e;
+}
+
+int Withdraw_Money(customer& c) {
+	int choice;
+	double amount = 0.0;
+	do {
+		cout << "Enter amount to withdraw: ";
+		cout << "1. 10TND\n2. 20TND\n3. 50TND\n4. 100TND\n5. Other amount\n";
+		cin >> choice;
+		switch (choice) {
+		case 1:
+			amount = 10;
+			break;
+		case 2:
+			amount = 20;
+			break;
+		case 3:
+			amount = 50;
+			break;
+		case 4:
+			amount = 100;
+			break;
+		case 5:
+			cout << "Enter other amount: ";
+			cin >> amount;
+			break;
+		default:
+			cout << "Invalid choice." << endl;
+			return 0;
+		}
+
+	} while (amount <= 0);
+	if (c.Balance < amount) {
+		cout << "Insufficient balance." << endl;
+		return 0;
+	}
+	c.Balance -= amount;
+	cout << "Withdrawal successful. New balance: " << c.Balance << " TND" << endl;
+	Push(&c.Transaction_Stack, transaction{ rand() % 10000 + 1, c.Account_Number, "Withdrawal", amount, "Today" });
+	return 1;
+}
+
+int Deposit_Money(customer& c, double amount) {
+	if (amount <= 0) {
+		cout << "Invalid deposit amount." << endl;
+		return 0;
+	}
+	c.Balance += amount;
+	cout << "Deposit successful. New balance: " << c.Balance << " TND" << endl;
+	Push(&c.Transaction_Stack, transaction{ rand() % 10000 + 1, c.Account_Number, "Deposit", amount, "Today" });
+	return 1;
+}
+	
+void Display_Transactions(const customer& c) {
+	if (IsEmpty(c.Transaction_Stack)) {
+		cout << "No transactions to display." << endl;
+		return;
+	}
+	cout << "Today's Transactions for Account Number: " << c.Account_Number << endl;
+	DisplayStack(c.Transaction_Stack);
+}
+
+
+
 void customer_interface(customer*& customers, int& CustomerCount, int& Customer_Capacity) {
-	int customer_choice = -1;
+	int customer_choice = -1, operation_choice = -1;
 	list loanList = create_List();
 	loan Loan1;
 	int c;
+	
 	do {
 		c = CheckCustomerLogin(customers, CustomerCount);
 	} while (c == -1);
 	cout << "============================================================================================" << endl;
+	
+
 	if (c != -1) {
 		do {
 			cout << "============================================================================================" << endl;
@@ -504,16 +644,44 @@ void customer_interface(customer*& customers, int& CustomerCount, int& Customer_
 
 			case 3:
 				cout << "============================================================================================" << endl;
-				break;
-				//Perform transaction function
-				cout << "============================================================================================" << endl;
+				
+				do
+				{
+					cout << "Choose an operation to perform: " << endl;
+					cout << "                            1.Withdraw money. " << endl;
+					cout << "                            2.Deposit money. " << endl;
+					cout << "                            0.Return to Home. " << endl;
+					cin >> operation_choice;
+					switch (operation_choice)
+					{
+					case 1:
+						Withdraw_Money(customers[c]);
+						break;
+					case 2:
+						cout << "                            Enter amount to deposit: ";
+						double depositAmount;
+						cin >> depositAmount;
+						Deposit_Money(customers[c], depositAmount);
 
+						break;
+					case 0:
+						cout << "                            Returning...." << endl;
+						break;
+					default:
+						cout << "--------------------------------------------------------------------------------------------" << endl;
+						cout << "                            Invalid choice. Please try again." << endl;
+						cout << "============================================================================================" << endl;
+					}
+				}
+				while (operation_choice != 0);
+				cout << "============================================================================================" << endl;
+				break;
 
 			case 4:
 				cout << "============================================================================================" << endl;
-				break;
-				//View list of today's transactions function
+				Display_Transactions(customers[c]);	
 				cout << "============================================================================================" << endl;
+				break;
 
 			case 5:
 				cout << "============================================================================================" << endl;
