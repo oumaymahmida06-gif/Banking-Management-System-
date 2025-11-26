@@ -467,25 +467,25 @@ void customer_interface(customer*& customers, int& CustomerCount, int& Customer_
 	list loanList = create_List();
 	loan Loan1;
 	int c;
-	cout << "============================================================================================" << endl;
-	cout << "============================================================================================" << endl;
-	cout << "                    Welcome to the Bank Customer Management System" << endl;
-	cout << "============================================================================================" << endl;
-	cout << "============================================================================================" << endl;
 	do {
 		c = CheckCustomerLogin(customers, CustomerCount);
 	} while (c == -1);
 	cout << "============================================================================================" << endl;
 	if (c != -1) {
 		do {
-			cout << "1.View loan list. " << endl;
-			cout << "2.Submit loan request" << endl;
-			cout << "3.Perform transaction." << endl;
-			cout << "4.View list of today's transactions." << endl;
-			cout << "5.Undo last transaction." << endl;
-			cout << "0.Return to Home." << endl;
 			cout << "============================================================================================" << endl;
-			cout << "Enter your choice: ";
+			cout << "============================================================================================" << endl;
+			cout << "                    Welcome to the CUSTOMER MANAGEMENT SYSTEM" << endl;
+			cout << "============================================================================================" << endl;
+			cout << "============================================================================================" << endl;
+			cout << "                            1.View loan list. " << endl;
+			cout << "                            2.Submit loan request" << endl;
+			cout << "                            3.Perform transaction." << endl;
+			cout << "                            4.View list of today's transactions." << endl;
+			cout << "                            5.Undo last transaction." << endl;
+			cout << "                            0.Return to Home." << endl;
+			cout << "============================================================================================" << endl;
+			cout << "                            Enter your choice: ";
 			cin >> customer_choice;
 
 			switch (customer_choice)
