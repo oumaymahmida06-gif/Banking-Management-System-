@@ -55,4 +55,6 @@ transaction Top(const Stack& S);
 int Withdraw_Money(customer& c);
 int Deposit_Money(customer& c, double amount);
 void Display_Transactions(const customer& c);
+void Undo_Last_Transaction(customer& c);
+
 #endif
