@@ -40,5 +40,19 @@ bool VerifyPIN(int PIN);
 void Display_Loan_List(const customer& c);
 void Submit_Loan_Request(customer& c);
 bool Verify_End_Date(string Start_Date, string End_Date);
+void customer_interface(customer*& customers, int& CustomerCount, int& Customer_Capacity);
 
+Stack* CreateStack();
+void DestroyStack(Stack* S);
+void DisplayStack(const Stack& S);
+bool IsEmpty(const Stack& S);
+bool IsFull(const Stack& S);
+int StackSize(const Stack& S);
+int Push(Stack* S, const transaction& e);
+transaction Pop(Stack* S);
+transaction Top(const Stack& S);
+
+int Withdraw_Money(customer& c);
+int Deposit_Money(customer& c, double amount);
+void Display_Transactions(const customer& c);
 #endif
