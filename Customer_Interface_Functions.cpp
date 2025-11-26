@@ -104,7 +104,7 @@ bool VerifyIBAN(int IBAN) {
 bool VerifyBranchCode(string BranchCode)
 {
 	char c1 = BranchCode[0], c2 = BranchCode[1];
-	if (BranchCode.length() != 5 && isalpha(c1) && isupper(c1) && isalpha(c2) && isupper(c2))
+	if (BranchCode.length() == 5 && isalpha(c1) && isupper(c1) && isalpha(c2) && isupper(c2))
 	{
 		for (int i = 2; i < BranchCode.length(); i++)
 		{
@@ -116,7 +116,7 @@ bool VerifyBranchCode(string BranchCode)
 		}
 		return true;
 	}
-	cout << "Invalid branch code. The first and second character must be uppercase letters followed by digits." << endl;
+	cout << "Invalid branch code. The branch code must follow this format : AB123." << endl;
 	return false;
 }
 bool VerifyAccountHolderName(string AccountHolderName) {
@@ -490,10 +490,10 @@ void DestroyStack(Stack* S) {
 void DisplayStack(const Stack& S) {
 	for (int i = S.Top; i >= 1; i--) {
 		cout << " the transaction ID is :" << S.transactions[i].Transaction_ID
-			<< " the Account Number is :" << S.transactions[i].Account_Number
-			<< " the Transaction Type is :" << S.transactions[i].Transaction_Type
-			<< " the transaction amount is : " << S.transactions[i].Transaction_Amount
-			<< " the Transaction Date is :" << S.transactions[i].Transaction_Date << endl;
+			<< " \nthe Account Number is :" << S.transactions[i].Account_Number
+			<< " \nthe Transaction Type is :" << S.transactions[i].Transaction_Type
+			<< " \nthe transaction amount is : " << S.transactions[i].Transaction_Amount
+			<< " \nthe Transaction Date is :" << S.transactions[i].Transaction_Date << endl;
 	}
 	cout << endl;
 }
@@ -503,24 +503,34 @@ bool IsEmpty(const Stack& S) {
 }
 
 bool IsFull(const Stack& S) {
-	return (S.Top == Max);
+	return S.Top >= Max; // Top is count of elements (0..Max)
 }
 
 int StackSize(const Stack& S) {
 	return S.Top;
 }
 
-int Push(Stack* S, const transaction& e) {  // add element to the top 
-	if (!S) return 0;
-	if (IsFull(*S)) { cout << "\nStack is full"; return 0; }
-	S->transactions[S->Top++] = e; // store at next free slot
-	return 1;
+int Push(Stack* S, transaction e) {  // add element to the top 
+	if (IsFull(*S)) {
+		cout << "\nStack is full";
+		return 0;
+	}
+	else {
+		S->Top++;
+		S->transactions[S->Top] = e;
+		return 1;
+	}
 }
 
 transaction Pop(Stack* S) { // remove the top element from the stack
-	transaction e{0,0,"",0.0,""};
-	if (!S || S->Top == 0) { cout << "\nStack is empty"; return e; }
-	e = S->transactions[--S->Top];
+	transaction e = transaction{0,0,"",0.0,""};
+	if (IsEmpty(*S)) {
+		cout << "\nStack is empty";
+	}
+	else {
+		e = S->transactions[S->Top]; // get the top element
+		S->Top--; // move the top index down
+	}
 	return e;
 }
 
@@ -675,7 +685,7 @@ void customer_interface(customer*& customers, int& CustomerCount, int& Customer_
 				}
 				while (operation_choice != 0);
 				cout << "============================================================================================" << endl;
-				break;
+
 
 			case 4:
 				cout << "============================================================================================" << endl;
