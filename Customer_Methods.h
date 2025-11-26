@@ -1,7 +1,7 @@
 #pragma once
 #ifndef CUSTOMER_METHODS_H
 #define CUSTOMER_METHODS_H
-#include "DoublyLinkedList.h"
+
 #include "Customer.h"
 
 bool isEmpty(const list& L);
@@ -21,6 +21,10 @@ loan get_Element(const list& L, int pos);
 int CheckCustomerLogin(customer* customers, int CustomerCount);
 void AddCustomer(customer *& customers, int& CustomerCount, int& Customer_Capacity);
 void NewCustomerArray(customer*& customers, int& Customer_Capacity, int CustomerCount);
+void ChangeCustomerAccountStatus(customer* customers, int CustomerCount);
+int FindCustomer(customer* customers, int number, int CustomerCount);
+void DisplayCustomers(customer* customers, int CustomerCount);
+void PrintCustomer(const customer& c);
 
 bool isNumber(string str);
 bool VerifyAccountNumber(int AccountNumber);
@@ -28,7 +32,7 @@ bool VerifyAccountType(string AccountType);
 bool VerifyIBAN(int IBAN);
 bool VerifyBranchCode(string BranchCode);
 bool VerifyAccountHolderName(string AccountHolderName);
-bool VerifyDate(string Date);
+bool VerifyOpeningDate(string OpeningDate);
 bool VerifyStatus(string Status);
 bool VerifyBalance(double Balance);
 bool VerifyPIN(int PIN);
@@ -36,11 +40,5 @@ bool VerifyPIN(int PIN);
 void Display_Loan_List(const customer& c);
 void Submit_Loan_Request(customer& c);
 bool Verify_End_Date(string Start_Date, string End_Date);
-
-/// ADDED BY HANNACHI
-void PrintCustomer(const customer& c);
-void DisplayCustomers(customer* customers, int CustomerCount);
-int FindCustomer(customer* customers, int number, int CustomerCount);
-void ChangeCustomerAccountStatus(customer* customers, int CustomerCount);
 
 #endif
