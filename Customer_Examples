@@ -1,5 +1,5 @@
 #customer_0 
-customers[0].Account_Number = "123456";
+customers[0].Account_Number = 123456;
 customers[0].Account_Type = "Savings";
 customers[0].IBAN = 12345678;
 customers[0].Branch_Code = "AB123";
@@ -11,7 +11,7 @@ customers[0].PIN = 1234;
 
 
 #customer_1
-customers[1].Account_Number = "234567";
+customers[1].Account_Number = 234567;
 customers[1].Account_Type = "Savings";
 customers[1].IBAN = 23456789;
 customers[1].Branch_Code = "TU227";
