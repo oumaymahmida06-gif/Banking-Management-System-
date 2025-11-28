@@ -367,8 +367,74 @@ void DisplayEarliestAndRecentEmployees(Employee* employees, int EmployeeCount) {
 	cout << "---------------------------------------------\n";
 	delete[] HireDateSort;
 }
+void Delete_Closed_Accounts_And_Store_Them(customer*& customers, int& CustomerCount, customer*& archived, int& ArchivedCount, int& ArchivedCapacity){
+	int i = 0;
+	while (i < CustomerCount) {
 
-void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,customer*& customers, int& CustomerCount, int& Customer_Capacity)
+		if (ArchivedCount == ArchivedCapacity)
+		{
+			NewCustomerArray(archived, ArchivedCapacity, ArchivedCount);
+		}
+
+		if (customers[i].Status == "Closed") {
+
+			archived[ArchivedCount] = customers[i];
+			ArchivedCount++;
+
+			for (int j = i; j < CustomerCount - 1; j++) {
+				customers[j] = customers[j + 1];
+			}
+
+			CustomerCount--;
+		}
+		else {
+			i++;
+		}
+	}
+
+	cout << "You have successfuly deleted all closed accounts and archived them in the archived accounts setion.\n";
+}
+
+void Display_Archived_Accounts(customer* archived, int ArchivedCount) {
+	if (ArchivedCount == 0) {
+		cout << "No arhived customers.\n";
+		return;
+	}
+	cout << "\n---------- Archived Accounts ----------\n";
+	for (int i = 0; i < ArchivedCount; i++) {
+		PrintCustomer(archived[i]);
+	}
+}
+
+void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int CustomerCount) {
+	if (CustomerCount == 0) {
+		cout << "There's no existant customers\n";
+		return;
+	}
+	else {
+		int account_number_to_display_its_loan_list = 0, p;
+		bool ValidAccount = false;
+		do {
+			cout << "Enter the customer's Account Number to display its loan list: " << endl;
+			cin >> account_number_to_display_its_loan_list;
+			if (!VerifyAccountNumber(account_number_to_display_its_loan_list)) {
+				ValidAccount = false;
+			}
+			p = FindCustomer(customers, account_number_to_display_its_loan_list, CustomerCount);
+			if ((p == -1) && (VerifyAccountNumber(account_number_to_display_its_loan_list))) {
+				cout << "Customer not found. Please make sure of the Account Number.\n";
+				ValidAccount = false;
+			}
+			else {
+				ValidAccount = true;
+			}
+		} while (!ValidAccount);
+		Display_Loan_List(customers[p]);
+	}
+}
+
+
+void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,customer*& customers, int& CustomerCount, int& Customer_Capacity, customer*& archived, int& ArchivedCount, int& Archived_Capacity)
 {
 	int employee_choice;
 
@@ -388,6 +454,10 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 		cout << "8. Add Customer\n";
 		cout << "9. Display All Customers\n";
 		cout << "10. Change Customer Account Status\n";
+		cout << "11. Delete all accounts whose status is closed\n";
+		cout << "12. Display archived accounts\n";
+		cout << "13. Display the list of loans for a specific customer\n";
+		cout << "14. Change the status of a loan\n";
 		cout << "0. Return to Home\n";
 		cout << "Choose an operation : ";
 		cin >> employee_choice;
@@ -422,6 +492,18 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 			break;
 		case 10:
 			ChangeCustomerAccountStatus(customers, CustomerCount);
+			break;
+		case 11:
+			Delete_Closed_Accounts_And_Store_Them(customers, CustomerCount, archived, ArchivedCount, Archived_Capacity);
+			break;
+		case 12:
+			Display_Archived_Accounts(archived, ArchivedCount);
+			break;
+		case 13:
+			Display_List_Of_Loans_For_Specific_Customer(customers, CustomerCount);
+			break;
+		case 14:
+			Change_Status_Of_A_Loan(customers, CustomerCount);
 			break;
 		case 0:
 			cout << "Returning.......\n";
