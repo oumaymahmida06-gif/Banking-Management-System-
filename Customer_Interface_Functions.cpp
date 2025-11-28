@@ -631,6 +631,34 @@ void Undo_Last_Transaction(customer& c) { //*To fix* it undoes the last transact
 	}
 }
 
+//Added by hancha
+bool VerifyLoanStatus(string Status)
+{
+	if (Status != "Active" && Status != "Completed" && Status != "Overdue")
+	{
+		cout << "Invalid status. Please enter 'Active', 'Completed', or 'Overdue'." << endl;
+		return false;
+	}
+	return true;
+}
+
+void Change_Status_Of_A_Loan(customer& c, int loanID) {
+	node* current = c.Loan_List.head;
+	string newStatus;
+	while (current) {
+		if (current->data.Loan_ID == loanID) {
+			do {
+				cout << "Enter the new loan status: " << endl;
+				cin >> newStatus;
+			} while (!VerifyLoanStatus(newStatus));
+			current->data.Loan_Status = newStatus;
+			cout << "Loan status changed successfuly" << endl;
+			return;
+		}
+		current = current->next;
+	}
+	cout << "Loan with ID " << loanID << " not found." << endl;
+}
 
 void customer_interface(customer*& customers, int& CustomerCount, int& Customer_Capacity) {
 	int customer_choice = -1, operation_choice = -1;
