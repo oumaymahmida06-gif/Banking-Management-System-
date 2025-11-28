@@ -28,6 +28,11 @@ void Delete_Closed_Accounts_And_Store_Them(customer*& customers, int& CustomerCo
 void Display_Archived_Accounts(customer* archived, int ArchivedCount);
 void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int CustomerCount);
 
-void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity, customer*& customers, int& CustomerCount, int& Customer_Capacity);
+void Delete_Closed_Accounts_And_Store_Them(customer*& customers, int& CustomerCount, customer*& archived, int& ArchivedCount, int& ArchivedCapacity);
+void Display_Archived_Accounts(customer* archived, int ArchivedCount);
+void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int CustomerCount);
+void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity, customer*& customers, int& CustomerCount, int& Customer_Capacity, customer*& archived, int& ArchivedCount, int& Archived_Capacity);
+
 #endif
+
 
