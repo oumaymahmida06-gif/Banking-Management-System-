@@ -634,8 +634,6 @@ void Undo_Last_Transaction(customer& c) { //*To fix* it undoes the last transact
 
 void customer_interface(customer*& customers, int& CustomerCount, int& Customer_Capacity) {
 	int customer_choice = -1, operation_choice = -1;
-	list loanList = create_List();
-	loan Loan1;
 	int c;
 	
 	do {
@@ -731,5 +729,5 @@ void customer_interface(customer*& customers, int& CustomerCount, int& Customer_
 			}
 		} while (customer_choice != 0);
 	}
-	destroy_List(&loanList);
+	
 }
