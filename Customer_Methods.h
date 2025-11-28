@@ -57,4 +57,8 @@ int Deposit_Money(customer& c, double amount);
 void Display_Transactions(const customer& c);
 void Undo_Last_Transaction(customer& c);
 
+///Added by hancha
+bool VerifyLoanStatus(string Status);
+void Change_Status_Of_A_Loan(customer& c, int loanID);
+
 #endif
