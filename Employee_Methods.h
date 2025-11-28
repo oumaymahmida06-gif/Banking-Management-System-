@@ -14,10 +14,12 @@ bool Verify_Address(const string& Address);
 bool Verify_Name(const string& Name);
 bool Verify_Last_Name(const string& Last_Name);
 bool Verify_Hire_Date(const string& date);
+
 int FindEmployee(Employee* employees, int ID, int EmployeeCount);
 void DeleteEmployee(Employee* employees, int& EmployeeCount);
 void ModifyEmployee(Employee* employees, int EmployeeCount);
 void PrintEmployee(const Employee& e);
+
 void DisplayEmployees(Employee* employees, int EmployeeCount);
 void DisplayEmployeesSortedByAlphabeticalOrder(Employee* employees, int EmployeeCount);
 void DisplayEmployeesGroupedByBankBranch(Employee* employees, int EmployeeCount);
@@ -31,6 +33,7 @@ void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int Custom
 void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity, customer*& customers, int& CustomerCount, int& Customer_Capacity, customer*& archived, int& ArchivedCount, int& Archived_Capacity);
 
 #endif
+
 
 
 
