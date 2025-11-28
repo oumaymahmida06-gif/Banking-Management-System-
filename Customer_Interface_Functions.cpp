@@ -642,20 +642,39 @@ bool VerifyLoanStatus(string Status)
 	return true;
 }
 
-void Change_Status_Of_A_Loan(customer& c, int loanID) {
-	node* current = c.Loan_List.head;
-	string newStatus;
-	while (current) {
-		if (current->data.Loan_ID == loanID) {
-			do {
-				cout << "Enter the new loan status: " << endl;
-				cin >> newStatus;
-			} while (!VerifyLoanStatus(newStatus));
-			current->data.Loan_Status = newStatus;
-			cout << "Loan status changed successfuly" << endl;
-			return;
+bool VerifyLoanID(int loanID) {
+	if (loanID < 100000 || loanID > 999999) {
+		cout << "The LOAN ID is a 6-digit number ." << endl;
+		return false;
+	}
+	return true;
+}
+
+void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
+	int loanID;
+	do {
+		cout << "Enter a loan ID: " << endl;
+		cin >> loanID;
+	} while (!VerifyLoanID(loanID));
+
+	int i = 0;
+	while (i< CustomerCount){
+		customer c = customers[i];
+		node* current = c.Loan_List.head;
+		string newStatus;
+		while (current) {
+			if (current->data.Loan_ID == loanID) {
+				do {
+					cout << "Enter the new loan status: " << endl;
+					cin >> newStatus;
+				} while (!VerifyLoanStatus(newStatus));
+				current->data.Loan_Status = newStatus;
+				cout << "Loan status changed successfuly" << endl;
+				return;
+			}
+			current = current->next;
 		}
-		current = current->next;
+		i++;
 	}
 	cout << "Loan with ID " << loanID << " not found." << endl;
 }
