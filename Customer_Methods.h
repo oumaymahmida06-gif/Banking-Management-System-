@@ -48,7 +48,7 @@ void DisplayStack(const Stack& S);
 bool IsEmpty(const Stack& S);
 bool IsFull(const Stack& S);
 int StackSize(const Stack& S);
-int Push(Stack* S, const transaction& e);
+int Push(Stack* S, transaction e);
 transaction Pop(Stack* S);
 transaction Top(const Stack& S);
 
