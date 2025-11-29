@@ -8,6 +8,11 @@ int main() {
     customer* customers = new customer[Customer_Capacity];
     int CustomerCount = 0;
 
+    int Archived_Capacity = 200;
+    customer* archived = new customer[200];
+    int ArchivedCount = 0;
+    
+
     int capacity = 200;
     Employee* employees = new Employee[capacity];
     int EmployeeCount = 0;
@@ -33,7 +38,7 @@ int main() {
 
         switch (choice) {
         case 1:
-            employee_interface(employees, EmployeeCount, capacity, customers, CustomerCount, Customer_Capacity);
+            employee_interface(employees, EmployeeCount, capacity, customers, CustomerCount, Customer_Capacity, archived, ArchivedCount, Archived_Capacity);
             break;
         case 2:
             customer_interface(customers, CustomerCount, Customer_Capacity);
@@ -48,5 +53,6 @@ int main() {
     } while (choice != 0);
 	delete[] customers;
 	delete[] employees;
+	delete[] archived;
     return 0;
 }
