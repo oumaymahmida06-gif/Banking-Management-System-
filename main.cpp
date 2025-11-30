@@ -44,8 +44,8 @@ int main() {
             customer_interface(customers, CustomerCount, Customer_Capacity);
             break;
         case 0:
-            cout << "Exiting program.......\n";
-            break;
+		Quit_Program();
+		break;
         default:
             cout << "Invalid option. Try again.\n";
         }
