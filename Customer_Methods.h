@@ -48,17 +48,23 @@ void DisplayStack(const Stack& S);
 bool IsEmpty(const Stack& S);
 bool IsFull(const Stack& S);
 int StackSize(const Stack& S);
-int Push(Stack* S, transaction e);
+int Push(Stack* S, const transaction& e);
 transaction Pop(Stack* S);
 transaction Top(const Stack& S);
 
 int Withdraw_Money(customer& c);
-int Deposit_Money(customer& c, double amount);
+int Deposit_Money(customer& c);
 void Display_Transactions(const customer& c);
 void Undo_Last_Transaction(customer& c);
 
-///Added by hancha
+void Change_Status_Of_A_Loan(customer* customers, int CustomerCount);
+bool VerifyLoanID(int loanID);
 bool VerifyLoanStatus(string Status);
-void Change_Status_Of_A_Loan(customer& c, int loanID);
+
+
+int Home_Page();
+int Login_Page();
+int Customer_Home_Page();
+void Quit_Program();
 
 #endif
