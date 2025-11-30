@@ -18,6 +18,7 @@ struct customer {
 	int PIN=0;
 	list Loan_List;
 	list Requested_Loan_List;
+	bool Last_Transaction_Undone = false;
 	Stack Transaction_Stack;
 };
 
