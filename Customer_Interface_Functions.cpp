@@ -521,10 +521,7 @@ void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	cout << "Loan with ID " << loanID << " not found." << endl;
 }
 
-int generate_Loan_ID() {
-	return rand() % 900000 + 100000; // Generates a random 6-digit number
 
-}
 // stack functions
 
 Stack* CreateStack() {
