@@ -59,17 +59,23 @@ void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacit
 }
 int CheckCustomerLogin(customer* customers, int CustomerCount) {
 	int AccountNumber, pin;
-	cout << "Enter Account Number: ";
+	cout << "                            Enter Account Number: ";
 	cin >> AccountNumber;
-	cout << "\nEnter PIN: ";
+	cout << "                            Enter PIN: ";
 	cin >> pin;
+	cout << "--------------------------------------------------------------------------------------------" << endl;
+
 	for (int i = 0; i < CustomerCount; i++) {
 		if (customers[i].Account_Number == AccountNumber && customers[i].PIN == pin) {
-			cout << "\nLogin successful!\n";
+			cout << "                            Login successful!\n";
+			cout << "--------------------------------------------------------------------------------------------" << endl;
+
 			return i;
 		}
 	}
-	cout << "\nLogin failed. Please check your account informations.\n";
+	cout << "\n                            Login failed. Please check your account informations.\n";
+	cout << "--------------------------------------------------------------------------------------------" << endl;
+
 	return -1;
 }
 bool isNumber(string str) {
@@ -82,21 +88,21 @@ bool isNumber(string str) {
 }
 bool VerifyAccountNumber(int AccountNumber) {
 	if (AccountNumber < 100000 || AccountNumber > 999999) {
-		cout << "The account number should be a 6-digit number ." << endl;
+		cout << "                            The account number should be a 6-digit number ." << endl;
 		return false;
 	}
 	return true;
 }
 bool VerifyAccountType(string AccountType) {
 	if (AccountType != "Savings" && AccountType != "Current" && AccountType != "Fixed Deposit") {
-		cout << "Invalid account type. Please enter 'Savings', 'Current', or 'Fixed Deposit'." << endl;
+		cout << "                            Invalid account type. Please enter 'Savings', 'Current', or 'Fixed Deposit'." << endl;
 		return false;
 	}
 	return true;
 }
 bool VerifyIBAN(int IBAN) {
 	if (IBAN < 10000000 || IBAN > 99999999) {
-		cout << "The IBAN should be an 8-digits number. " << endl;
+		cout << "                            The IBAN should be an 8-digits number. " << endl;
 		return false;
 	}
 	return true;
@@ -110,31 +116,31 @@ bool VerifyBranchCode(string BranchCode)
 		{
 			if (!isdigit(BranchCode[i]))
 			{
-				cout << "Invalid branch code. The first and second character must be followed by digits." << endl;
+				cout << "                            Invalid branch code. The first and second character must be followed by digits." << endl;
 				return false;
 			}
 		}
 		return true;
 	}
-	cout << "Invalid branch code. The branch code must follow this format : AB123." << endl;
+	cout << "                            Invalid branch code. The branch code must follow this format : AB123." << endl;
 	return false;
 }
 bool VerifyAccountHolderName(string AccountHolderName) {
 	if (AccountHolderName.length() < 3) {
-		cout << "The name must be at least 3 characters long.\n";
+		cout << "                            The name must be at least 3 characters long.\n";
 		return false;
 	}
 	if (!isupper(AccountHolderName[0])) {
-		cout << "The first letter must be uppercase.\n";
+		cout << "                            The first letter must be uppercase.\n";
 		return false;
 	}
 	for (int i = 1; i < AccountHolderName.length(); i++) {
 		if (!isalpha(AccountHolderName[i])) {
-			cout << "The name must contain only alphabetical letters.\n";
+			cout << "                            The name must contain only alphabetical letters.\n";
 			return false;
 		}
 		if (!islower(AccountHolderName[i])) {
-			cout << "All letters except the first one must be lowercase.\n";
+			cout << "                            All letters except the first one must be lowercase.\n";
 			return false;
 		}
 	}
@@ -144,12 +150,12 @@ bool VerifyOpeningDate(string OpeningDate)
 {
 	if (OpeningDate.length() != 10 || OpeningDate[2] != '-' || OpeningDate[5] != '-')
 	{
-		cout << "Invalid opening date format. Please use DD-MM-YYYY." << endl;
+		cout << "                            Invalid opening date format. Please use DD-MM-YYYY." << endl;
 		return false;
 	}
 	if (OpeningDate.substr(0, 2) < "01" || OpeningDate.substr(0, 2) > "31" || OpeningDate.substr(3, 2) < "01" || OpeningDate.substr(3, 2) > "12" || OpeningDate.substr(6, 4) < "1900")
 	{
-		cout << "Invalid opening date. Please ensure the date is valid." << endl;
+		cout << "                            Invalid opening date. Please ensure the date is valid." << endl;
 		return false;
 	}
 	return true;
@@ -158,7 +164,7 @@ bool VerifyStatus(string Status)
 {
 	if (Status != "Active" && Status != "Inactive" && Status != "Closed")
 	{
-		cout << "Invalid status. Please enter 'Active', 'Inactive', or 'Closed'." << endl;
+		cout << "                            Invalid status. Please enter 'Active', 'Inactive', or 'Closed'." << endl;
 		return false;
 	}
 	return true;
@@ -167,7 +173,7 @@ bool VerifyBalance(double Balance)
 {
 	if (Balance < 0)
 	{
-		cout << "Invalid balance. Balance cannot be negative." << endl;
+		cout << "                            Invalid balance. Balance cannot be negative." << endl;
 		return false;
 	}
 	return true;
@@ -176,24 +182,24 @@ bool VerifyPIN(int PIN)
 {
 	if (PIN < 1000 || PIN > 9999)
 	{
-		cout << "Invalid PIN. PIN should be a 4-digit number." << endl;
+		cout << "                            Invalid PIN. PIN should be a 4-digit number." << endl;
 		return false;
 	}
 	return true;
 }
 bool Verify_End_Date(string Start_Date, string End_Date) {
 	if (End_Date.substr(6, 4) < Start_Date.substr(6, 4)) {
-		cout << "Invalid end date. Please ensure the end date is after the start date." << endl;
+		cout << "                            Invalid end date. Please ensure the end date is after the start date." << endl;
 		return false;
 	}
 	if (End_Date.substr(6, 4) == Start_Date.substr(6, 4)) {
 		if (End_Date.substr(3, 2) < Start_Date.substr(3, 2)) {
-			cout << "Invalid end date. Please ensure the end date is after the start date." << endl;
+			cout << "                            Invalid end date. Please ensure the end date is after the start date." << endl;
 			return false;
 		}
 		if (End_Date.substr(3, 2) == Start_Date.substr(3, 2)) {
 			if (End_Date.substr(0, 2) <= Start_Date.substr(0, 2)) {
-				cout << "Invalid end date. Please ensure the end date is after the start date." << endl;
+				cout << "                            Invalid end date. Please ensure the end date is after the start date." << endl;
 				return false;
 			}
 		}
@@ -205,25 +211,25 @@ bool Verify_End_Date(string Start_Date, string End_Date) {
 
 // array functions
 void PrintCustomer(const customer& c) {
-	cout << "Account Number " << c.Account_Number << endl;
-	cout << "Account Type: " << c.Account_Type << endl;
-	cout << "IBAN: " << c.IBAN << endl;
-	cout << "Branch Code: " << c.Branch_Code << endl;
-	cout << "Account Holder Name: " << c.Account_Holder_Name << endl;
-	cout << "Opening date: " << c.Opening_date << endl;
-	cout << "Status: " << c.Status << endl;
-	cout << "Balance: " << c.Balance << endl;
-	cout << "PIN: " << c.PIN << endl;
+	cout << "                            Account Number " << c.Account_Number << endl;
+	cout << "                            Account Type: " << c.Account_Type << endl;
+	cout << "                            IBAN: " << c.IBAN << endl;
+	cout << "                            Branch Code: " << c.Branch_Code << endl;
+	cout << "                            Account Holder Name: " << c.Account_Holder_Name << endl;
+	cout << "                            Opening date: " << c.Opening_date << endl;
+	cout << "                            Status: " << c.Status << endl;
+	cout << "                            Balance: " << c.Balance << endl;
+	cout << "                            PIN: " << c.PIN << endl;
 	cout << "------------------------------------\n";
 }
 
 void DisplayCustomers(customer* customers, int CustomerCount) {
 	if (CustomerCount == 0) {
-		cout << "No customers to display.\n";
+		cout << "                            No customers to display.\n";
 		return;
 	}
 
-	cout << "\n------ Customer List ------\n";
+	cout << "\n                            ------ Customer List ------\n";
 
 	for (int i = 0; i < CustomerCount; i++) {
 		PrintCustomer(customers[i]);
@@ -239,21 +245,21 @@ int FindCustomer(customer* customers, int number, int CustomerCount) {
 }
 void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 	if (CustomerCount == 0) {
-		cout << "There's no existant customers\n";
+		cout << "                            There's no existant customers\n";
 		return;
 	}
 	else {
 		int account_number_to_change_its_status = 0, p;
 		bool ValidAccount = false;
 		do {
-			cout << "Enter the customer's Account Number to change its status: " << endl;
+			cout << "                            Enter the customer's Account Number to change its status: " << endl;
 			cin >> account_number_to_change_its_status;
 			if (!VerifyAccountNumber(account_number_to_change_its_status)) {
 				ValidAccount = false;
 			}
 			p = FindCustomer(customers, account_number_to_change_its_status, CustomerCount);
 			if ((p == -1) && (VerifyAccountNumber(account_number_to_change_its_status))) {
-				cout << "Customer not found. Please make sure of the Account Number.\n";
+				cout << "                            Customer not found. Please make sure of the Account Number.\n";
 				ValidAccount = false;
 			}
 			else {
@@ -264,7 +270,7 @@ void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 		string newStatus;
 		bool ValidStatus = false;
 		do {
-			cout << "Enter the new account status: " << endl;
+			cout << "                            Enter the new account status: " << endl;
 			cin >> newStatus;
 			if (!VerifyStatus(newStatus)) {
 				ValidStatus = false;
@@ -274,7 +280,7 @@ void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 			}
 		} while (!ValidStatus);
 		customers[p].Status = newStatus;
-		cout << "Customer account status changed successfully!\n";
+		cout << "                            Customer account status changed successfully!\n";
 	}
 }
 void NewCustomerArray(customer*& customers, int& Customer_Capacity, int CustomerCount) {
@@ -305,7 +311,7 @@ int listSize(const list& L) {
 node* create_Node(const loan& value) {
 	node* Node = new (nothrow) node;
 	if (!Node) {
-		cout << "\nMemory allocation failed for node\n";
+		cout << "\n                            Memory allocation failed for node\n";
 		return nullptr;
 	}
 	// Affectation explicite (requiert que node::data soit de type `loan`)
@@ -335,7 +341,7 @@ void destroy_List(list* L) {
 
 int insert(list& L, const loan& Loan, int pos) {
 	if (pos < 1 || pos > L.size + 1) {
-		cout << "\nInvalid position";
+		cout << "\n                            Invalid position";
 		return 0;
 	}
 	node* n = create_Node(Loan);
@@ -371,11 +377,11 @@ int insert(list& L, const loan& Loan, int pos) {
 }
 int removeAt(list* L, int pos) {
 	if (!L || isEmpty(*L)) {
-		cout << "\nList is empty";
+		cout << "\n                            List is empty";
 		return 0;
 	}
 	if (pos < 1 || pos > L->size) {
-		cout << "\nInvalid position";
+		cout << "\n                            Invalid position";
 		return 0;
 	}
 	node* current;
@@ -397,12 +403,12 @@ int removeAt(list* L, int pos) {
 }
 loan get_Element(const list& L, int pos) {
 	if (isEmpty(L)) {
-		cerr << "\nList is empty\n";
+		cerr << "\n                            List is empty\n";
 		return loan{};
 	}
 
 	if (pos < 1 || pos > L.size) {
-		cerr << "\nInvalid position\n";
+		cerr << "\n                            Invalid position\n";
 		return loan{};
 	}
 	node* current = L.head;
@@ -415,20 +421,20 @@ loan get_Element(const list& L, int pos) {
 void Display_Loan_List(const customer& c) {
 	node* current = c.Loan_List.head;
 	if (current == nullptr) {
-		cout << "No loans found for this customer." << endl;
+		cout << "                            No loans found for this customer." << endl;
 		return;
 	}
-	cout << "Loans for Customer Account Number: " << c.Account_Number << endl;
+	cout << "                            Loans for Customer Account Number: " << c.Account_Number << endl;
 	while (current) {
-		cout << "Loan ID : " << current->data.Loan_ID << endl;;
-		cout << "Loan Type: " << current->data.Loan_Type << endl;
-		cout << "Principle Amount: " << current->data.Principle_Amount << "TND" << endl;
-		cout << "Interest Rate: " << current->data.Interest_Rate << endl;
-		cout << "Amount paid: " << current->data.Amount_paid << "TND" << endl;
-		cout << "Remaining Balance: " << current->data.Remaining_Balance << "TND" << endl;
-		cout << "Start Date: " << current->data.Start_Date << endl;
-		cout << "End Date: " << current->data.End_Date << endl;
-		cout << "Loan Status: " << current->data.Loan_Status << endl;
+		cout << "                            Loan ID : " << current->data.Loan_ID << endl;;
+		cout << "                            Loan Type: " << current->data.Loan_Type << endl;
+		cout << "                            Principle Amount: " << current->data.Principle_Amount << "TND" << endl;
+		cout << "                            Interest Rate: " << current->data.Interest_Rate << endl;
+		cout << "                            Amount paid: " << current->data.Amount_paid << "TND" << endl;
+		cout << "                            Remaining Balance: " << current->data.Remaining_Balance << "TND" << endl;
+		cout << "                            Start Date: " << current->data.Start_Date << endl;
+		cout << "                            End Date: " << current->data.End_Date << endl;
+		cout << "                            Loan Status: " << current->data.Loan_Status << endl;
 		cout << "============================================================================================" << endl;
 		current = current->next;
 	}
@@ -436,15 +442,15 @@ void Display_Loan_List(const customer& c) {
 
 void Submit_Loan_Request(customer& c) {
 	loan newLoan;
-	cout << "Enter Loan Type: ";
+	cout << "                            Enter Loan Type: ";
 	cin.ignore();
 	getline(cin, newLoan.Loan_Type);
 
 	do {
-		cout << "Enter Principle Amount: ";
+		cout << "                            Enter Principle Amount: ";
 		cin >> newLoan.Principle_Amount;
 		if (newLoan.Principle_Amount < 0) {
-			cout << "The Principle amount cannot be negative.\n";
+			cout << "                            The Principle amount cannot be negative.\n";
 		}
 	} while (newLoan.Principle_Amount < 0);
 
@@ -454,184 +460,20 @@ void Submit_Loan_Request(customer& c) {
 	cin.ignore();
 
 	do {
-		cout << "Enter Start Date (DD-MM-YYYY): ";
+		cout << "                            Enter Start Date (DD-MM-YYYY): ";
 		getline(cin, newLoan.Start_Date);
 	} while (!VerifyOpeningDate(newLoan.Start_Date));
 
 	do {
-		cout << "Enter End Date (DD-MM-YYYY): ";
+		cout << "                            Enter End Date (DD-MM-YYYY): ";
 		getline(cin, newLoan.End_Date);
 	} while (!VerifyOpeningDate(newLoan.End_Date) || !Verify_End_Date(newLoan.Start_Date, newLoan.End_Date));
 
-	newLoan.Loan_Status = "Pending";
+	newLoan.Loan_Status = "                            Pending";
 	insert(c.Requested_Loan_List, newLoan, c.Requested_Loan_List.size + 1);
-	cout << "Loan request submitted successfully!" << endl;
+	cout << "                            Loan request submitted successfully!" << endl;
 }
 
-
-// stack functions
-
-Stack* CreateStack() {
-	Stack* S = new (nothrow) Stack;
-
-	if (!S) {
-		cout << "\n Error: unable to allocate memory";
-	}
-	else {
-		S->Top = 0;
-	}
-	return S;
-}
-
-void DestroyStack(Stack* S) {
-	delete S;
-}
-
-void DisplayStack(const Stack& S) {
-	for (int i = S.Top; i >= 1; i--) {
-		cout << " the transaction ID is :" << S.transactions[i].Transaction_ID
-			<< " \nthe Account Number is :" << S.transactions[i].Account_Number
-			<< " \nthe Transaction Type is :" << S.transactions[i].Transaction_Type
-			<< " \nthe transaction amount is : " << S.transactions[i].Transaction_Amount
-			<< " \nthe Transaction Date is :" << S.transactions[i].Transaction_Date << endl;
-	}
-	cout << endl;
-}
-
-bool IsEmpty(const Stack& S) {
-	return (S.Top == 0);
-}
-
-bool IsFull(const Stack& S) {
-	return S.Top >= Max; // Top is count of elements (0..Max)
-}
-
-int StackSize(const Stack& S) {
-	return S.Top;
-}
-
-int Push(Stack* S, transaction e) {  // add element to the top 
-	if (IsFull(*S)) {
-		cout << "\nStack is full";
-		return 0;
-	}
-	else {
-		S->Top++;
-		S->transactions[S->Top] = e;
-		return 1;
-	}
-}
-
-transaction Pop(Stack* S) { // remove the top element from the stack
-	transaction e = transaction{0,0,"",0.0,""};
-	if (IsEmpty(*S)) {
-		cout << "\nStack is empty";
-	}
-	else {
-		e = S->transactions[S->Top]; // get the top element
-		S->Top--; // move the top index down
-	}
-	return e;
-}
-
-transaction Top(const Stack& S) { // look at the top element without removing it 
-	transaction e = transaction{0,0,"",0.0,""};
-
-	if (IsEmpty(S)) {
-		cout << "\nStack is empty";
-	}
-	else {
-		e = S.transactions[S.Top];
-	}
-
-	return e;
-}
-
-int Withdraw_Money(customer& c) {
-	int choice;
-	double amount = 0.0;
-	do {
-		cout << "Enter amount to withdraw: " << endl;
-		cout << "1. 10TND\n2. 20TND\n3. 50TND\n4. 100TND\n5. Other amount\n";
-		cin >> choice;
-		switch (choice) {
-		case 1:
-			amount = 10;
-			break;
-		case 2:
-			amount = 20;
-			break;
-		case 3:
-			amount = 50;
-			break;
-		case 4:
-			amount = 100;
-			break;
-		case 5:
-			cout << "Enter other amount: ";
-			cin >> amount;
-			break;
-		default:
-			cout << "Invalid choice." << endl;
-			return 0;
-		}
-
-	} while (amount <= 0);
-	if (c.Balance < amount) {
-		cout << "Insufficient balance." << endl;
-		cout << " Enter 0 to exit.";
-		cin >> choice;
-		if (choice == 0) {
-			return 0;
-		}
-		return 0;
-	}
-	c.Balance -= amount;
-	cout << "Withdrawal successful. New balance: " << c.Balance << " TND" << endl;
-	Push(&c.Transaction_Stack, transaction{ rand() % 10000 + 1, c.Account_Number, "Withdrawal", amount, "Today" });
-	return 1;
-}
-
-int Deposit_Money(customer& c, double amount) {
-	if (amount <= 0) {
-		cout << "Invalid deposit amount." << endl;
-		return 0;
-	}
-	c.Balance += amount;
-	cout << "Deposit successful. New balance: " << c.Balance << " TND" << endl;
-	Push(&c.Transaction_Stack, transaction{ rand() % 10000 + 1, c.Account_Number, "Deposit", amount, "Today" });
-	return 1;
-}
-	
-void Display_Transactions(const customer& c) {
-	if (IsEmpty(c.Transaction_Stack)) {
-		cout << "No transactions to display." << endl;
-		return;
-	}
-	cout << "Today's Transactions for Account Number: " << c.Account_Number << endl;
-	DisplayStack(c.Transaction_Stack);
-}
-
-void Undo_Last_Transaction(customer& c) { //*To fix* it undoes the last transaction and repeats it even if thhe transaction is not the same the last and before last time 
-	if (IsEmpty(c.Transaction_Stack)) {
-		cout << "No transactions to undo." << endl;
-		return;
-	}
-	transaction lastTransaction = Pop(&c.Transaction_Stack);
-	if (lastTransaction.Transaction_Type == "Withdrawal") {
-		c.Balance += lastTransaction.Transaction_Amount;
-		cout << "Last withdrawal transaction undone. New balance: " << c.Balance << " TND" << endl;
-	}
-	else if (lastTransaction.Transaction_Type == "Deposit") {
-		c.Balance -= lastTransaction.Transaction_Amount;
-		cout << "Last deposit transaction undone. New balance: " << c.Balance << " TND" << endl;
-	}
-	else {
-		cout << "Unknown transaction type." << endl;
-	}
-}
-
-//Added by hancha
 bool VerifyLoanStatus(string Status)
 {
 	if (Status != "Active" && Status != "Completed" && Status != "Overdue")
@@ -658,7 +500,7 @@ void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	} while (!VerifyLoanID(loanID));
 
 	int i = 0;
-	while (i< CustomerCount){
+	while (i < CustomerCount) {
 		customer c = customers[i];
 		node* current = c.Loan_List.head;
 		string newStatus;
@@ -679,102 +521,312 @@ void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	cout << "Loan with ID " << loanID << " not found." << endl;
 }
 
-void customer_interface(customer*& customers, int& CustomerCount, int& Customer_Capacity) {
-	int customer_choice = -1, operation_choice = -1;
-	int c;
+int generate_Loan_ID() {
+	return rand() % 900000 + 100000; // Generates a random 6-digit number
+
+}
+// stack functions
+
+Stack* CreateStack() {
+	Stack* S = new Stack;
+	S->Top = -1;               
+	return S;
+}
+
+void DestroyStack(Stack* S) {
+	delete S;
+}
+
+void DisplayStack(const Stack& S) {
+	for (int i = S.Top; i >= 1; i--) {
+		cout << "                             the transaction ID is :" << S.transactions[i].Transaction_ID
+			<< " \n                            the Account Number is :" << S.transactions[i].Account_Number
+			<< " \n                            the Transaction Type is :" << S.transactions[i].Transaction_Type
+			<< " \n                            the transaction amount is : " << S.transactions[i].Transaction_Amount
+			<< " \n                            the Transaction Date is :" << S.transactions[i].Transaction_Date 
+			<< "\n------------------------------------------------------------------------------------------------------";
+	}
+	cout << endl;
+}
+
+bool IsEmpty(const Stack& S) {
+	return (S.Top == -1);
+}
+
+bool IsFull(const Stack& S) {
+	return S.Top >= Max-1; // Top is count of elements (0..Max)
+}
+
+int StackSize(const Stack& S) {
+	return S.Top+1;
+}
+
+int Push(Stack* S, const transaction& e) {  // add element to the top 
+	if (IsFull(*S)) {
+		cout << "\n                            Stack is full";
+		return 0;
+	}
+	else {
+		S->Top++;
+		S->transactions[S->Top] = e;
+		return 1;
+	}
+}
+
+transaction Pop(Stack* S) { // remove the top element from the stack
+	transaction e = transaction{0,0,"",0.0,""};
+	if (IsEmpty(*S)) {
+		cout << "\n                            Stack is empty";
+	}
+	else {
+		e = S->transactions[S->Top]; // get the top element
+		S->Top--; // move the top index down
+	}
+	return e;
+}
+
+transaction Top(const Stack& S) { // look at the top element without removing it 
+	transaction e = transaction{0,0,"",0.0,""};
+
+	if (IsEmpty(S)) {
+		cout << "\n                            Stack is empty";
+	}
+	else {
+		e = S.transactions[S.Top];
+	}
+
+	return e;
+}
+
+int Withdraw_Money(customer& c) {
+	int choice;
+	double amount = 0.0;
+	do {
+		cout << "                            Choose amount to withdraw: " << endl;
+		cout << "\n                            1. 10TND\n                            2. 20TND\n                            3. 50TND\n                            4. 100TND\n                            5. Other amount\n";
+		cout << "============================================================================================" << endl;
+		cout << "                            Enter your choice :";
+		cin >> choice;
+		cout << "============================================================================================" << endl;
+		switch (choice) {
+		case 1:
+			amount = 10;
+			break;
+		case 2:
+			amount = 20;
+			break;
+		case 3:
+			amount = 50;
+			break;
+		case 4:
+			amount = 100;
+			break;
+		case 5:
+			cout << "                            Enter other amount: ";
+			cin >> amount;
+			cout << endl;
+			break;
+		default:
+			cout << "                            Invalid choice." << endl;
+			return 0;
+		}
+
+	} while (amount <= 0);
+	if (c.Balance < amount) {
+		cout << "                            Insufficient balance." << endl;
+		cout << "                            Enter 0 to exit :  ";
+		cin >> choice;
+		if (choice == 0) {
+			return 0;
+		}
+		return 0;
+	}
+	c.Balance -= amount;
+	cout << "                            Withdrawal successful. New balance: " << c.Balance << " TND" << endl;
+	Push(&c.Transaction_Stack, transaction{ rand() % 10000 + 1, c.Account_Number, "Withdrawal", amount, "Today" });
+	return 1;
+}
+
+int Deposit_Money(customer& c) {
+	double amount;
+	cout << "                            Enter amount to deposit: ";
+	cin >> amount;
+	if (amount <= 0) {
+		cout << "                            Invalid deposit amount." << endl;
+		return 0;
+	}
+	c.Balance += amount;
+	cout << "\n                            Deposit successful. New balance: " << c.Balance << " TND" << endl;
+	Push(&c.Transaction_Stack, transaction{ rand() % 10000 + 1, c.Account_Number, "Deposit", amount, "Today" });
+	return 1;
+}
 	
+void Display_Transactions(const customer& c) {
+	if (IsEmpty(c.Transaction_Stack)) {
+		cout << "                            No transactions to display." << endl;
+		return;
+	}
+	cout << "                            Today's Transactions for Account Number: " << c.Account_Number << endl;
+	DisplayStack(c.Transaction_Stack);
+}
+
+void Undo_Last_Transaction(customer& c) { //*To fix* it undoes the last transaction and repeats it even if thhe transaction is not the same the last and before last time 
+	if (c.Last_Transaction_Undone == true)
+	{
+		cout << "                            You already undid the last trasnaction of today. You cannot undo again."<<endl;
+		return;
+	}
+	if (IsEmpty(c.Transaction_Stack)) {
+		cout << "                            No transactions to undo." << endl;
+		return;
+	}
+	transaction lastTransaction = Pop(&c.Transaction_Stack);
+	if (lastTransaction.Transaction_Type == "Withdrawal") {
+		c.Balance += lastTransaction.Transaction_Amount;
+		cout << "                            Last withdrawal transaction undone. New balance: " << c.Balance << " TND" << endl;
+	}
+	else if (lastTransaction.Transaction_Type == "Deposit") {
+		c.Balance -= lastTransaction.Transaction_Amount;
+		cout << "                            Last deposit transaction undone. New balance: " << c.Balance << " TND" << endl;
+	}
+	else {
+		cout << "                            Unknown transaction type." << endl;
+	}
+	c.Last_Transaction_Undone = true;
+}
+
+int Home_Page() {
+	int choice;
+	cout << "============================================================================================" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "                    Welcome to the BANK MANAGEMENT SYSTEM" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "                            1.Employee Interface" << endl;
+	cout << "                            2.Customer Interface" << endl;
+	cout << "                            0.Exit" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "                            Enter your choice: ";
+	cin >> choice;
+	return choice;
+}
+int Login_Page()
+{
+	int choice;
+	cout << "============================================================================================" << endl;
+	cout << "                            Press -1 to try again " << endl;
+	cout << "                            Press 0 to return to Home: " << endl;
+	cout << "                            Enter your choice: ";
+	cin >> choice;
+	cout << "============================================================================================" << endl;
+	return choice;
+}
+int Customer_Home_Page() { 
+	int customer_choice;
+	cout << "============================================================================================" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "                    Welcome to the CUSTOMER MANAGEMENT SYSTEM" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "============================================================================================" << endl;
+	cout << "                            1.View loan list. " << endl;
+	cout << "                            2.Submit loan request" << endl;
+	cout << "                            3.Perform transaction." << endl;
+	cout << "                            4.View list of today's transactions." << endl;
+	cout << "                            5.Undo last transaction." << endl;
+	cout << "                            0.Return to Home." << endl;
+	cout << "============================================================================================" << endl;
+	cout << "                            Enter your choice: ";
+	cin >> customer_choice;
+	return customer_choice;
+}
+void customer_interface(customer*& customers, int& CustomerCount, int& Customer_Capacity) {
+	int c, customer_choice, operation_choice;
 	do {
 		c = CheckCustomerLogin(customers, CustomerCount);
+		if (c==-1) {
+			c=Login_Page();
+		}
 	} while (c == -1);
-	cout << "============================================================================================" << endl;
 	
+	
+	do {
+		customer_choice = Customer_Home_Page();
+		switch (customer_choice)
+		{
+		case 1:
+			cout << "============================================================================================" << endl;
+			Display_Loan_List(customers[c]);
+			break;
+			cout << "============================================================================================" << endl;
 
-	if (c != -1) {
-		do {
+		case 2:
 			cout << "============================================================================================" << endl;
+			Submit_Loan_Request(customers[c]);
+			break;
 			cout << "============================================================================================" << endl;
-			cout << "                    Welcome to the CUSTOMER MANAGEMENT SYSTEM" << endl;
-			cout << "============================================================================================" << endl;
-			cout << "============================================================================================" << endl;
-			cout << "                            1.View loan list. " << endl;
-			cout << "                            2.Submit loan request" << endl;
-			cout << "                            3.Perform transaction." << endl;
-			cout << "                            4.View list of today's transactions." << endl;
-			cout << "                            5.Undo last transaction." << endl;
-			cout << "                            0.Return to Home." << endl;
-			cout << "============================================================================================" << endl;
-			cout << "                            Enter your choice: ";
-			cin >> customer_choice;
 
-			switch (customer_choice)
-			{
-			case 1:
-				cout << "============================================================================================" << endl;
-				Display_Loan_List(customers[c]);
-				break;
-				cout << "============================================================================================" << endl;
-
-			case 2:
-				cout << "============================================================================================" << endl;
-				Submit_Loan_Request(customers[c]);
-				break;
-				cout << "============================================================================================" << endl;
-
-			case 3:
-				cout << "============================================================================================" << endl;
+		case 3:
+			cout << "============================================================================================" << endl;
 				
-				do
+			do
+			{
+				cout << "                            Choose an operation to perform: " << endl;
+				cout << "                            1.Withdraw money. " << endl;
+				cout << "                            2.Deposit money. " << endl;
+				cout << "                            0.Return to Home. " << endl;
+				cout << "============================================================================================" << endl;
+				cout << "                            Enter your choice : ";
+				cin >> operation_choice;
+				cout << "============================================================================================" << endl;
+
+				switch (operation_choice)
 				{
-					cout << "Choose an operation to perform: " << endl;
-					cout << "                            1.Withdraw money. " << endl;
-					cout << "                            2.Deposit money. " << endl;
-					cout << "                            0.Return to Home. " << endl;
-					cin >> operation_choice;
-					switch (operation_choice)
-					{
-					case 1:
-						Withdraw_Money(customers[c]);
-						break;
-					case 2:
-						cout << "                            Enter amount to deposit: ";
-						double depositAmount;
-						cin >> depositAmount;
-						Deposit_Money(customers[c], depositAmount);
-						break;
-					case 0:
-						cout << "                            Returning...." << endl;
-						break;
-					default:
-						cout << "--------------------------------------------------------------------------------------------" << endl;
-						cout << "                            Invalid choice. Please try again." << endl;
-						cout << "============================================================================================" << endl;
-					}
+				case 1:
+					Withdraw_Money(customers[c]);
+					break;
+				case 2:
+						
+					Deposit_Money(customers[c]);
+					break;
+				case 0:
+					cout << "                            Returning...." << endl;
+					break;
+				default:
+					cout << "--------------------------------------------------------------------------------------------" << endl;
+					cout << "                            Invalid choice. Please try again." << endl;
+					cout << "============================================================================================" << endl;
 				}
-				while (operation_choice != 0);
-				cout << "============================================================================================" << endl;
-				break;
-
-			case 4:
-				cout << "============================================================================================" << endl;
-				Display_Transactions(customers[c]);	
-				cout << "============================================================================================" << endl;
-				break;
-
-			case 5:
-				cout << "============================================================================================" << endl;
-				Undo_Last_Transaction(customers[c]);
-				cout << "============================================================================================" << endl;
-				break;
-			case 0:
-				cout << "Returning...." << endl;
-				break;
-
-			default:
-				cout << "--------------------------------------------------------------------------------------------" << endl;
-				cout << "Invalid choice. Please try again." << endl;
-				cout << "============================================================================================" << endl;
 			}
-		} while (customer_choice != 0);
-	}
+			while (operation_choice != 0);
+			cout << "============================================================================================" << endl;
+			break;
+
+		case 4:
+			cout << "============================================================================================" << endl;
+			Display_Transactions(customers[c]);	
+			cout << "============================================================================================" << endl;
+			break;
+
+		case 5:
+			cout << "============================================================================================" << endl;
+			Undo_Last_Transaction(customers[c]);
+			cout << "============================================================================================" << endl;
+			break;
+		case 0:
+			cout << "                            Returning...." << endl;
+			break;
+
+		default:
+			cout << "--------------------------------------------------------------------------------------------" << endl;
+			cout << "                            Invalid choice. Please try again." << endl;
+			cout << "============================================================================================" << endl;
+		}
+	} while (customer_choice!=0  );
 	
+	
+}
+void Quit_Program() {
+	cout << "================= EXITING PROGRAM =================" << endl;
+	cout << "                            Thank you for using our banking system." << endl;
+	cout << "                            Goodbye!" << endl;
 }
