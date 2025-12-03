@@ -6,6 +6,7 @@
 using namespace std;
 
 struct loan {
+	int Account_Holder_Number = 000000;
 	int Loan_ID = 0;
 	string Loan_Type;
 	double Principle_Amount = 0.0;
@@ -16,4 +17,5 @@ struct loan {
 	string End_Date;
 	string Loan_Status;
 };
+
 #endif
