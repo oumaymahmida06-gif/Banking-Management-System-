@@ -54,14 +54,14 @@ int Push(Stack* S, transaction e) {  // add element to the top
 	}
 }
 
-transaction Pop(Stack* S) { // remove the top element from the stack
+transaction Pop(Stack& S) { // remove the top element from the stack
 	transaction e = transaction{ 0,0,"",0.0,"" };
-	if (IsEmpty(*S)) {
+	if (IsEmpty(S)) {
 		cout << "\nStack is empty";
 	}
 	else {
-		e = S->transactions[S->Top]; // get the top element
-		S->Top--; // move the top index down
+		e = S.transactions[S.Top]; // get the top element
+		S.Top--; // move the top index down
 	}
 	return e;
 }
