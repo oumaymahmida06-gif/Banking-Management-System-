@@ -2,12 +2,12 @@
 #include "StatisticsMeths.h"
 using namespace std;
 
-int Total_Number_of_Loans(const customer* customers, int CustomerCount) {
+void Total_Number_of_Loans(const customer* customers, int CustomerCount) {
 	int total_loans = 0;
 	for (int i = 0; i < CustomerCount; i++) {
 		total_loans += customers[i].Loan_List.size;
 	}
-	return total_loans;
+	cout << "Total Number of Loans: " << total_loans << "\n";
 
 }
 void Number_of_Loans_By_Type(const customer* customers, int CustomerCount) {
@@ -197,4 +197,62 @@ void Number_of_employees_per_bank_branch(const Employee* employees, int Employee
 		cout << "Bank Branch " << CurrentBranch << ": " << branch_employee_count << " employees\n";
 	}
 	delete[] BranchSort;
+}
+void statistics_interface(const customer* customers, int CustomerCount, const Employee* employees, int EmployeeCount, int ArchivedCount) {
+	int stats_choice;
+	do {
+		cout << "================== Statistics Menu ==================\n";
+		cout << "1. Total Number of Loans\n";
+		cout << "2. Number of Loans by Type\n";
+		cout << "3. Number of Loans by Status\n";
+		cout << "4. Active Loans within a Specified Date Range\n";
+		cout << "5. Customer with the Highest Number of Loans\n";
+		cout << "6. Customer with the Highest Account Balance\n";
+		cout << "7. Customer with the Lowest Account Balance\n";
+		cout << "8. Total Number of Employees\n";
+		cout << "9. Number of Employees per Bank Branch\n";
+		cout << "0. Exit Statistics Menu\n";
+		do {
+			cout << "Enter your choice: ";
+			cin >> stats_choice;
+			if (stats_choice < 0 || stats_choice > 9) {
+				cout << "Invalid choice. Please try again.\n";
+			}
+		} while (stats_choice < 0 || stats_choice > 9);
+		cin.ignore();
+		switch (stats_choice) {
+		case 1:
+			Total_Number_of_Loans(customers, CustomerCount);
+			break;
+		case 2:
+			Number_of_Loans_By_Type(customers, CustomerCount);
+			break;
+		case 3:
+			Number_of_loans_by_status(customers, CustomerCount, ArchivedCount);
+			break;
+		case 4:
+			Active_loans_within_a_specified_date_range(customers, CustomerCount);
+			break;
+		case 5:
+			Customer_with_the_highest_number_of_loans(customers, CustomerCount);
+			break;
+		case 6:
+			Customer_with_the_highest_account_balance(customers, CustomerCount);
+			break;
+		case 7:
+			Customer_with_the_lowest_account_balance(customers, CustomerCount);
+			break;
+		case 8:
+			Total_number_of_employees(employees, EmployeeCount);
+			break;
+		case 9:
+			Number_of_employees_per_bank_branch(employees, EmployeeCount);
+			break;
+		case 0:
+			cout << "Exiting Statistics Menu.\n";
+			break;
+		default:
+			cout << "Invalid choice. Please try again.\n";
+		}
+	} while (stats_choice != 0);
 }
