@@ -72,7 +72,6 @@ bool Dequeue(Queue& Q) {
 		cout << "\nQueue is empty";
 		return false;
 	}
-	loan latest_loan_request = Q.Loan_Requests[Q.Front];
 	if (Q.Front == Q.Tail) {
 		Q.Front = 0;
 		Q.Tail = 0;
