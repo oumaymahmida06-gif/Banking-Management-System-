@@ -1,7 +1,12 @@
 #include <iostream>
-#include "Employee_Methods.h"
 #include "Customer_Methods.h"
+#include "Employee_Methods.h"
+#include "TransactionMeths.h"
+#include "DoublyLinkedListMeths.h"
+#include "SinglyLinkedListMeths.h"
 #include "QueueMeths.h"
+#include "DailyTransactionsLogListMeths.h"
+#include "TodaysDate.h"
 using namespace std;
 
 //------------------------ARRAY--------------------------
@@ -442,11 +447,32 @@ void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int Custom
 		Display_Loan_List(customers[p]);
 	}
 }
-
+void Finalize_Day(customer* customers, int CustomerCount, DailyTransactionsLogList* DailyLogList) {
+	string current_date = GetTodayDate();
+	string choice;
+	do{
+		cout << " are you sure you want to finalize the day? This action will copy all daily transactions into the Daily Log List and clear all customers' transaction stacks. (Yes/No): ";
+		getline(cin, choice);
+		if ((choice != "Yes") && (choice != "No")) {
+			cout << "Invalid input. Please enter 'Yes' or 'No'.\n";
+		}
+	} while ((choice != "Yes") && (choice != "No"));
+	cout << "Finalizing the day: " << current_date << "...\n";
+	for (int i = 0; i < CustomerCount; i++) {
+		while (!IsEmpty(customers[i].Transaction_Stack)) {
+			transaction t = Pop(customers[i].Transaction_Stack);
+			if (i==0){
+				Insert_Completed_Transaction(DailyLogList, t, DailyLogList->size);
+			}
+			Insert_Completed_Transaction(DailyLogList, t, DailyLogList->size +1);
+		}
+	}
+	cout << "All daily transactions have been copied into the Log List successfully.\n";
+}
 //-----------------------------------------------INTERFACE FUNTION--------------------------------------------------
 
 
-void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,customer*& customers, int& CustomerCount, int& Customer_Capacity, customer*& archived, int& ArchivedCount, int& Archived_Capacity, CompletedLoanList& CompletedLoansList, Queue* Q)
+void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,customer*& customers, int& CustomerCount, int& Customer_Capacity, customer*& archived, int& ArchivedCount, int& Archived_Capacity, CompletedLoanList& CompletedLoansList, Queue* Q, DailyTransactionsLogList* Daily_Transactions_Log_List)
 {
 	int employee_choice;
 
@@ -473,6 +499,7 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 		cout << "15. Delete Loans Whose Status is completed\n";
 		cout << "16. Display Completed Loans\n";
 		cout << "17. Manage Loan Requests\n";
+		cout << "18. Finalize the Day\n";
 		cout << "0. Return to Home\n";
 		cout << "Choose an operation : ";
 		cin >> employee_choice;
@@ -524,7 +551,13 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 			Move_All_Completed_Loans(customers, CustomerCount, &CompletedLoansList);
 			break;
 		case 16:
+			Display_Completed_Loans(CompletedLoansList);
+			break;
+		case 17:
 			Manage_Loan_Requests(*Q, customers, CustomerCount);
+			break;
+		case 18:
+			Finalize_Day(customers, CustomerCount, Daily_Transactions_Log_List);
 			break;
 		case 0:
 			cout << "Returning.......\n";
