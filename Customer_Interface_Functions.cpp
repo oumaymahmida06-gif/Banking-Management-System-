@@ -264,9 +264,14 @@ void Display_Loan_List(const customer& c) {
 void Submit_Loan_Request(customer& c, Queue& Q) {
 	loan newLoan;
 	newLoan.Account_Holder_Number = c.Account_Number;
-	cout << "Enter Loan Type: ";
-	cin.ignore();
-	getline(cin, newLoan.Loan_Type);
+	
+	do
+	{
+		cout << "Enter Loan Type: ";
+		cin.ignore();
+		getline(cin, newLoan.Loan_Type);
+	} while (!VerifyLoanType(newLoan.Loan_Type));	
+		
 
 	do {
 		cout << "Enter Principle Amount: ";
