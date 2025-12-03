@@ -433,6 +433,7 @@ void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacit
 		cin >> c.PIN;
 	} while (!VerifyPIN(c.PIN));
 	c.Loan_List = create_List();
+	c.Transaction_Stack.Top = 0;
 	customers[CustomerCount] = c;
 	CustomerCount++;
 }
