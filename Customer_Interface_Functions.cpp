@@ -505,7 +505,7 @@ void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	cout << "Loan with ID " << loanID << " not found." << endl;
 }
 
-vvoid Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* completed_loans) {
+void Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* completed_loans) {
 
 	node* current = c.Loan_List.head;
 	int pos = 1;
