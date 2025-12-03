@@ -2,6 +2,7 @@
 #include "Employee_Methods.h"
 #include "Customer_Methods.h"
 #include "SinglyLinkedListMeths.h"
+#include "TodaysDate.h"
 using namespace std;
 
 int main() {
@@ -20,7 +21,7 @@ int main() {
 
     CompletedLoanList CompletedLoansList = Create_Completed_Loan_List();
     Queue* Loan_Requests = CreateQueue();
-
+    string TodaysDate = GetTodayDate();
 	int choice;
 
 
@@ -28,6 +29,8 @@ int main() {
         cout << "============================================================================================" << endl;
         cout << "============================================================================================" << endl;
         cout << "                    Welcome to the Banking Management System" << endl;
+        cout << "\n";
+        cout << "                              Today's Date : " << TodaysDate << endl;
         cout << "============================================================================================" << endl;
         cout << "============================================================================================" << endl;
         cout << "                            1. Employee Interface\n";
