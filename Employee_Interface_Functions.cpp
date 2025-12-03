@@ -6,6 +6,7 @@
 #include "SinglyLinkedListMeths.h"
 #include "QueueMeths.h"
 #include "DailyTransactionsLogListMeths.h"
+#include "StatisticsMeths.h"
 #include "TodaysDate.h"
 using namespace std;
 
@@ -500,8 +501,11 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 		cout << "16. Display Completed Loans\n";
 		cout << "17. Manage Loan Requests\n";
 		cout << "18. Finalize the Day\n";
+		cout << "19. View Statistics\n";
 		cout << "0. Return to Home\n";
-		cout << "Choose an operation : ";
+		cout << "============================================================================================" << endl;
+		cout << "\n";
+		cout << "Please Choose an operation : ";
 		cin >> employee_choice;
 
 		switch (employee_choice) {
@@ -558,6 +562,9 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 			break;
 		case 18:
 			Finalize_Day(customers, CustomerCount, Daily_Transactions_Log_List);
+			break;
+		case 19:
+			statistics_interface(customers, CustomerCount, employees, EmployeeCount, ArchivedCount);
 			break;
 		case 0:
 			cout << "Returning.......\n";
