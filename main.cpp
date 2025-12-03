@@ -3,6 +3,7 @@
 #include "Customer_Methods.h"
 #include "SinglyLinkedListMeths.h"
 #include "DailyTransactionsLogListMeths.h"
+#include "StatisticsMeths.h"
 #include "TodaysDate.h"
 using namespace std;
 
