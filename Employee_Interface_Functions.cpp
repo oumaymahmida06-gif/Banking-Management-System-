@@ -1,61 +1,42 @@
 #include <iostream>
 #include "Employee_Methods.h"
 #include "Customer_Methods.h"
+#include "QueueMeths.h"
 using namespace std;
 
-void AddEmployee(Employee* employees, int& EmployeeCount, int& capacity) {
-	if (EmployeeCount == capacity) {
-		NewArray(employees, capacity, EmployeeCount);
-	}
-	Employee e;
-	int ID;
-	do {
-		cout << "Enter the ID of the employee:" << endl;
-		cin >> ID;
-	} while (!Verify_Id(ID));
-	e.id = ID;
-	cin.ignore();
-	string Name;
-	do {
-		cout << "Enter the Name of the employee: ";
-		getline(cin, Name);
-	} while (!Verify_Name(Name));
-	e.Name = Name;
-	string Last_Name;
-	do {
-		cout << "Enter the Last Name of the employee: ";
-		getline(cin, Last_Name);
-	} while (!Verify_Last_Name(Last_Name));
-	e.Last_Name = Last_Name;
-	string Address;
-	do {
-		cout << "Enter the Adress of the employee: ";
-		getline(cin, Address);
-	} while (!Verify_Address(Address));
-	e.Address = Address;
-	double salary;
-	do {
-		cout << "Enter the Salary of the employee:" << endl;
-		cin >> salary;
-	} while (!Verify_Salary(salary));
-	e.Salary = salary;
-	cin.ignore();
-	string date;
-	do {
-		cout << "Enter the Hire Date of the employee: ";
-		getline(cin, date);
-	} while (!Verify_Hire_Date(date));
-	e.Hire_Date = date;
-	int bank_branch;
-	do {
-		cout << "Enter the bank branch of the employee:" << endl;
-		cin >> bank_branch;
-	} while (!Verify_Bank_Branch(bank_branch));
-	e.Bank_Branch= bank_branch;
-	employees[EmployeeCount] = e;
-	EmployeeCount++;
-}
+//------------------------ARRAY--------------------------
 
+void PrintEmployee(const Employee& e) {
+	cout << "ID: " << e.id << endl;
+	cout << "Name: " << e.Name << endl;
+	cout << "Last Name: " << e.Last_Name << endl;
+	cout << "Address: " << e.Address << endl;
+	cout << "Salary: " << e.Salary << endl;
+	cout << "Hire Date: " << e.Hire_Date << endl;
+	cout << "Bank Branch: " << e.Bank_Branch << endl;
+	cout << "------------------------------------\n";
+}
+void DisplayEmployees(Employee* employees, int EmployeeCount) {
+	if (EmployeeCount == 0) {
+		cout << "No employees to display.\n";
+		return;
+	}
+
+	cout << "\n------ Employee List ------\n";
+
+	for (int i = 0; i < EmployeeCount; i++) {
+		PrintEmployee(employees[i]);
+	}
+}
+int FindEmployee(Employee* employees, int ID, int EmployeeCount) {
+	for (int i = 0; i < EmployeeCount; i++) {
+		if (employees[i].id == ID) {
+			return i;
+		}
+	}
+	return -1;
+}
+//DYNAMIC ALLOCATION:
 void NewArray(Employee*& employees, int& capacity, int EmployeeCount) {
 	int NewSize = capacity * 2;
 	Employee* NewArr = new Employee[NewSize];
@@ -66,6 +47,8 @@ void NewArray(Employee*& employees, int& capacity, int EmployeeCount) {
 	employees = NewArr;
 	capacity = NewSize;
 }
+
+//------------------------VERIFICATION--------------------------
 
 bool Verify_Id(const int& ID) {
 	if ((ID > 9999) || (ID<999)) {
@@ -166,13 +149,59 @@ bool Verify_Hire_Date(const string& date) {
 	return true;
 }
 
-int FindEmployee(Employee* employees, int ID, int EmployeeCount) {
-	for (int i = 0; i < EmployeeCount; i++) {
-		if (employees[i].id == ID) {
-			return i;
-		}
+//------------------------EMPLOYEE INTERFACE FUNCTIONS--------------------------
+
+void AddEmployee(Employee* employees, int& EmployeeCount, int& capacity) {
+	if (EmployeeCount == capacity) {
+		NewArray(employees, capacity, EmployeeCount);
 	}
-	return -1;
+	Employee e;
+	int ID;
+	do {
+		cout << "Enter the ID of the employee:" << endl;
+		cin >> ID;
+	} while (!Verify_Id(ID));
+	e.id = ID;
+	cin.ignore();
+	string Name;
+	do {
+		cout << "Enter the Name of the employee: ";
+		getline(cin, Name);
+	} while (!Verify_Name(Name));
+	e.Name = Name;
+	string Last_Name;
+	do {
+		cout << "Enter the Last Name of the employee: ";
+		getline(cin, Last_Name);
+	} while (!Verify_Last_Name(Last_Name));
+	e.Last_Name = Last_Name;
+	string Address;
+	do {
+		cout << "Enter the Adress of the employee: ";
+		getline(cin, Address);
+	} while (!Verify_Address(Address));
+	e.Address = Address;
+	double salary;
+	do {
+		cout << "Enter the Salary of the employee:" << endl;
+		cin >> salary;
+	} while (!Verify_Salary(salary));
+	e.Salary = salary;
+	cin.ignore();
+	string date;
+	do {
+		cout << "Enter the Hire Date of the employee: ";
+		getline(cin, date);
+	} while (!Verify_Hire_Date(date));
+	e.Hire_Date = date;
+	int bank_branch;
+	do {
+		cout << "Enter the bank branch of the employee:" << endl;
+		cin >> bank_branch;
+	} while (!Verify_Bank_Branch(bank_branch));
+	e.Bank_Branch = bank_branch;
+	employees[EmployeeCount] = e;
+	EmployeeCount++;
 }
 
 void DeleteEmployee(Employee* employees, int& EmployeeCount) {
@@ -254,28 +283,7 @@ void ModifyEmployee(Employee* employees, int EmployeeCount) {
 
 	}
 }
-void PrintEmployee(const Employee& e) {
-	cout << "ID: " << e.id << endl;
-	cout << "Name: " << e.Name << endl;
-	cout << "Last Name: " << e.Last_Name << endl;
-	cout << "Address: " << e.Address << endl;
-	cout << "Salary: " << e.Salary << endl;
-	cout << "Hire Date: " << e.Hire_Date << endl;
-	cout << "Bank Branch: " << e.Bank_Branch << endl;
-	cout << "------------------------------------\n";
-}
-void DisplayEmployees(Employee* employees, int EmployeeCount) {
-	if (EmployeeCount == 0) {
-		cout << "No employees to display.\n";
-		return;
-	}
 
-	cout << "\n------ Employee List ------\n";
-
-	for (int i = 0; i < EmployeeCount; i++) {
-		PrintEmployee(employees[i]);
-	}
-}
 
 void DisplayEmployeesSortedByAlphabeticalOrder(Employee* employees, int EmployeeCount) {
 	if (EmployeeCount == 0) {
@@ -334,12 +342,7 @@ void DisplayEmployeesGroupedByBankBranch(Employee* employees, int EmployeeCount)
 	}
 	delete[] BranchSort;
 }
-string Reformulate(string hiredate) {
-	string day = hiredate.substr(0, 2);
-	string month = hiredate.substr(3, 2);
-	string year = hiredate.substr(6, 4);
-	return year + month + day;
-}
+
 void DisplayEarliestAndRecentEmployees(Employee* employees, int EmployeeCount) {
 	if (EmployeeCount == 0) {
 		cout << "There's no existant employees to display.\n";
@@ -367,6 +370,13 @@ void DisplayEarliestAndRecentEmployees(Employee* employees, int EmployeeCount) {
 	cout << "---------------------------------------------\n";
 	delete[] HireDateSort;
 }
+string Reformulate(string hiredate) {
+	string day = hiredate.substr(0, 2);
+	string month = hiredate.substr(3, 2);
+	string year = hiredate.substr(6, 4);
+	return year + month + day;
+}
+
 void Delete_Closed_Accounts_And_Store_Them(customer*& customers, int& CustomerCount, customer*& archived, int& ArchivedCount, int& ArchivedCapacity){
 	int i = 0;
 	while (i < CustomerCount) {
@@ -413,28 +423,30 @@ void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int Custom
 	}
 	else {
 		int account_number_to_display_its_loan_list = 0, p;
-		bool ValidAccount = false;
+		bool ValidAccountNumber = false;
 		do {
 			cout << "Enter the customer's Account Number to display its loan list: " << endl;
 			cin >> account_number_to_display_its_loan_list;
 			if (!VerifyAccountNumber(account_number_to_display_its_loan_list)) {
-				ValidAccount = false;
+				ValidAccountNumber = false;
 			}
 			p = FindCustomer(customers, account_number_to_display_its_loan_list, CustomerCount);
 			if ((p == -1) && (VerifyAccountNumber(account_number_to_display_its_loan_list))) {
 				cout << "Customer not found. Please make sure of the Account Number.\n";
-				ValidAccount = false;
+				ValidAccountNumber = false;
 			}
 			else {
-				ValidAccount = true;
+				ValidAccountNumber = true;
 			}
-		} while (!ValidAccount);
+		} while (!ValidAccountNumber);
 		Display_Loan_List(customers[p]);
 	}
 }
 
+//-----------------------------------------------INTERFACE FUNTION--------------------------------------------------
 
-void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,customer*& customers, int& CustomerCount, int& Customer_Capacity, customer*& archived, int& ArchivedCount, int& Archived_Capacity)
+
+void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,customer*& customers, int& CustomerCount, int& Customer_Capacity, customer*& archived, int& ArchivedCount, int& Archived_Capacity, CompletedLoanList& CompletedLoansList, Queue* Q)
 {
 	int employee_choice;
 
@@ -458,6 +470,9 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 		cout << "12. Display archived accounts\n";
 		cout << "13. Display the list of loans for a specific customer\n";
 		cout << "14. Change the status of a loan\n";
+		cout << "15. Delete Loans Whose Status is completed\n";
+		cout << "16. Display Completed Loans\n";
+		cout << "17. Manage Loan Requests\n";
 		cout << "0. Return to Home\n";
 		cout << "Choose an operation : ";
 		cin >> employee_choice;
@@ -504,6 +519,12 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 			break;
 		case 14:
 			Change_Status_Of_A_Loan(customers, CustomerCount);
+			break;
+		case 15:
+			Move_All_Completed_Loans(customers, CustomerCount, &CompletedLoansList);
+			break;
+		case 16:
+			Manage_Loan_Requests(*Q, customers, CustomerCount);
 			break;
 		case 0:
 			cout << "Returning.......\n";
