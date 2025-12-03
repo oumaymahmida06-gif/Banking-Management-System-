@@ -505,26 +505,24 @@ void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	cout << "Loan with ID " << loanID << " not found." << endl;
 }
 
-void Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* completed_loans) {
+vvoid Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* completed_loans) {
 
 	node* current = c.Loan_List.head;
 	int pos = 1;
 
 	while (current) {
+		node* nextNode = current->next;
 
 		if (current->data.Loan_Status == "Completed") {
 
 			Insert_Completed_Loan(completed_loans, current->data, completed_loans->size + 1);
 			removeAt(&c.Loan_List, pos);
-
-			current = c.Loan_List.head;
-			for (int i = 1; i < pos && current; i++)
-				current = current->next;
 		}
 		else {
-			current = current->next;
 			pos++;
 		}
+		current = current->next;
+
 	}
 }
 void Move_All_Completed_Loans(customer* customers, int CustomerCount, CompletedLoanList* CompletedLoansList){
