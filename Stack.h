@@ -5,6 +5,7 @@
 constexpr int Max = 100;
 struct Stack {
 	transaction transactions[Max];
-	int Top;
+	int Top=0;
 };
+
 #endif
