@@ -11,7 +11,7 @@ struct Employee {
 	string Address;
 	double Salary = 0.0;
 	string Hire_Date;
-	int Bank_Branch=1;
+	int Bank_Branch=0;
 };
 
 #endif
