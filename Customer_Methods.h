@@ -36,7 +36,7 @@ bool VerifyPIN(int PIN);
 bool VerifyLoanID(int loanID);
 bool VerifyLoanStatus(string Status);
 bool Verify_End_Date(string Start_Date, string End_Date);
-
+bool VerifyLoanType(string LoanType);
 
 //------------------------TO USE FOR THE CUSTOMER--------------------------
 void Display_Loan_List(const customer& c);
