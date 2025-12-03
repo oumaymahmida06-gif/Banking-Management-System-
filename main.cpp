@@ -2,6 +2,7 @@
 #include "Employee_Methods.h"
 #include "Customer_Methods.h"
 #include "SinglyLinkedListMeths.h"
+#include "DailyTransactionsLogListMeths.h"
 #include "TodaysDate.h"
 using namespace std;
 
@@ -21,6 +22,7 @@ int main() {
 
     CompletedLoanList CompletedLoansList = Create_Completed_Loan_List();
     Queue* Loan_Requests = CreateQueue();
+    DailyTransactionsLogList  Daily_Transactions_Log_List = Create_Daily_Transactions_Log_List();
     string TodaysDate = GetTodayDate();
 	int choice;
 
@@ -45,7 +47,7 @@ int main() {
 
         switch (choice) {
         case 1:
-            employee_interface(employees, EmployeeCount, capacity, customers, CustomerCount, Customer_Capacity, archived, ArchivedCount, Archived_Capacity, CompletedLoansList, Loan_Requests);
+            employee_interface(employees, EmployeeCount, capacity, customers, CustomerCount, Customer_Capacity, archived, ArchivedCount, Archived_Capacity, CompletedLoansList, Loan_Requests, &Daily_Transactions_Log_List);
             break;
         case 2:
             customer_interface(customers, CustomerCount, Customer_Capacity, *Loan_Requests);
