@@ -361,7 +361,7 @@ void Display_Transactions(const customer& c) {
 	DisplayStack(c.Transaction_Stack);
 }
 
-void Undo_Last_Transaction(customer& c) { //*To fix* it undoes the last transaction and repeats it even if thhe transaction is not the same the last and before last time 
+void Undo_Last_Transaction(customer& c) { 
 	if (IsEmpty(c.Transaction_Stack)) {
 		cout << "No transactions to undo." << endl;
 		return;
