@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Employee_Methods.h"
 #include "Customer_Methods.h"
+#include "SinglyLinkedListMeths.h"
 using namespace std;
 
 int main() {
@@ -9,13 +10,16 @@ int main() {
     int CustomerCount = 0;
 
     int Archived_Capacity = 200;
-    customer* archived = new customer[200];
+    customer* archived = new customer[Archived_Capacity];
     int ArchivedCount = 0;
     
 
     int capacity = 200;
     Employee* employees = new Employee[capacity];
     int EmployeeCount = 0;
+
+    CompletedLoanList CompletedLoansList = Create_Completed_Loan_List();
+    Queue* Loan_Requests = CreateQueue();
 
 	int choice;
 
@@ -38,14 +42,14 @@ int main() {
 
         switch (choice) {
         case 1:
-            employee_interface(employees, EmployeeCount, capacity, customers, CustomerCount, Customer_Capacity, archived, ArchivedCount, Archived_Capacity);
+            employee_interface(employees, EmployeeCount, capacity, customers, CustomerCount, Customer_Capacity, archived, ArchivedCount, Archived_Capacity, CompletedLoansList, Loan_Requests);
             break;
         case 2:
-            customer_interface(customers, CustomerCount, Customer_Capacity);
+            customer_interface(customers, CustomerCount, Customer_Capacity, *Loan_Requests);
             break;
         case 0:
-		Quit_Program();
-		break;
+            cout << "Exiting program.......\n";
+            break;
         default:
             cout << "Invalid option. Try again.\n";
         }
@@ -54,5 +58,6 @@ int main() {
 	delete[] customers;
 	delete[] employees;
 	delete[] archived;
+	DestroyQueue(Loan_Requests);
     return 0;
 }
