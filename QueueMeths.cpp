@@ -114,7 +114,7 @@ void Manage_Loan_Requests(Queue& Q, customer* customers, int CustomerCount) {
 			cout << "Loan request approved and added to customer's loan list.\n";
 			for (int i = 0; i < CustomerCount; i++) {
 				if (customers[i].Account_Number == customer_account_number_having_the_loan_request) {
-					insert(customers[i].Loan_List, current_request, (customers[i].Loan_List.size)++);
+					insert(customers[i].Loan_List, current_request, customers[i].Loan_List.size + 1);
 					Dequeue(Q);
 
 				}
