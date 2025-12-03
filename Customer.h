@@ -3,25 +3,22 @@
 #define CUSTOMER_H
 #include <string>
 #include "DoublyLinkedList.h"
+#include "SinglyLinkedList.h"
 #include "Stack.h"
 using namespace std;
 
 struct customer {
-	int Account_Number=000000;
+	int Account_Number = 000000;
 	string Account_Type;
-	int IBAN=0;
+	int IBAN = 0;
 	string Branch_Code;
 	string Account_Holder_Name;
 	string Opening_date;
-	string Status; 
-	double Balance=0.0;
-	int PIN=0;
+	string Status;
+	double Balance = 0.0;
+	int PIN = 0;
 	list Loan_List;
-	list Requested_Loan_List;
-	bool Last_Transaction_Undone = false;
 	Stack Transaction_Stack;
 };
-
-
 
 #endif
