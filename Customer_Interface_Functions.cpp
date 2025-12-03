@@ -235,6 +235,14 @@ bool Verify_End_Date(string Start_Date, string End_Date) {
 	return true;
 }
 
+bool VerifyLoanType(string LoanType) {
+	if (LoanType != "Car" && LoanType != "Home" && LoanType != "Student" && LoanType != "Business") {
+		cout << "Invalid loan type. Please enter 'Car', 'Home', 'Student', or 'Business'." << endl;
+		return false;
+	}
+	return true;
+}
+
 
 //------------------------TO USE FOR THE CUSTOMER--------------------------
 
