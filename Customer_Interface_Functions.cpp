@@ -5,6 +5,7 @@
 #include "DoublyLinkedListMeths.h"
 #include "SinglyLinkedListMeths.h"
 #include "QueueMeths.h"
+#include "DailyTransactionsLogListMeths.h"
 using namespace std;
 
 //------------------------LOGIN--------------------------
@@ -338,6 +339,7 @@ int Withdraw_Money(customer& c) {
 	c.Balance -= amount;
 	cout << "Withdrawal successful. New balance: " << c.Balance << " TND" << endl;
 	Push(&c.Transaction_Stack, transaction{ rand() % 10000 + 1, c.Account_Number, "Withdrawal", amount, "Today" });
+	c.Last_transaction_undone = false;
 	return 1;
 }
 
@@ -349,6 +351,7 @@ int Deposit_Money(customer& c, double amount) {
 	c.Balance += amount;
 	cout << "Deposit successful. New balance: " << c.Balance << " TND" << endl;
 	Push(&c.Transaction_Stack, transaction{ rand() % 10000 + 1, c.Account_Number, "Deposit", amount, "Today" });
+	c.Last_transaction_undone = false;
 	return 1;
 }
 
@@ -361,32 +364,47 @@ void Display_Transactions(const customer& c) {
 	DisplayStack(c.Transaction_Stack);
 }
 
-void Undo_Last_Transaction(customer& c) { 
-	if (c.Last_transaction_undone == true)
+void Undo_Last_Transaction(customer& c) {
+	if (IsEmpty(c.Transaction_Stack)) {
+		cout << "No transactions to undo." << endl;
 		return;
-	else {
-		c.Last_transaction_undone = false;
-
-		if (IsEmpty(c.Transaction_Stack)) {
-			cout << "No transactions to undo." << endl;
-			return;
-		}
-		transaction lastTransaction = Pop(&c.Transaction_Stack);
-		if (lastTransaction.Transaction_Type == "Withdrawal") {
-			c.Balance += lastTransaction.Transaction_Amount;
-			cout << "Last withdrawal transaction undone. New balance: " << c.Balance << " TND" << endl;
-		}
-		else if (lastTransaction.Transaction_Type == "Deposit") {
-			c.Balance -= lastTransaction.Transaction_Amount;
-			cout << "Last deposit transaction undone. New balance: " << c.Balance << " TND" << endl;
-		}
-		else {
-			cout << "Unknown transaction type." << endl;
-		}
-		c.Last_transaction_undone = true;
 	}
-}
 
+	transaction lastTransaction = Top(c.Transaction_Stack);
+
+	if (c.Last_transaction_undone==true) {
+		cout << "The last transaction has already been undone.\n";
+		return;
+	}
+
+	cout << "This is the Last transaction:\n";
+	cout << "  ID: " << lastTransaction.Transaction_ID << "\n";
+	cout << "  Type: " << lastTransaction.Transaction_Type << "\n";
+	cout << "  Amount: " << lastTransaction.Transaction_Amount << "\n";
+	string confirmation;
+	do {
+		cout << "Do you want to undo this transaction? (Yes/No): ";
+		getline(cin, confirmation);
+		if ((confirmation != "Yes") && (confirmation != "No")) {
+			cout << "Invalid input. Please enter 'Yes' or 'No'.\n";
+		}
+	} while ( (confirmation != "Yes") && (confirmation != "No"));
+	
+	Pop(c.Transaction_Stack);
+	if (lastTransaction.Transaction_Type == "Withdrawal") {
+		c.Balance += lastTransaction.Transaction_Amount;
+		cout << "Last withdrawal transaction undone. New balance: " << c.Balance << " TND" << endl;
+	}
+	else if (lastTransaction.Transaction_Type == "Deposit") {
+		c.Balance -= lastTransaction.Transaction_Amount;
+		cout << "Last deposit transaction undone. New balance: " << c.Balance << " TND" << endl;
+	}
+	else {
+		cout << "Unknown transaction type." << endl;
+	}
+
+	c.Last_transaction_undone = true;
+}
 //------------------------FOR EMPLOYEE INTERFACE--------------------------
 
 void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacity) {
@@ -532,6 +550,7 @@ void Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* 
 
 	}
 }
+
 void Move_All_Completed_Loans(customer* customers, int CustomerCount, CompletedLoanList* CompletedLoansList){
 	for (int i = 0; i < CustomerCount; i++) {
 		Move_Completed_Loans_for_a_single_customer(customers[i], CompletedLoansList);
