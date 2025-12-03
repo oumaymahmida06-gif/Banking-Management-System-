@@ -98,7 +98,7 @@ void Manage_Loan_Requests(Queue& Q, customer* customers, int CustomerCount) {
 	while (!IsEmpty(Q)) {
 		loan current_request = FrontElement(Q);
 		int customer_account_number_having_the_loan_request = current_request.Account_Holder_Number;
-		cout << "Processing Loan Request number "<<i++<<":\n"
+		cout << "Processing Loan Request number "<< i++ <<":\n"
 			 << "Type: " << current_request.Loan_Type << "\n"
 			 << "Principal Amount: " << current_request.Principle_Amount << "\n"
 			 << "Start Date: " << current_request.Start_Date << "\n"
