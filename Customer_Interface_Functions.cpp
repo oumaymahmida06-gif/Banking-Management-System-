@@ -362,21 +362,28 @@ void Display_Transactions(const customer& c) {
 }
 
 void Undo_Last_Transaction(customer& c) { 
-	if (IsEmpty(c.Transaction_Stack)) {
-		cout << "No transactions to undo." << endl;
+	if (c.Last_transaction_undone == true)
 		return;
-	}
-	transaction lastTransaction = Pop(&c.Transaction_Stack);
-	if (lastTransaction.Transaction_Type == "Withdrawal") {
-		c.Balance += lastTransaction.Transaction_Amount;
-		cout << "Last withdrawal transaction undone. New balance: " << c.Balance << " TND" << endl;
-	}
-	else if (lastTransaction.Transaction_Type == "Deposit") {
-		c.Balance -= lastTransaction.Transaction_Amount;
-		cout << "Last deposit transaction undone. New balance: " << c.Balance << " TND" << endl;
-	}
 	else {
-		cout << "Unknown transaction type." << endl;
+		c.Last_transaction_undone = false;
+
+		if (IsEmpty(c.Transaction_Stack)) {
+			cout << "No transactions to undo." << endl;
+			return;
+		}
+		transaction lastTransaction = Pop(&c.Transaction_Stack);
+		if (lastTransaction.Transaction_Type == "Withdrawal") {
+			c.Balance += lastTransaction.Transaction_Amount;
+			cout << "Last withdrawal transaction undone. New balance: " << c.Balance << " TND" << endl;
+		}
+		else if (lastTransaction.Transaction_Type == "Deposit") {
+			c.Balance -= lastTransaction.Transaction_Amount;
+			cout << "Last deposit transaction undone. New balance: " << c.Balance << " TND" << endl;
+		}
+		else {
+			cout << "Unknown transaction type." << endl;
+		}
+		c.Last_transaction_undone = true;
 	}
 }
 
