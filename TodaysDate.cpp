@@ -4,17 +4,22 @@
 #include <sstream>
 
 string GetTodayDate() {
-    time_t now = time(0);
-    tm* ltm = localtime(&now);
+    time_t now = time(nullptr);
+    tm tm_info;
 
-    int day = ltm->tm_mday;
-    int month = 1 + ltm->tm_mon;
-    int year = 1900 + ltm->tm_year;
+#ifdef _WIN32
+    localtime_s(&tm_info, &now);   // MSVC secure API
+#else
+    localtime_r(&now, &tm_info);   // POSIX reentrant API
+#endif
 
-    stringstream ss;
-    ss << setw(2) << setfill('0') << day << "-"
-        << setw(2) << setfill('0') << month << "-"
-        << year;
+    int day = tm_info.tm_mday;
+    int month = 1 + tm_info.tm_mon;
+    int year = 1900 + tm_info.tm_year;
 
-    return ss.str();
+    // Format with leading zeros: DD-MM-YYYY
+    std::ostringstream oss;
+    oss << std::setfill('0') << std::setw(2) << day << "-"
+        << std::setw(2) << month << "-" << year;
+    return oss.str();
 }
