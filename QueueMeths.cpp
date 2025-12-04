@@ -94,11 +94,11 @@ void Manage_Loan_Requests(Queue& Q, customer* customers, int CustomerCount) {
 		cout << "No loan requests to manage.\n";
 		return;
 	}
-	int i = 0;
+	int i = 1;
 	while (!IsEmpty(Q)) {
 		loan current_request = FrontElement(Q);
 		int customer_account_number_having_the_loan_request = current_request.Account_Holder_Number;
-		cout << "Processing Loan Request number "<< i++ <<":\n"
+		cout << "Processing Loan Request number  "<< i <<":\n"
 			 << "Type: " << current_request.Loan_Type << "\n"
 			 << "Principal Amount: " << current_request.Principle_Amount << "\n"
 			 << "Start Date: " << current_request.Start_Date << "\n"
@@ -110,6 +110,14 @@ void Manage_Loan_Requests(Queue& Q, customer* customers, int CustomerCount) {
 		} while ( (decision!="Yes") && (decision != "No") );
 
 		if (decision == "Yes") {
+			double interest_rate_to_approve = 0.0;
+			do {
+				cout << "Please enter the interest rate of this loan (%) : ";
+				cin >> interest_rate_to_approve;
+				if ((interest_rate_to_approve > 20) || (interest_rate_to_approve < 0)) {
+					cout << "  The interest rate should be between 0% to 20%" << endl;
+				}
+			} while ((interest_rate_to_approve > 20) || (interest_rate_to_approve < 0));
 			cout << "Loan request approved and added to customer's loan list.\n";
 			for (int i = 0; i < CustomerCount; i++) {
 				if (customers[i].Account_Number == customer_account_number_having_the_loan_request) {
@@ -123,5 +131,6 @@ void Manage_Loan_Requests(Queue& Q, customer* customers, int CustomerCount) {
 			cout << "Loan request denied and deleted .\n";
 			Dequeue(Q);
 		}
+		i++;
 	}
 }
