@@ -235,14 +235,6 @@ bool Verify_End_Date(string Start_Date, string End_Date) {
 	return true;
 }
 
-bool VerifyLoanType(string LoanType) {
-	if (LoanType != "Car" && LoanType != "Home" && LoanType != "Student" && LoanType != "Business") {
-		cout << "Invalid loan type. Please enter 'Car', 'Home', 'Student', or 'Business'." << endl;
-		return false;
-	}
-	return true;
-}
-
 
 //------------------------TO USE FOR THE CUSTOMER--------------------------
 
@@ -272,14 +264,9 @@ void Display_Loan_List(const customer& c) {
 void Submit_Loan_Request(customer& c, Queue& Q) {
 	loan newLoan;
 	newLoan.Account_Holder_Number = c.Account_Number;
-	
-	do
-	{
-		cout << "Enter Loan Type: ";
-		cin.ignore();
-		getline(cin, newLoan.Loan_Type);
-	} while (!VerifyLoanType(newLoan.Loan_Type));	
-		
+	cout << "Enter Loan Type: ";
+	cin.ignore();
+	getline(cin, newLoan.Loan_Type);
 
 	do {
 		cout << "Enter Principle Amount: ";
@@ -288,6 +275,7 @@ void Submit_Loan_Request(customer& c, Queue& Q) {
 			cout << "The Principle amount cannot be negative.\n";
 		}
 	} while (newLoan.Principle_Amount < 0);
+	newLoan.Loan_ID = rand() % 9000 + 1000;
 	newLoan.Interest_Rate = 0.0;
 	newLoan.Amount_paid = 0.0;
 	newLoan.Remaining_Balance = newLoan.Principle_Amount;
@@ -373,7 +361,7 @@ void Display_Transactions(const customer& c) {
 		cout << "No transactions to display." << endl;
 		return;
 	}
-	cout << "Today's Transactions for Account Number: " << c.Account_Number << endl;
+	cout << "=========== Today's Transactions for Account Number:  " << c.Account_Number << "  ===========" <<endl;
 	DisplayStack(c.Transaction_Stack);
 }
 
@@ -394,6 +382,7 @@ void Undo_Last_Transaction(customer& c) {
 	cout << "  ID: " << lastTransaction.Transaction_ID << "\n";
 	cout << "  Type: " << lastTransaction.Transaction_Type << "\n";
 	cout << "  Amount: " << lastTransaction.Transaction_Amount << "\n";
+	cin.ignore();
 	string confirmation;
 	do {
 		cout << "Do you want to undo this transaction? (Yes/No): ";
@@ -559,7 +548,7 @@ void Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* 
 		else {
 			pos++;
 		}
-		current = current->next;
+		current = nextNode;
 
 	}
 }
