@@ -67,12 +67,12 @@ void Number_of_loans_by_status(const customer* customers, int CustomerCount, int
 void Active_loans_within_a_specified_date_range(const customer* customers, int CustomerCount) {
 	string start_date, end_date;
 	do {
-		cout << "Enter the start date (DD-MM-YYYY): ";
-		cout << "Enter the end date (DD-MM-YYYY): ";
+		cout << "Enter the start date (DD-MM-YYYY): \n";
 		getline(cin, start_date);
+		cout << "Enter the end date (DD-MM-YYYY):\n ";
 		getline(cin, end_date);
 	} while (!Verify_End_Date(start_date, end_date));
-	cout << "Active Loans within the specified date range: from" << start_date << " to " << end_date << "\n";
+	cout << "Active Loans within the specified date range: from  " << start_date << "   to   " << end_date << "\n";
 	for (int i = 0; i < CustomerCount; i++) {
 		node* current = customers[i].Loan_List.head;
 		while (current) {
