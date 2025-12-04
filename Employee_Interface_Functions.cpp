@@ -267,19 +267,31 @@ void ModifyEmployee(Employee* employees, int EmployeeCount) {
 			} while (ValidID==false);
 			employees[p].id = newID;
 			cin.ignore();
-			cout << "Enter new name: ";
-			getline(cin, employees[p].Name);
-			cout << "Enter new last name: ";
-			getline(cin, employees[p].Last_Name);
-			cout << "Enter new address: ";
-			getline(cin, employees[p].Address);
-			cout << "Enter new salary: ";
-			cin >> employees[p].Salary;
+			do {
+				cout << "Enter the new Name of the employee: ";
+				getline(cin, employees[p].Name);
+			} while (!Verify_Name(employees[p].Name));
+			do {
+				cout << "Enter the new Last Name of the employee: ";
+				getline(cin, employees[p].Last_Name);
+			} while (!Verify_Last_Name(employees[p].Last_Name));
+			do {
+				cout << "Enter the new Adress of the employee: ";
+				getline(cin, employees[p].Address);
+			} while (!Verify_Address(employees[p].Address));
+			do {
+				cout << "Enter the Salary of the employee:" << endl;
+				cin >> employees[p].Salary;
+			} while (!Verify_Salary(employees[p].Salary));
 			cin.ignore();
-			cout << "Enter new hire date: ";
-			getline(cin, employees[p].Hire_Date);
-			cout << "Enter new branch code: ";
-			cin >> employees[p].Bank_Branch;
+			do {
+				cout << "Enter the Hire Date of the employee: ";
+				getline(cin, employees[p].Hire_Date);
+			} while (!Verify_Hire_Date(employees[p].Hire_Date));
+			do {
+				cout << "Enter the bank branch of the employee:" << endl;
+				cin >> employees[p].Bank_Branch;
+			} while (!Verify_Bank_Branch(employees[p].Bank_Branch));
 			cout << "Employee modified successfully!\n";
 		}
 		else {
@@ -451,6 +463,8 @@ void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int Custom
 void Finalize_Day(customer* customers, int CustomerCount, DailyTransactionsLogList* DailyLogList) {
 	string current_date = GetTodayDate();
 	string choice;
+	cin.ignore();
+
 	do{
 		cout << " are you sure you want to finalize the day? This action will copy all daily transactions into the Daily Log List and clear all customers' transaction stacks. (Yes/No): ";
 		getline(cin, choice);
@@ -462,14 +476,12 @@ void Finalize_Day(customer* customers, int CustomerCount, DailyTransactionsLogLi
 	for (int i = 0; i < CustomerCount; i++) {
 		while (!IsEmpty(customers[i].Transaction_Stack)) {
 			transaction t = Pop(customers[i].Transaction_Stack);
-			if (i==0){
-				Insert_Completed_Transaction(DailyLogList, t, DailyLogList->size);
-			}
 			Insert_Completed_Transaction(DailyLogList, t, DailyLogList->size +1);
 		}
 	}
 	cout << "All daily transactions have been copied into the Log List successfully.\n";
 }
+
 //-----------------------------------------------INTERFACE FUNTION--------------------------------------------------
 
 
