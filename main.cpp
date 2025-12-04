@@ -5,6 +5,7 @@
 #include "DailyTransactionsLogListMeths.h"
 #include "StatisticsMeths.h"
 #include "TodaysDate.h"
+#include "Data.h"
 using namespace std;
 
 int main() {
@@ -27,6 +28,7 @@ int main() {
     string TodaysDate = GetTodayDate();
 	int choice;
 
+    LoadDemoData(customers, CustomerCount, Customer_Capacity,employees, EmployeeCount, capacity);
 
     do {
         cout << "============================================================================================" << endl;
@@ -62,7 +64,7 @@ int main() {
 
     } while (choice != 0);
 	delete[] customers;
-	delete[] employees;
+    delete[] employees;
 	delete[] archived;
 	DestroyQueue(Loan_Requests);
     return 0;
