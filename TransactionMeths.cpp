@@ -21,11 +21,10 @@ void DestroyStack(Stack* S) {
 
 void DisplayStack(const Stack& S) {
 	for (int i = S.Top; i >= 1; i--) {
-		cout << " the transaction ID is :" << S.transactions[i].Transaction_ID
-			<< " \nthe Account Number is :" << S.transactions[i].Account_Number
-			<< " \nthe Transaction Type is :" << S.transactions[i].Transaction_Type
-			<< " \nthe transaction amount is : " << S.transactions[i].Transaction_Amount
-			<< " \nthe Transaction Date is :" << S.transactions[i].Transaction_Date << endl;
+		cout << "The transaction ID is : " << S.transactions[i].Transaction_ID<<"\n";
+		cout << "The Transaction Type is : " << S.transactions[i].Transaction_Type << "\n";
+		cout << "The transaction amount is : " << S.transactions[i].Transaction_Amount << "\n";
+		cout << "The Transaction Date is :" << S.transactions[i].Transaction_Date << "\n";
 	}
 	cout << endl;
 }
