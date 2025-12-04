@@ -57,7 +57,7 @@ void Display_Daily_Transactions_Log_List(const DailyTransactionsLogList& L) {
 		current = current->next;
 	}
 }
-int Insert_Completed_Transaction(DailyTransactionsLogList* L, transaction& e, int pos) {
+int Insert_Completed_Transaction(DailyTransactionsLogList* L, const transaction& e, int pos) {
 	if (!L) return 0;
 	if (pos < 1 || pos > L->size + 1) {
 		cerr << "\nInvalid position";
