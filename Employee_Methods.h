@@ -40,6 +40,7 @@ void Display_Archived_Accounts(customer* archived, int ArchivedCount);
 void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int CustomerCount);
 void Finalize_Day(customer* customers, int CustomerCount, DailyTransactionsLogList* DailyLogList);
 
+
 //------------------------INTERFACE FUNTION--------------------------
 void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity, customer*& customers, int& CustomerCount, int& Customer_Capacity, customer*& archived, int& ArchivedCount, int& Archived_Capacity, CompletedLoanList& CompletedLoansList, Queue* Q, DailyTransactionsLogList* Daily_Transactions_Log_List);
 
