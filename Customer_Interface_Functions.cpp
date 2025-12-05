@@ -234,7 +234,13 @@ bool Verify_End_Date(string Start_Date, string End_Date) {
 	}
 	return true;
 }
-
+bool VerifyLoanType(string LoanType) {
+	if (LoanType != "Car" && LoanType != "Home" && LoanType != "Student" && LoanType != "Business") {
+		cout << "Invalid loan type. Please enter 'Car', 'Home', 'Student', or 'Business'." << endl;
+		return false;
+	}
+	return true;
+}
 
 //------------------------TO USE FOR THE CUSTOMER--------------------------
 
@@ -264,9 +270,11 @@ void Display_Loan_List(const customer& c) {
 void Submit_Loan_Request(customer& c, Queue& Q) {
 	loan newLoan;
 	newLoan.Account_Holder_Number = c.Account_Number;
+	do {
 	cout << "Enter Loan Type: ";
 	cin.ignore();
 	getline(cin, newLoan.Loan_Type);
+	} while (!VerifyLoanType(newLoan.Loan_Type));
 
 	do {
 		cout << "Enter Principle Amount: ";
