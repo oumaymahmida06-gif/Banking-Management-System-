@@ -23,6 +23,7 @@ void DisplayCustomers(customer* customers, int CustomerCount);
 // for the customer :
 bool isNumber(string str);
 bool VerifyAccountNumber(int AccountNumber, customer* customers, int CustomerCount);
+bool VerifyExistingAccountNumber(int accountNumber, customer* customers, int CustomerCount);
 bool VerifyAccountType(string AccountType);
 bool VerifyIBAN(int IBAN);
 bool VerifyBranchCode(string BranchCode);
