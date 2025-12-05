@@ -84,7 +84,12 @@ bool isNumber(string str) {
 	}
 	return true;
 }
-bool VerifyAccountNumber(int AccountNumber) {
+bool VerifyAccountNumber(int AccountNumber, customer* customers, int CustomerCount) {
+	for (int i = 0; i < CustomerCount; i++) {
+	if (AccountNumber == customers[i].Account_Number) {
+		cout << "Account number already exists. Please enter a unique 6-digit account number." << endl;
+		return false;
+	}
 	if (AccountNumber < 100000 || AccountNumber > 999999) {
 		cout << "The account number should be a 6-digit number ." << endl;
 		return false;
@@ -426,7 +431,7 @@ void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacit
 		cout << "Enter the account number of the customer:" << endl;
 		cin >> c.Account_Number;
 		cin.ignore();
-	} while (!(VerifyAccountNumber(c.Account_Number)));
+	} while (!(VerifyAccountNumber(c.Account_Number, customers, CustomerCount)));
 	do {
 		cout << "Enter the account type of the customer:" << endl;
 		getline(cin, c.Account_Type);
