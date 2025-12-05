@@ -77,11 +77,11 @@ void LoadDemoData(customer*& customers, int& CustomerCount, int& Customer_Capaci
 
 	// ===================== EMPLOYEES =====================
 
-	employees[0] = { 1001, "Rabii", "Zarrouki" , "Ariana", 1250.00, "12-03-19", 2 };
-	employees[1] = { 1002, "Wajdi", "Bedoui" , "Tunis", 2500.00, "27-07-20", 2 };
-	employees[2] = { 1003, "Yassine", "Ahmed" , "Ghazela", 1350.00, "05-11-21", 1 };
-	employees[3] = { 1004, "Meriem", "Cherni" , "Menzah 5", 2400.00, "18-04-22", 3 };
-	employees[4] = { 1005, "Hatem", "Aloui" , "Manouba", 3100.00, "07-01-23", 1 };
+	employees[0] = { 1001, "Rabii", "Zarrouki" , "Ariana", 1250.00, "12-03-2019", 2 };
+	employees[1] = { 1002, "Wajdi", "Bedoui" , "Tunis", 2500.00, "27-07-2020", 2 };
+	employees[2] = { 1003, "Yassine", "Ahmed" , "Ghazela", 1350.00, "05-11-2021", 1 };
+	employees[3] = { 1004, "Meriem", "Cherni" , "Menzah 5", 2400.00, "18-04-2022", 3 };
+	employees[4] = { 1005, "Hatem", "Aloui" , "Manouba", 3100.00, "07-01-2023", 1 };
 
 	EmployeeCount = 5;
 }
