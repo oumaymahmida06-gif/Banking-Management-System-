@@ -86,15 +86,24 @@ bool isNumber(string str) {
 }
 bool VerifyAccountNumber(int AccountNumber, customer* customers, int CustomerCount) {
 	for (int i = 0; i < CustomerCount; i++) {
-	if (AccountNumber == customers[i].Account_Number) {
-		cout << "Account number already exists. Please enter a unique 6-digit account number." << endl;
-		return false;
+		if (AccountNumber == customers[i].Account_Number) {
+			cout << "Account number already exists. Please enter a unique 6-digit account number." << endl;
+			return false;
+		}
 	}
 	if (AccountNumber < 100000 || AccountNumber > 999999) {
-		cout << "The account number should be a 6-digit number ." << endl;
+		cout << "The account number should be a 6-digit number." << endl;
 		return false;
 	}
 	return true;
+}
+bool VerifyExistingAccountNumber(int accountNumber, customer* customers, int CustomerCount) {
+	if (accountNumber < 100000 || accountNumber > 999999)
+		return false;
+
+	
+	int index = FindCustomer(customers, accountNumber, CustomerCount);
+	return index != -1;
 }
 bool VerifyAccountType(string AccountType) {
 	if (AccountType != "Savings" && AccountType != "Current" && AccountType != "Fixed Deposit") {
@@ -479,43 +488,54 @@ void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacit
 }
 void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 	if (CustomerCount == 0) {
-		cout << "There's no existant customers\n";
+		cout << "There are no existing customers.\n";
 		return;
 	}
-	else {
-		int account_number_to_change_its_status = 0, p;
-		bool ValidAccount = false;
-		do {
-			cout << "Enter the customer's Account Number to change its status: " << endl;
-			cin >> account_number_to_change_its_status;
-			if (!VerifyAccountNumber(account_number_to_change_its_status)) {
-				ValidAccount = false;
-			}
-			p = FindCustomer(customers, account_number_to_change_its_status, CustomerCount);
-			if ((p == -1) && (VerifyAccountNumber(account_number_to_change_its_status))) {
-				cout << "Customer not found. Please make sure of the Account Number.\n";
-				ValidAccount = false;
-			}
-			else {
-				ValidAccount = true;
-			}
-		} while (!ValidAccount);
-		p = FindCustomer(customers, account_number_to_change_its_status, CustomerCount);
-		string newStatus;
-		bool ValidStatus = false;
-		do {
-			cout << "Enter the new account status: " << endl;
-			cin >> newStatus;
-			if (!VerifyStatus(newStatus)) {
-				ValidStatus = false;
-			}
-			else {
-				ValidStatus = true;
-			}
-		} while (!ValidStatus);
-		customers[p].Status = newStatus;
-		cout << "Customer account status changed successfully!\n";
-	}
+
+	int accountNumber;
+	int index = -1;
+
+	
+	do {
+		cout << "Enter the customer's Account Number to change its status: ";
+		cin >> accountNumber;
+
+		
+		if (cin.fail()) {
+			cin.clear(); 
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Invalid input. Please enter a numeric 6-digit account number.\n";
+			continue;
+		}
+
+
+		if (!VerifyExistingAccountNumber(accountNumber, customers, CustomerCount)) {
+			cout << "Account number not found or invalid. Please enter a valid existing 6-digit account number.\n";
+			continue;
+		}
+
+		index = FindCustomer(customers, accountNumber, CustomerCount);
+		if (index == -1) {
+			cout << "Customer not found. Please make sure of the Account Number.\n";
+		}
+
+	} while (index == -1);
+
+
+	string newStatus;
+	do {
+		cout << "Enter the new account status ('Active', 'Inactive', or 'Closed'): ";
+		cin >> newStatus;
+
+		if (!VerifyStatus(newStatus)) {
+			cout << "Invalid status. Please enter 'Active', 'Inactive', or 'Closed'.\n";
+		}
+
+	} while (!VerifyStatus(newStatus));
+
+
+	customers[index].Status = newStatus;
+	cout << "Customer account status changed successfully!\n";
 }
 void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	int loanID;
