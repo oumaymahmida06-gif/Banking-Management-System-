@@ -275,7 +275,7 @@ void Submit_Loan_Request(customer& c, Queue& Q) {
 			cout << "The Principle amount cannot be negative.\n";
 		}
 	} while (newLoan.Principle_Amount < 0);
-	newLoan.Loan_ID = rand() % 9000 + 1000;
+	newLoan.Loan_ID = rand() % 900000 + 100000;
 	newLoan.Interest_Rate = 0.0;
 	newLoan.Amount_paid = 0.0;
 	newLoan.Remaining_Balance = newLoan.Principle_Amount;
