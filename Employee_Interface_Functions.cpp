@@ -445,11 +445,11 @@ void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int Custom
 		do {
 			cout << "Enter the customer's Account Number to display its loan list: " << endl;
 			cin >> account_number_to_display_its_loan_list;
-			if (!VerifyAccountNumber(account_number_to_display_its_loan_list)) {
+			if (!VerifyAccountNumber(account_number_to_display_its_loan_list, customers, CustomerCount)) {
 				ValidAccountNumber = false;
 			}
 			p = FindCustomer(customers, account_number_to_display_its_loan_list, CustomerCount);
-			if ((p == -1) && (VerifyAccountNumber(account_number_to_display_its_loan_list))) {
+			if ((p == -1) && (VerifyAccountNumber(account_number_to_display_its_loan_list, customers, CustomerCount))) {
 				cout << "Customer not found. Please make sure of the Account Number.\n";
 				ValidAccountNumber = false;
 			}
@@ -588,3 +588,4 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 	} while (employee_choice != 0);
 
 }
+
