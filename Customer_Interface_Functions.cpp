@@ -101,7 +101,6 @@ bool VerifyExistingAccountNumber(int accountNumber, customer* customers, int Cus
 	if (accountNumber < 100000 || accountNumber > 999999)
 		return false;
 
-	
 	int index = FindCustomer(customers, accountNumber, CustomerCount);
 	return index != -1;
 }
@@ -256,6 +255,8 @@ bool VerifyLoanType(string LoanType) {
 	return true;
 }
 
+
+
 //------------------------TO USE FOR THE CUSTOMER--------------------------
 
 
@@ -281,13 +282,15 @@ void Display_Loan_List(const customer& c) {
 	}
 }
 
+
+
 void Submit_Loan_Request(customer& c, Queue& Q) {
 	loan newLoan;
 	newLoan.Account_Holder_Number = c.Account_Number;
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	do {
-	cout << "Enter Loan Type: ";
-	cin.ignore();
-	getline(cin, newLoan.Loan_Type);
+		cout << "Enter Loan Type: ";
+		getline(cin, newLoan.Loan_Type);
 	} while (!VerifyLoanType(newLoan.Loan_Type));
 
 	do {
@@ -383,7 +386,7 @@ void Display_Transactions(const customer& c) {
 		cout << "No transactions to display." << endl;
 		return;
 	}
-	cout << "=========== Today's Transactions for Account Number:  " << c.Account_Number << "  ===========" <<endl;
+	cout << "=========== Today's Transactions for Account Number:  " << c.Account_Number << "  ===========" << endl;
 	DisplayStack(c.Transaction_Stack);
 }
 
@@ -395,7 +398,7 @@ void Undo_Last_Transaction(customer& c) {
 
 	transaction lastTransaction = Top(c.Transaction_Stack);
 
-	if (c.Last_transaction_undone==true) {
+	if (c.Last_transaction_undone == true) {
 		cout << "The last transaction has already been undone.\n";
 		return;
 	}
@@ -412,8 +415,8 @@ void Undo_Last_Transaction(customer& c) {
 		if ((confirmation != "Yes") && (confirmation != "No")) {
 			cout << "Invalid input. Please enter 'Yes' or 'No'.\n";
 		}
-	} while ( (confirmation != "Yes") && (confirmation != "No"));
-	
+	} while ((confirmation != "Yes") && (confirmation != "No"));
+
 	Pop(c.Transaction_Stack);
 	if (lastTransaction.Transaction_Type == "Withdrawal") {
 		c.Balance += lastTransaction.Transaction_Amount;
@@ -486,6 +489,8 @@ void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacit
 	customers[CustomerCount] = c;
 	CustomerCount++;
 }
+
+
 void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 	if (CustomerCount == 0) {
 		cout << "There are no existing customers.\n";
@@ -537,6 +542,7 @@ void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 	customers[index].Status = newStatus;
 	cout << "Customer account status changed successfully!\n";
 }
+
 void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	int loanID;
 	do {
@@ -545,7 +551,7 @@ void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	} while (!VerifyLoanID(loanID));
 
 	int i = 0;
-	while (i< CustomerCount){
+	while (i < CustomerCount) {
 		node* current = customers[i].Loan_List.head;
 		while (current) {
 			if (current->data.Loan_ID == loanID) {
@@ -564,6 +570,7 @@ void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	}
 	cout << "Loan with ID " << loanID << " not found." << endl;
 }
+
 
 void Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* completed_loans) {
 
@@ -586,7 +593,7 @@ void Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* 
 	}
 }
 
-void Move_All_Completed_Loans(customer* customers, int CustomerCount, CompletedLoanList* CompletedLoansList){
+void Move_All_Completed_Loans(customer* customers, int CustomerCount, CompletedLoanList* CompletedLoansList) {
 	for (int i = 0; i < CustomerCount; i++) {
 		Move_Completed_Loans_for_a_single_customer(customers[i], CompletedLoansList);
 	}
