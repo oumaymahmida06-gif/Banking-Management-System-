@@ -465,21 +465,24 @@ void Finalize_Day(customer* customers, int CustomerCount, DailyTransactionsLogLi
 	string choice;
 	cin.ignore();
 
-	do{
+	do {
 		cout << " are you sure you want to finalize the day? This action will copy all daily transactions into the Daily Log List and clear all customers' transaction stacks. (Yes/No): ";
 		getline(cin, choice);
 		if ((choice != "Yes") && (choice != "No")) {
 			cout << "Invalid input. Please enter 'Yes' or 'No'.\n";
 		}
 	} while ((choice != "Yes") && (choice != "No"));
-	cout << "Finalizing the day: " << current_date << "...\n";
-	for (int i = 0; i < CustomerCount; i++) {
-		while (!IsEmpty(customers[i].Transaction_Stack)) {
-			transaction t = Pop(customers[i].Transaction_Stack);
-			Insert_Completed_Transaction(DailyLogList, t, DailyLogList->size +1);
+	if (choice == "No") return;
+	else {
+		cout << "Finalizing the day: " << current_date << "...\n";
+		for (int i = 0; i < CustomerCount; i++) {
+			while (!IsEmpty(customers[i].Transaction_Stack)) {
+				transaction t = Pop(customers[i].Transaction_Stack);
+				Insert_Completed_Transaction(DailyLogList, t, DailyLogList->size + 1);
+			}
 		}
+		cout << "All daily transactions have been copied into the Log List successfully.\n";
 	}
-	cout << "All daily transactions have been copied into the Log List successfully.\n";
 }
 
 //-----------------------------------------------INTERFACE FUNTION--------------------------------------------------
@@ -588,4 +591,5 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 	} while (employee_choice != 0);
 
 }
+
 
