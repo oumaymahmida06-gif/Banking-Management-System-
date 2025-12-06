@@ -98,36 +98,57 @@ void Manage_Loan_Requests(Queue& Q, customer* customers, int CustomerCount) {
 	while (!IsEmpty(Q)) {
 		loan current_request = FrontElement(Q);
 		int customer_account_number_having_the_loan_request = current_request.Account_Holder_Number;
-		cout << "Processing Loan Request number  "<< i <<":\n"
-			 << "Type: " << current_request.Loan_Type << "\n"
-			 << "Principal Amount: " << current_request.Principle_Amount << "\n"
-			 << "Start Date: " << current_request.Start_Date << "\n"
-			 << "End Date: " << current_request.End_Date << "\n";
+		cout << "Processing Loan Request number  " << i << ":\n"
+			<< "Type: " << current_request.Loan_Type << "\n"
+			<< "Principal Amount: " << current_request.Principle_Amount << "\n"
+			<< "Start Date: " << current_request.Start_Date << "\n"
+			<< "End Date: " << current_request.End_Date << "\n";
 		string decision;
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 		do {
 			cout << "Approve this loan request? (Yes or No): ";
 			getline(cin, decision);
-		} while ( (decision!="Yes") && (decision != "No") );
+		} while ((decision != "Yes") && (decision != "No"));
 
 		if (decision == "Yes") {
 			double interest_rate_to_approve = 0.0;
-			do {
+			string input;
+			while (true) {
 				cout << "Please enter the interest rate of this loan (%) : ";
-				cin >> interest_rate_to_approve;
-				if ((interest_rate_to_approve > 20) || (interest_rate_to_approve < 0)) {
-					cout << "  The interest rate should be between 0% to 20%" << endl;
-				}
-			} while ((interest_rate_to_approve > 20) || (interest_rate_to_approve < 0));
-			cout << "Loan request approved and added to customer's loan list.\n";
-			for (int i = 0; i < CustomerCount; i++) {
-				if (customers[i].Account_Number == customer_account_number_having_the_loan_request) {
-					insert(customers[i].Loan_List, current_request, customers[i].Loan_List.size + 1);
-					Dequeue(Q);
+				cin >> input;
 
+				// Remove trailing %
+				if (!input.empty() && input.back() == '%')
+					input.pop_back();
+
+				try {
+					interest_rate_to_approve = stod(input);
+				}
+				catch (...) {
+					cout << "Invalid format. Please enter a number like 5 or 5%.\n";
+					continue;
+				}
+
+				if (interest_rate_to_approve < 0 || interest_rate_to_approve > 20) {
+					cout << "The interest rate should be between 0% and 20%.\n";
+					continue;
+				}
+				
+				current_request.Interest_Rate = interest_rate_to_approve;
+				int j=0;
+				while( j< CustomerCount) {
+					if (customers[j].Account_Number == customer_account_number_having_the_loan_request) {
+						insert(customers[j].Loan_List, current_request, customers[j].Loan_List.size + 1);
+						Dequeue(Q);
+						cout << "Loan request approved and added to customer's loan list.\n";
+						return;
+					}
+					j++;
 				}
 			}
-			
-		} else {
+		}
+		else {
 			cout << "Loan request denied and deleted .\n";
 			Dequeue(Q);
 		}
