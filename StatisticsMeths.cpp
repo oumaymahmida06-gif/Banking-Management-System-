@@ -204,7 +204,7 @@ void Number_of_employees_per_bank_branch(const Employee* employees, int Employee
 	delete[] BranchSort;
 }
 void statistics_interface(const customer* customers, int CustomerCount, const Employee* employees, int EmployeeCount, int ArchivedCount) {
-	char stats_choice;
+	int stats_choice;
 	do {
 		cout << "================== Statistics Menu ==================\n";
 		cout << "1. Total Number of Loans\n";
@@ -226,38 +226,38 @@ void statistics_interface(const customer* customers, int CustomerCount, const Em
 		} while (stats_choice < 0 || stats_choice > 9);
 		cin.ignore();
 		switch (stats_choice) {
-		case '1':
+		case 1:
 			Total_Number_of_Loans(customers, CustomerCount);
 			break;
-		case '2':
+		case 2:
 			Number_of_Loans_By_Type(customers, CustomerCount);
 			break;
-		case '3':
+		case 3:
 			Number_of_loans_by_status(customers, CustomerCount, ArchivedCount);
 			break;
-		case '4':
+		case 4:
 			Active_loans_within_a_specified_date_range(customers, CustomerCount);
 			break;
-		case '5':
+		case 5:
 			Customer_with_the_highest_number_of_loans(customers, CustomerCount);
 			break;
-		case '6':
+		case 6:
 			Customer_with_the_highest_account_balance(customers, CustomerCount);
 			break;
-		case '7':
+		case 7:
 			Customer_with_the_lowest_account_balance(customers, CustomerCount);
 			break;
-		case '8':
+		case 8:
 			Total_number_of_employees(employees, EmployeeCount);
 			break;
-		case '9':
+		case 9:
 			Number_of_employees_per_bank_branch(employees, EmployeeCount);
 			break;
-		case '0':
+		case 0:
 			cout << "Exiting Statistics Menu.\n";
 			break;
 		default:
 			cout << "Invalid choice. Please try again.\n";
 		}
-	} while (stats_choice != '0');
+	} while (stats_choice != 0);
 }
