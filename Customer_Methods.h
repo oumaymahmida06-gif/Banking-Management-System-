@@ -47,14 +47,6 @@ int Deposit_Money(customer& c, double amount);
 void Display_Transactions(const customer& c);
 void Undo_Last_Transaction(customer& c);
 
-
-//------------------------FOR EMPLOYEE INTERFACE--------------------------
-void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacity);
-void ChangeCustomerAccountStatus(customer* customers, int CustomerCount);
-void Change_Status_Of_A_Loan(customer* customers, int CustomerCount);
-void Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* completed_loans);
-void Move_All_Completed_Loans(customer* customers, int CustomerCount, CompletedLoanList* CompletedLoansList);
-
 //------------------------INTERFACE FUNCTION--------------------------
 void customer_interface(customer*& customers, int& CustomerCount, int& Customer_Capacity, Queue& Q);
 
