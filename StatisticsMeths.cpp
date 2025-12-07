@@ -49,7 +49,7 @@ void Number_of_loans_by_status(const customer* customers, int CustomerCount, int
 			if (current->data.Loan_Status == "Active") {
 				Active_loan_count++;
 			}
-			else if (current->data.Loan_Status == "Pending") {
+			else if (current->data.Loan_Status == "Overdue") {
 				Overdue_loan_count++;
 			}
 			else if (current->data.Loan_Status == "Completed") {
@@ -61,7 +61,7 @@ void Number_of_loans_by_status(const customer* customers, int CustomerCount, int
 	cout << "Number of Loans by Status:\n";
 	cout << "Active Loans: " << Active_loan_count << "\n";
 	cout << "Overdue Loans: " << Overdue_loan_count << "\n";
-	cout << "Completed Loans: " << Completed_loan_count+ ArchivedCount << "\n";
+	cout << "Completed Loans: " << Completed_loan_count + ArchivedCount << "\n";
 
 }
 void Active_loans_within_a_specified_date_range(const customer* customers, int CustomerCount) {
@@ -80,6 +80,7 @@ void Active_loans_within_a_specified_date_range(const customer* customers, int C
 				cout << "Customer Account Number: " << customers[i].Account_Number << "\n";
 				cout << "Loan ID: " << current->data.Loan_ID << "\n";
 				cout << "Loan Type: " << current->data.Loan_Type << "\n";
+				cout << "Loan Status: " << current->data.Loan_Status << "\n";
 				cout << "Principle Amount: " << current->data.Principle_Amount << "\n";
 				cout << "Interest Rate: " << current->data.Interest_Rate << "\n";
 				cout << "Amount Paid: " << current->data.Amount_paid << "\n";
@@ -106,13 +107,17 @@ void Customer_with_the_highest_number_of_loans(const customer* customers, int Cu
 			customer_index = i;
 		}
 	}
+	if (max_loans == 0) {
+		cout << "No loans found for any customer.\n";
+		return;
+	}
 	if (customer_index != -1) {
 		cout << "Customer with the highest number of loans:\n";
 		cout << "Account Number: " << customers[customer_index].Account_Number << "\n";
 		cout << "Account Holder Name: " << customers[customer_index].Account_Holder_Name << "\n";
 		cout << "Number of Loans: " << max_loans << "\n";
 	}
-
+	
 }
 void Customer_with_the_highest_account_balance(const customer* customers, int CustomerCount) {
 	if (CustomerCount == 0) {
