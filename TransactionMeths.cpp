@@ -34,14 +34,14 @@ bool IsEmpty(const Stack& S) {
 }
 
 bool IsFull(const Stack& S) {
-	return S.Top >= Max; // Top is count of elements (0..Max)
+	return S.Top >= Max; 
 }
 
 int StackSize(const Stack& S) {
 	return S.Top;
 }
 
-int Push(Stack* S, transaction e) {  // add element to the top 
+int Push(Stack* S, transaction e) {
 	if (IsFull(*S)) {
 		cout << "\nStack is full";
 		return 0;
@@ -53,19 +53,19 @@ int Push(Stack* S, transaction e) {  // add element to the top
 	}
 }
 
-transaction Pop(Stack& S) { // remove the top element from the stack
+transaction Pop(Stack& S) { 
 	transaction e = transaction{ 0,0,"",0.0,"" };
 	if (IsEmpty(S)) {
 		cout << "\nStack is empty";
 	}
 	else {
-		e = S.transactions[S.Top]; // get the top element
-		S.Top--; // move the top index down
+		e = S.transactions[S.Top];
+		S.Top--;
 	}
 	return e;
 }
 
-transaction Top(const Stack& S) { // look at the top element without removing it 
+transaction Top(const Stack& S) { 
 	transaction e = transaction{ 0,0,"",0.0,"" };
 
 	if (IsEmpty(S)) {
