@@ -6,6 +6,7 @@
 #include "SinglyLinkedListMeths.h"
 #include "QueueMeths.h"
 #include "DailyTransactionsLogListMeths.h"
+#include <limits>
 using namespace std;
 
 //------------------------LOGIN--------------------------
@@ -442,22 +443,46 @@ void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacit
 	do {
 		cout << "Enter the account number of the customer:" << endl;
 		cin >> c.Account_Number;
-		cin.ignore();
+
+		if (cin.fail()) {
+			cout << "Invalid input. Please enter numbers only.\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			continue;
+		}
+
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	} while (!(VerifyAccountNumber(c.Account_Number, customers, CustomerCount)));
-	do {
-		cout << "Enter the account type of the customer:" << endl;
-		getline(cin, c.Account_Type);
-	} while (!(VerifyAccountType(c.Account_Type)));
 
 	do {
 		cout << "Enter the IBAN of the customer:" << endl;
 		cin >> c.IBAN;
-		cin.ignore();
+
+		if (cin.fail()) {
+			cout << "Invalid input. Please enter numbers only.\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			continue;
+		}
+
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	} while (!VerifyIBAN(c.IBAN));
+
 	do {
 		cout << "Enter the the branch code of the customer:" << endl;
 		cin >> c.Branch_Code;
-		cin.ignore();
+
+		if (cin.fail()) {
+			cout << "Invalid input. Please enter valid input.\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			continue;
+		}
+
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	} while (!VerifyBranchCode(c.Branch_Code));
 
 	do {
@@ -478,12 +503,29 @@ void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacit
 	do {
 		cout << "Enter the Balance of the customer account:" << endl;
 		cin >> c.Balance;
+
+		if (cin.fail()) {
+			cout << "Invalid input. Please enter a valid number.\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			continue;
+		}
+
 	} while (!VerifyBalance(c.Balance));
 
 	do {
 		cout << "Enter the PIN of the customer:" << endl;
 		cin >> c.PIN;
+
+		if (cin.fail()) {
+			cout << "Invalid input. Please enter numbers only.\n";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			continue;
+		}
+
 	} while (!VerifyPIN(c.PIN));
+
 	c.Loan_List = create_List();
 	c.Transaction_Stack.Top = 0;
 	customers[CustomerCount] = c;
@@ -500,14 +542,14 @@ void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 	int accountNumber;
 	int index = -1;
 
-	
+
 	do {
 		cout << "Enter the customer's Account Number to change its status: ";
 		cin >> accountNumber;
 
-		
+
 		if (cin.fail()) {
-			cin.clear(); 
+			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			cout << "Invalid input. Please enter a numeric 6-digit account number.\n";
 			continue;
@@ -546,8 +588,22 @@ void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	int loanID;
 	do {
-		cout << "Enter a loan ID: " << endl;
+		cout << "Enter a loan ID: ";
 		cin >> loanID;
+
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Invalid input. Please enter a numeric Loan ID.\n";
+			continue;
+		}
+
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		if (!VerifyLoanID(loanID)) {
+			cout << "Invalid Loan ID format. Please enter a valid 6-digit Loan ID.\n";
+		}
+
 	} while (!VerifyLoanID(loanID));
 
 	int i = 0;
