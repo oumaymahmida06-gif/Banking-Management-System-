@@ -981,7 +981,7 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 			Finalize_Day(customers, CustomerCount, Daily_Transactions_Log_List);
 			break;
 		case 19:
-			statistics_interface(customers, CustomerCount, employees, EmployeeCount, ArchivedCount);
+			statistics_interface(customers, CustomerCount, employees, EmployeeCount, ArchivedCount, CompletedLoansList);
 			break;
 		case 0:
 			cout << "Returning.......\n";
