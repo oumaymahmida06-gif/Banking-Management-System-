@@ -39,7 +39,7 @@ void Number_of_Loans_By_Type(const customer* customers, int CustomerCount) {
 	cout << "Student Loans: " << Student_loan_count << "\n";
 	cout << "Business Loans: " << Business_loan_count << "\n";
 }
-void Number_of_loans_by_status(const customer* customers, int CustomerCount, int ArchivedCount) {
+void Number_of_loans_by_status(const customer* customers, int CustomerCount, int ArchivedCount, CompletedLoanList& CompletedLoansList) {
 	int Active_loan_count = 0;
 	int Overdue_loan_count = 0;
 	int Completed_loan_count = 0;
@@ -52,12 +52,10 @@ void Number_of_loans_by_status(const customer* customers, int CustomerCount, int
 			else if (current->data.Loan_Status == "Overdue") {
 				Overdue_loan_count++;
 			}
-			else if (current->data.Loan_Status == "Completed") {
-				Completed_loan_count++;
-			}
 			current = current->next;
 		}
 	}
+	Completed_loan_count = Completed_Loans_list_Size(CompletedLoansList);
 	cout << "Number of Loans by Status:\n";
 	cout << "Active Loans: " << Active_loan_count << "\n";
 	cout << "Overdue Loans: " << Overdue_loan_count << "\n";
@@ -117,7 +115,7 @@ void Customer_with_the_highest_number_of_loans(const customer* customers, int Cu
 		cout << "Account Holder Name: " << customers[customer_index].Account_Holder_Name << "\n";
 		cout << "Number of Loans: " << max_loans << "\n";
 	}
-
+	
 }
 void Customer_with_the_highest_account_balance(const customer* customers, int CustomerCount) {
 	if (CustomerCount == 0) {
@@ -203,7 +201,7 @@ void Number_of_employees_per_bank_branch(const Employee* employees, int Employee
 	}
 	delete[] BranchSort;
 }
-void statistics_interface(const customer* customers, int CustomerCount, const Employee* employees, int EmployeeCount, int ArchivedCount) {
+void statistics_interface(const customer* customers, int CustomerCount, const Employee* employees, int EmployeeCount, int ArchivedCount, CompletedLoanList& CompletedLoansList) {
 	int stats_choice;
 	do {
 		cout << "================== Statistics Menu ==================\n";
@@ -233,7 +231,7 @@ void statistics_interface(const customer* customers, int CustomerCount, const Em
 			Number_of_Loans_By_Type(customers, CustomerCount);
 			break;
 		case 3:
-			Number_of_loans_by_status(customers, CustomerCount, ArchivedCount);
+			Number_of_loans_by_status(customers, CustomerCount, ArchivedCount,  CompletedLoansList);
 			break;
 		case 4:
 			Active_loans_within_a_specified_date_range(customers, CustomerCount);
