@@ -37,8 +37,15 @@ void DisplayEarliestAndRecentEmployees(Employee* employees, int EmployeeCount);
 string Reformulate(string hiredate);
 void Delete_Closed_Accounts_And_Store_Them(customer*& customers, int& CustomerCount, customer*& archived, int& ArchivedCount, int& ArchivedCapacity);
 void Display_Archived_Accounts(customer* archived, int ArchivedCount);
+void Manage_Loan_Requests(Queue& Q, customer* customers, int CustomerCount);
 void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int CustomerCount);
 void Finalize_Day(customer* customers, int CustomerCount, DailyTransactionsLogList* DailyLogList);
+
+void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacity);
+void ChangeCustomerAccountStatus(customer* customers, int CustomerCount);
+void Change_Status_Of_A_Loan(customer* customers, int CustomerCount);
+void Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* completed_loans);
+void Move_All_Completed_Loans(customer* customers, int CustomerCount, CompletedLoanList* CompletedLoansList);
 
 
 //------------------------INTERFACE FUNTION--------------------------
