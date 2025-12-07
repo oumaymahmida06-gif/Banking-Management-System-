@@ -51,6 +51,7 @@ void Display_Completed_Loans(const CompletedLoanList& L) {
 			<< "Type: " << current->data.Loan_Type << "\n"
 			<< "Principal: " << current->data.Principle_Amount << "\n"
 			<< "Remaining: " << current->data.Remaining_Balance << "\n"
+			<< "Interest Rate: " << current->data.Interest_Rate << "\n"
 			<< "Start: " << current->data.Start_Date << "\n"
 			<< "End :" << current->data.End_Date << "\n"
 			<< "Status: " << current->data.Loan_Status << "\n"
