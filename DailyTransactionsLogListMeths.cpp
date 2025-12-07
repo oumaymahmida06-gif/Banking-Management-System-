@@ -63,24 +63,29 @@ int Insert_Completed_Transaction(DailyTransactionsLogList* L, const transaction&
 		cerr << "\nInvalid position";
 		return 0;
 	}
+
 	DailyTransactionNode* n = Create_Daily_Transaction_Node(e);
 	if (!n) return 0;
+
 	if (pos == 1) {
 		n->next = L->head;
 		L->head = n;
 	}
 	else {
-		DailyTransactionNode* prev = nullptr;
-		DailyTransactionNode* current = L->head;
+		DailyTransactionNode* prev = L->head;
+		
 		for (int i = 1; i < pos - 1; i++) {
-			prev = current;
-			current = current->next;
+			if (!prev) { 
+				cerr << "\nUnexpected nullptr while traversing list";
+				delete n;
+				return 0;
+			}
+			prev = prev->next;
 		}
+		n->next = prev->next;
 		prev->next = n;
-		n->next = current;
 	}
 
 	L->size++;
 	return 1;
-
 }
