@@ -341,7 +341,7 @@ void ModifyEmployee(Employee* employees, int EmployeeCount) {
 			}
 
 		} while (!Verify_Salary(employees[p].Salary));
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');		
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		do {
 			cout << "Enter the Hire Date of the employee: ";
 			getline(cin, employees[p].Hire_Date);
@@ -365,7 +365,7 @@ void ModifyEmployee(Employee* employees, int EmployeeCount) {
 		return;
 	}
 
-	
+
 }
 
 
@@ -527,8 +527,6 @@ void Manage_Loan_Requests(Queue& Q, customer* customers, int CustomerCount) {
 			while (true) {
 				cout << "Please enter the interest rate of this loan (%) : ";
 				cin >> input;
-
-				// Remove trailing %
 				if (!input.empty() && input.back() == '%')
 					input.pop_back();
 
@@ -549,6 +547,7 @@ void Manage_Loan_Requests(Queue& Q, customer* customers, int CustomerCount) {
 				int j = 0;
 				while (j < CustomerCount) {
 					if (customers[j].Account_Number == customer_account_number_having_the_loan_request) {
+						current_request.Loan_Status = "Active";
 						insert(customers[j].Loan_List, current_request, customers[j].Loan_List.size + 1);
 						Dequeue(Q);
 						cout << "Loan request approved and added to customer's loan list.\n";
@@ -584,19 +583,19 @@ void Display_List_Of_Loans_For_Specific_Customer(customer* customers, int Custom
 				ValidAccountNumber = false;
 				continue;
 			}
-			if (!VerifyAccountNumber(account_number_to_display_its_loan_list, customers, CustomerCount)) {
+			if (!VerifyExistingAccountNumber(account_number_to_display_its_loan_list, customers, CustomerCount)) {
 				ValidAccountNumber = false;
 				continue;
 			}
 			p = FindCustomer(customers, account_number_to_display_its_loan_list, CustomerCount);
-			if ((p == -1) && (VerifyAccountNumber(account_number_to_display_its_loan_list, customers, CustomerCount))) {
+			if ((p == -1) && (VerifyExistingAccountNumber(account_number_to_display_its_loan_list, customers, CustomerCount))) {
 				cout << "Customer not found. Please make sure of the Account Number.\n";
 				ValidAccountNumber = false;
 			}
 			else {
 				ValidAccountNumber = true;
 			}
-		} while (!ValidAccountNumber);
+		} while (!VerifyExistingAccountNumber(account_number_to_display_its_loan_list, customers, CustomerCount));
 		Display_Loan_List(customers[p]);
 	}
 }
@@ -750,7 +749,7 @@ void ChangeCustomerAccountStatus(customer* customers, int CustomerCount) {
 	cout << "Customer account status changed successfully!\n";
 }
 
-void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
+void Change_Status_Of_A_Loan(customer* customers, int CustomerCount, CompletedLoanList* completed_loans) {
 	int loanID;
 	do {
 		cout << "Enter a loan ID: ";
@@ -782,7 +781,8 @@ void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 					cin >> newStatus;
 				} while (!VerifyLoanStatus(newStatus));
 				current->data.Loan_Status = newStatus;
-				cout << "Loan status changed successfuly" << endl;
+				Move_Single_Completed_Loan_for_a_single_customer(current->data, completed_loans, customers, CustomerCount); // Pass customers instead of &customers[i]
+				cout << "Loan status changed successfully" << endl;
 				return;
 			}
 			current = current->next;
@@ -791,8 +791,48 @@ void Change_Status_Of_A_Loan(customer* customers, int CustomerCount) {
 	}
 	cout << "Loan with ID " << loanID << " not found." << endl;
 }
+void Move_Single_Completed_Loan_for_a_single_customer(const loan& Completed_Loan, CompletedLoanList* L, customer* customers, int CustomerCount)
+{
+	if (Completed_Loan.Loan_Status != "Completed")
+		return;
 
+	// STEP 1: Insert into completed list
+	Insert_Completed_Loan(L, Completed_Loan, L->size + 1);
 
+	// STEP 2: Find which customer has this loan
+	int customerIndex = -1;
+	int loanPos = -1;
+
+	for (int i = 0; i < CustomerCount; i++) {
+		loanPos = Find_Loan_Position(&customers[i].Loan_List, Completed_Loan);
+		if (loanPos != -1) {
+			customerIndex = i;
+			break;
+		}
+	}
+
+	if (customerIndex == -1) {
+		cout << "ERROR: Loan not found in ANY customer list\n";
+		return;
+	}
+
+	// STEP 3: Remove it from the customer's loan list
+	removeAt(&customers[customerIndex].Loan_List, loanPos);
+}
+
+int Find_Loan_Position(list* L, const loan& target_loan) {
+	node* current = L->head;     // LOCAL POINTER (not global!)
+	int position = 1;
+
+	while (current) {
+		if (current->data.Loan_ID == target_loan.Loan_ID) {
+			return position;
+		}
+		current = current->next;
+		position++;
+	}
+	return -1;
+}
 void Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* completed_loans) {
 
 	node* current = c.Loan_List.head;
@@ -926,7 +966,7 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 			Display_List_Of_Loans_For_Specific_Customer(customers, CustomerCount);
 			break;
 		case 14:
-			Change_Status_Of_A_Loan(customers, CustomerCount);
+			Change_Status_Of_A_Loan(customers, CustomerCount, &CompletedLoansList);
 			break;
 		case 15:
 			Move_All_Completed_Loans(customers, CustomerCount, &CompletedLoansList);
@@ -953,4 +993,3 @@ void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity,
 	} while (employee_choice != 0);
 
 }
-
