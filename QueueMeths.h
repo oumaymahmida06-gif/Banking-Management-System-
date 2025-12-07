@@ -13,5 +13,4 @@ int QueueSize(const Queue& Q);
 int Enqueue(Queue& Q, loan loan_request);
 bool Dequeue(Queue& Q);
 loan FrontElement(const Queue& Q);
-void Manage_Loan_Requests(Queue& Q, customer* customers, int CustomerCount);
 #endif
