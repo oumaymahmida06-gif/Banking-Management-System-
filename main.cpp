@@ -16,7 +16,7 @@ int main() {
     int Archived_Capacity = 200;
     customer* archived = new customer[Archived_Capacity];
     int ArchivedCount = 0;
-    
+
 
     int capacity = 200;
     Employee* employees = new Employee[capacity];
@@ -26,9 +26,9 @@ int main() {
     Queue* Loan_Requests = CreateQueue();
     DailyTransactionsLogList  Daily_Transactions_Log_List = Create_Daily_Transactions_Log_List();
     string TodaysDate = GetTodayDate();
-	char choice;
+    char choice;
 
-    LoadDemoData(customers, CustomerCount, Customer_Capacity,employees, EmployeeCount, capacity);
+    LoadDemoData(customers, CustomerCount, Customer_Capacity, employees, EmployeeCount, capacity);
 
     do {
         cout << "============================================================================================" << endl;
@@ -63,9 +63,9 @@ int main() {
         }
 
     } while (choice != '0');
-	delete[] customers;
+    delete[] customers;
     delete[] employees;
-	delete[] archived;
-	DestroyQueue(Loan_Requests);
+    delete[] archived;
+    DestroyQueue(Loan_Requests);
     return 0;
 }
