@@ -259,5 +259,5 @@ void statistics_interface(const customer* customers, int CustomerCount, const Em
 		default:
 			cout << "Invalid choice. Please try again.\n";
 		}
-	} while (stats_choice != 0);
+	} while (stats_choice != '0');
 }
