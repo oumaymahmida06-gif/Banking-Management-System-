@@ -114,7 +114,7 @@ void LoadDemoData(customer*& customers, int& CustomerCount, int& Customer_Capaci
 	// Customer 4: two small loans and a withdrawal
 	{
 		loan L1{ customers[4].Account_Number, 100004, "Personal", 2000.0, 6.0, 500.0, 1500.0, "20-07-2022", "20-07-2024", "Active" };
-		loan L2{ customers[4].Account_Number, 100005, "Education", 3000.0, 2.5, 0.0, 3000.0, "01-09-2022", "01-09-2025", "Pending" };
+		loan L2{ customers[4].Account_Number, 100005, "Home", 3000.0, 2.5, 0.0, 3000.0, "01-09-2022", "01-09-2025", "Overdue" };
 		insert(customers[4].Loan_List, L1, customers[4].Loan_List.size + 1);
 		insert(customers[4].Loan_List, L2, customers[4].Loan_List.size + 1);
 		Push(&customers[4].Transaction_Stack, transaction{ 7, customers[4].Account_Number, "Withdrawal", 250.0, "25-07-2022" });
