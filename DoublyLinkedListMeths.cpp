@@ -21,7 +21,6 @@ node* create_Node(const loan& value) {
 		cout << "\nMemory allocation failed for node\n";
 		return nullptr;
 	}
-	// Affectation explicite (requiert que node::data soit de type `loan`)
 	Node->data = value;
 	Node->next = nullptr;
 	Node->prev = nullptr;
