@@ -26,7 +26,7 @@ int main() {
     Queue* Loan_Requests = CreateQueue();
     DailyTransactionsLogList  Daily_Transactions_Log_List = Create_Daily_Transactions_Log_List();
     string TodaysDate = GetTodayDate();
-	int choice;
+	char choice;
 
     LoadDemoData(customers, CustomerCount, Customer_Capacity,employees, EmployeeCount, capacity);
 
@@ -49,20 +49,20 @@ int main() {
         cin >> choice;
 
         switch (choice) {
-        case 1:
+        case '1':
             employee_interface(employees, EmployeeCount, capacity, customers, CustomerCount, Customer_Capacity, archived, ArchivedCount, Archived_Capacity, CompletedLoansList, Loan_Requests, &Daily_Transactions_Log_List);
             break;
-        case 2:
+        case '2':
             customer_interface(customers, CustomerCount, Customer_Capacity, *Loan_Requests);
             break;
-        case 0:
+        case '0':
             cout << "Exiting program.......\n";
             break;
         default:
             cout << "Invalid option. Try again.\n";
         }
 
-    } while (choice != 0);
+    } while (choice != '0');
 	delete[] customers;
     delete[] employees;
 	delete[] archived;
