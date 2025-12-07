@@ -43,10 +43,11 @@ void Finalize_Day(customer* customers, int CustomerCount, DailyTransactionsLogLi
 
 void AddCustomer(customer*& customers, int& CustomerCount, int& Customer_Capacity);
 void ChangeCustomerAccountStatus(customer* customers, int CustomerCount);
-void Change_Status_Of_A_Loan(customer* customers, int CustomerCount);
+void Change_Status_Of_A_Loan(customer* customers, int CustomerCount, CompletedLoanList* L);
+void Move_Single_Completed_Loan_for_a_single_customer(const loan& Completed_Loan, CompletedLoanList* L, customer* customers, int CustomerCount);
 void Move_Completed_Loans_for_a_single_customer(customer& c, CompletedLoanList* completed_loans);
 void Move_All_Completed_Loans(customer* customers, int CustomerCount, CompletedLoanList* CompletedLoansList);
-
+int Find_Loan_Position(list* L, const loan& target_loan);
 
 //------------------------INTERFACE FUNTION--------------------------
 void employee_interface(Employee*& employees, int& EmployeeCount, int& capacity, customer*& customers, int& CustomerCount, int& Customer_Capacity, customer*& archived, int& ArchivedCount, int& Archived_Capacity, CompletedLoanList& CompletedLoansList, Queue* Q, DailyTransactionsLogList* Daily_Transactions_Log_List);
