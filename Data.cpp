@@ -16,7 +16,6 @@ void LoadDemoData(customer*& customers, int& CustomerCount, int& Customer_Capaci
 	customers[0].PIN = 1234;
 	customers[0].Loan_List = create_List();
 	customers[0].Transaction_Stack.Top = 0;
-	CustomerCount++;
 
 	// ------------ CUSTOMER 1 ------------
 	customers[1].Account_Number = 234567;
@@ -30,7 +29,6 @@ void LoadDemoData(customer*& customers, int& CustomerCount, int& Customer_Capaci
 	customers[1].PIN = 2345;
 	customers[1].Loan_List = create_List();
 	customers[1].Transaction_Stack.Top = 0;
-	CustomerCount++;
 
 	// ------------ CUSTOMER 2 ------------
 	customers[2].Account_Number = 345678;
@@ -44,7 +42,6 @@ void LoadDemoData(customer*& customers, int& CustomerCount, int& Customer_Capaci
 	customers[2].PIN = 3456;
 	customers[2].Loan_List = create_List();
 	customers[2].Transaction_Stack.Top = 0;
-	CustomerCount++;
 
 	// ------------ CUSTOMER 3 ------------
 	customers[3].Account_Number = 456789;
@@ -58,7 +55,6 @@ void LoadDemoData(customer*& customers, int& CustomerCount, int& Customer_Capaci
 	customers[3].PIN = 4567;
 	customers[3].Loan_List = create_List();
 	customers[3].Transaction_Stack.Top = 0;
-	CustomerCount++;
 
 	// ------------ CUSTOMER 4 ------------
 	customers[4].Account_Number = 567890;
@@ -72,7 +68,7 @@ void LoadDemoData(customer*& customers, int& CustomerCount, int& Customer_Capaci
 	customers[4].PIN = 5678;
 	customers[4].Loan_List = create_List();
 	customers[4].Transaction_Stack.Top = 0;
-	CustomerCount++;
+	CustomerCount = 5;
 
 
 	// ===================== EMPLOYEES =====================
@@ -82,6 +78,45 @@ void LoadDemoData(customer*& customers, int& CustomerCount, int& Customer_Capaci
 	employees[2] = { 1003, "Yassine", "Ahmed" , "Ghazela", 1350.00, "05-11-2021", 1 };
 	employees[3] = { 1004, "Meriem", "Cherni" , "Menzah 5", 2400.00, "18-04-2022", 3 };
 	employees[4] = { 1005, "Hatem", "Aloui" , "Manouba", 3100.00, "07-01-2023", 1 };
-
 	EmployeeCount = 5;
+
+
+	//===================== Loans and Transactions for Customers =====================
+	// 
+	// Customer 0: one active personal loan, two transactions
+	{
+		loan L{ customers[0].Account_Number, 100001, "Personal", 5000.0, 5.0, 1000.0, 4000.0, "01-01-2021", "01-01-2024", "Active" };
+		insert(customers[0].Loan_List, L, customers[0].Loan_List.size + 1);
+		Push(&customers[0].Transaction_Stack, transaction{ 1, customers[0].Account_Number, "Deposit", 500.0, "01-02-2021" });
+		Push(&customers[0].Transaction_Stack, transaction{ 2, customers[0].Account_Number, "Withdrawal", 200.0, "03-02-2021" });
+	}
+
+	// Customer 1: one home loan, one transaction
+	{
+		loan L{ customers[1].Account_Number, 100002, "Home", 25000.0, 3.5, 5000.0, 20000.0, "15-06-2020", "15-06-2040", "Active" };
+		insert(customers[1].Loan_List, L, customers[1].Loan_List.size + 1);
+		Push(&customers[1].Transaction_Stack, transaction{ 3, customers[1].Account_Number, "Deposit", 1500.0, "20-06-2020" });
+	}
+
+	// Customer 2: one car loan, two transactions
+	{
+		loan L{ customers[2].Account_Number, 100003, "Car", 12000.0, 4.0, 3000.0, 9000.0, "01-04-2021", "01-04-2026", "Active" };
+		insert(customers[2].Loan_List, L, customers[2].Loan_List.size + 1);
+		Push(&customers[2].Transaction_Stack, transaction{ 4, customers[2].Account_Number, "Withdrawal", 100.0, "05-04-2021" });
+		Push(&customers[2].Transaction_Stack, transaction{ 5, customers[2].Account_Number, "Deposit", 200.0, "06-04-2021" });
+	}
+
+	// Customer 3: fixed deposit (no loan), one deposit transaction
+	{
+		Push(&customers[3].Transaction_Stack, transaction{ 6, customers[3].Account_Number, "Deposit", 10000.0, "12-11-2019" });
+	}
+
+	// Customer 4: two small loans and a withdrawal
+	{
+		loan L1{ customers[4].Account_Number, 100004, "Personal", 2000.0, 6.0, 500.0, 1500.0, "20-07-2022", "20-07-2024", "Active" };
+		loan L2{ customers[4].Account_Number, 100005, "Education", 3000.0, 2.5, 0.0, 3000.0, "01-09-2022", "01-09-2025", "Pending" };
+		insert(customers[4].Loan_List, L1, customers[4].Loan_List.size + 1);
+		insert(customers[4].Loan_List, L2, customers[4].Loan_List.size + 1);
+		Push(&customers[4].Transaction_Stack, transaction{ 7, customers[4].Account_Number, "Withdrawal", 250.0, "25-07-2022" });
+	}
 }
